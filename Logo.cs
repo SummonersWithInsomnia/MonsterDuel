@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace MonsterDuel
 {
-    // Title
+    // Logo
     public class Logo
     {
         public Form SourceForm;
@@ -35,13 +35,13 @@ namespace MonsterDuel
             await Task.Delay(200);
             await Effect.Typewriter(lbPresent, present, pDuration, pStep);
             
-            Console.WriteLine("lbTeamName.Width: " + lbTeamName.Width);
-            Console.WriteLine("lbTeamName.Height: " + lbTeamName.Height);
+            // Console.WriteLine("lbTeamName.Width: " + lbTeamName.Width);
+            // Console.WriteLine("lbTeamName.Height: " + lbTeamName.Height);
             
             await Task.Delay(500);
             
-            Console.WriteLine("lbPresent.Width: " + lbPresent.Width);
-            Console.WriteLine("lbPresent.Height: " + lbPresent.Height);
+            // Console.WriteLine("lbPresent.Width: " + lbPresent.Width);
+            // Console.WriteLine("lbPresent.Height: " + lbPresent.Height);
             
             await Effect.TypewriterEaseOut(lbTeamName, tnDuration / 3, tnStep);
             await Task.Delay(200);
