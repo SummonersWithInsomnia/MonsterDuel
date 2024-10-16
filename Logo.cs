@@ -9,11 +9,11 @@ namespace MonsterDuel
     // Logo
     public class Logo
     {
-        private Form SourceForm;
+        private Form sourceForm;
 
         public Logo(Form source)
         {
-            SourceForm = source;
+            sourceForm = source;
         }
 
         public async Task Start()
@@ -23,8 +23,8 @@ namespace MonsterDuel
             
             await Task.Delay(1000);
             
-            SourceForm.Controls.Add(lbTeamName);
-            SourceForm.Controls.Add(lbPresent);
+            sourceForm.Controls.Add(lbTeamName);
+            sourceForm.Controls.Add(lbPresent);
 
             int tnDuration = 2000;
             int tnStep = teamName.Length;
@@ -47,14 +47,14 @@ namespace MonsterDuel
             await Task.Delay(200);
             await Effect.TypewriterEaseOut(lbPresent, pDuration / 4, pStep);
             
-            SourceForm.Controls.Remove(lbTeamName);
-            SourceForm.Controls.Remove(lbPresent);
+            sourceForm.Controls.Remove(lbTeamName);
+            sourceForm.Controls.Remove(lbPresent);
         }
         
         private Label lbTeamName = new Label
         {
             AutoSize = true,
-            Location = new System.Drawing.Point(222, 335),
+            Location = new System.Drawing.Point(222, 345),
             Text = "",
             Font = new System.Drawing.Font("Courier New", 68f, FontStyle.Italic | FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.Snow
@@ -63,7 +63,7 @@ namespace MonsterDuel
         private Label lbPresent = new Label
         {
             AutoSize = true,
-            Location = new System.Drawing.Point(590, 455),
+            Location = new System.Drawing.Point(590, 465),
             Text = "",
             Font = new System.Drawing.Font("Courier New", 46f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.Snow
