@@ -9,7 +9,7 @@ namespace MonsterDuel
     // Logo
     public class Logo
     {
-        public Form SourceForm;
+        private Form SourceForm;
 
         public Logo(Form source)
         {
