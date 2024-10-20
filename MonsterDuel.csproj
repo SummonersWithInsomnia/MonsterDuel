@@ -79,7 +79,7 @@
     <ItemGroup>
         <Compile Include="AudioPlayer\AudioPlayer.cs" />
         <Compile Include="AudioPlayer\LoopWaveStream.cs" />
-        <Compile Include="Effect.cs" />
+        <Compile Include="TextEffect.cs" />
         <Compile Include="Game.cs">
             <SubType>Form</SubType>
         </Compile>
