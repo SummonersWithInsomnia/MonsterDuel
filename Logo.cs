@@ -16,7 +16,7 @@ namespace MonsterDuel
             sourceForm = source;
         }
 
-        public async Task Start()
+        public async Task<PictureBox> Start()
         {
             string teamName = "Summoners with Insomnia";
             string present = "Present";
@@ -49,6 +49,8 @@ namespace MonsterDuel
             
             sourceForm.Controls.Remove(lbTeamName);
             sourceForm.Controls.Remove(lbPresent);
+
+            return await SceneEffect.CutInFromLeft(sourceForm, "data/effect/scene/orange.png", 1000, 20);
         }
         
         private Label lbTeamName = new Label

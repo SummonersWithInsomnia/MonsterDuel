@@ -83,6 +83,7 @@
         <Compile Include="AudioPlayer\AudioPlayer.cs" />
         <Compile Include="AudioPlayer\LoopWaveStream.cs" />
         <Compile Include="SaveData.cs" />
+        <Compile Include="SceneEffect.cs" />
         <Compile Include="TextEffect.cs" />
         <Compile Include="Game.cs">
             <SubType>Form</SubType>
