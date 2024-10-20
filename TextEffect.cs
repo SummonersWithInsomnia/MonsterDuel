@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace MonsterDuel
 {
-    public static class Effect
+    public static class TextEffect
     {
         public static async Task Typewriter(Label lable, string text, int duration, int step)
         {
