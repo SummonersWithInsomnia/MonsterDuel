@@ -25,7 +25,7 @@ namespace MonsterDuel
         {
             // audioPlayer.PlayBGM("data/bgm/test.mp3");
 
-            SceneEffect.CutOutFromRight(sourceForm, pb, 1000, 20);
+            SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
             
             sourceForm.Controls.Add(lbLogo);
             sourceForm.Controls.Add(lbStartGame);
@@ -116,6 +116,7 @@ namespace MonsterDuel
         
         private void ExitGameMenu(object source, MouseEventArgs e)
         {
+            // audioPlayer.PlaySE("data/se/test.wav");
             if (e.Button == MouseButtons.Left)
             {
                 lbStartGame.Visible = false;
@@ -129,6 +130,7 @@ namespace MonsterDuel
 
         private void ExitGame(object source, MouseEventArgs e)
         {
+            // audioPlayer.PlaySE("data/se/test.wav");
             if (e.Button == MouseButtons.Left)
             {
                 sourceForm.Close();
@@ -137,6 +139,7 @@ namespace MonsterDuel
         
         private void NoExitGame(object source, MouseEventArgs e)
         {
+            // audioPlayer.PlaySE("data/se/test.wav");
             if (e.Button == MouseButtons.Left)
             {
                 lbExitGameYes.Visible = false;

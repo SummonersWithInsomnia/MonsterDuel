@@ -50,7 +50,7 @@ namespace MonsterDuel
             sourceForm.Controls.Remove(lbTeamName);
             sourceForm.Controls.Remove(lbPresent);
 
-            return await SceneEffect.CutInFromLeft(sourceForm, "data/effect/scene/orange.png", 1000, 20);
+            return await SceneEffect.CutInFromLeft(sourceForm, "data/effect/scene/orange.png", 500, 20);
         }
         
         private Label lbTeamName = new Label
