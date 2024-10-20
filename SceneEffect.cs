@@ -80,6 +80,7 @@ namespace MonsterDuel
             pb.Location = final;
             
             source.Controls.Remove(pb);
+            source.Refresh();
         }
         
         public static async Task CutOutFromLeft(Form source, PictureBox pb, int duration, int step)
@@ -98,6 +99,7 @@ namespace MonsterDuel
             pb.Location = final;
             
             source.Controls.Remove(pb);
+            source.Refresh();
         }
     }
 }
