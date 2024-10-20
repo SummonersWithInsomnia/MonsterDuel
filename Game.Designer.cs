@@ -44,6 +44,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Monster Duel";
+            this.DoubleBuffered = true;
             this.ResumeLayout(false);
         }
 

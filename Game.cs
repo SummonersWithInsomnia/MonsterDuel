@@ -13,19 +13,25 @@ namespace MonsterDuel
 {
     public partial class Game : Form
     {
+        public AudioPlayer audioPlayer;
+        private Logo logo;
+        private GameTitle gameTitle;
+        
         public Game()
         {
             InitializeComponent();
-            Logo logo = new Logo(this);
-            logo.Start();
+            audioPlayer = new AudioPlayer();
+            
+            logo = new Logo(this);
+            gameTitle = new GameTitle(this, audioPlayer);
+
+            Start();
         }
-        
-        // private PictureBox pbTeamLogo = new PictureBox
-        // {
-        //     Size = new Size(50, 50),
-        //     Location = new Point(10, 50),
-        //     BackColor = Color.Coral,
-        //     BorderStyle = BorderStyle.None
-        // };
+
+        private async Task Start()
+        {
+            await logo.Start();
+            await gameTitle.Start();
+        }
     }
 }
