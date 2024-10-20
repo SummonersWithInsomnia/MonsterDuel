@@ -12,7 +12,6 @@ namespace MonsterDuel
         public AudioPlayer()
         {
             bgmPlayer = new WaveOutEvent();
-            sePlayer = new WaveOutEvent();
         }
 
         public void PlayBGM(string bgmPath)
@@ -28,6 +27,7 @@ namespace MonsterDuel
 
         public void PlaySE(string sePath)
         {
+            sePlayer = new WaveOutEvent();
             seReader = new AudioFileReader(sePath);
             sePlayer.Init(seReader);
             sePlayer.Play();
