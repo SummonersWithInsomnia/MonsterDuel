@@ -19,13 +19,13 @@ namespace MonsterDuel
             lbExitGame.MouseClick += new MouseEventHandler(ExitGameMenu);
             lbExitGameYes.MouseClick += new MouseEventHandler(ExitGame);
             lbExitGameNo.MouseClick += new MouseEventHandler(NoExitGame);
+            lbStartGame.MouseClick += new MouseEventHandler(StartGame);
         }
 
-        public async Task Start(PictureBox pb)
+        public async Task Start()
         {
             // audioPlayer.PlayBGM("data/bgm/test.mp3");
-
-            SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "data/effect/scene/black.png", 500, 20);
             
             sourceForm.Controls.Add(lbLogo);
             sourceForm.Controls.Add(lbStartGame);
@@ -36,17 +36,19 @@ namespace MonsterDuel
             
             sourceForm.Controls.Add(pbGameTitleBackground);
             
+            SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+            
             // Console.WriteLine("lbLogo.Width: " + lbLogo.Width);
             // Console.WriteLine("lbLogo.Height: " + lbLogo.Height);
             // Console.WriteLine("lbStartGame.Width: " + lbStartGame.Width);
             // Console.WriteLine("lbStartGame.Height: " + lbStartGame.Height);
             // Console.WriteLine("lbCopyright.Width: " + lbCopyright.Width);
             // Console.WriteLine("lbCopyright.Height: " + lbCopyright.Height);
-            
         }
 
         public async Task Stop()
         {
+            
         }
         
         
@@ -125,6 +127,15 @@ namespace MonsterDuel
                 lbExitGameNo.Visible = true;
                 
                 sourceForm.Refresh();
+            }
+        }
+        
+        private void StartGame(object source, MouseEventArgs e)
+        {
+            // audioPlayer.PlaySE("data/se/test.wav");
+            if (e.Button == MouseButtons.Left)
+            {
+                Stop();
             }
         }
 

@@ -30,9 +30,8 @@ namespace MonsterDuel
 
         private async Task Start()
         {
-            PictureBox switchingScene;
-            switchingScene = await logo.Start();
-            await gameTitle.Start(switchingScene);
+            await logo.Start();
+            await gameTitle.Start();
         }
     }
 }
