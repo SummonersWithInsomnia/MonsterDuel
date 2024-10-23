@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LibVLCSharp.Shared;
 
 namespace MonsterDuel
 {
@@ -19,8 +20,10 @@ namespace MonsterDuel
         
         public Game()
         {
+            // Init
             InitializeComponent();
             audioPlayer = new AudioPlayer();
+            Core.Initialize(); // LibVLC
             
             logo = new Logo(this);
             gameTitle = new GameTitle(this, audioPlayer);

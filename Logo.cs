@@ -54,18 +54,18 @@ namespace MonsterDuel
         private Label lbTeamName = new Label
         {
             AutoSize = true,
-            Location = new System.Drawing.Point(222, 345),
+            Location = new Point(472, 455),
             Text = "",
-            Font = new System.Drawing.Font("Courier New", 68f, FontStyle.Italic | FontStyle.Bold, GraphicsUnit.Pixel),
+            Font = new Font("Courier New", 68f, FontStyle.Italic | FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.Snow
         };
         
         private Label lbPresent = new Label
         {
             AutoSize = true,
-            Location = new System.Drawing.Point(590, 465),
+            Location = new Point(850, 585),
             Text = "",
-            Font = new System.Drawing.Font("Courier New", 46f, FontStyle.Bold, GraphicsUnit.Pixel),
+            Font = new Font("Courier New", 46f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.Snow
         };
     }
