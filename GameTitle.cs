@@ -122,7 +122,8 @@ namespace MonsterDuel
         {
             Size = new Size(1920, 1080),
             Location = new Point(0, 0),
-            BackColor = Color.Black
+            // BackColor = Color.Black
+            // Only for WPF
         };
         
         private Label lbCopyright = new Label
