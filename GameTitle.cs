@@ -23,7 +23,7 @@ namespace MonsterDuel
             audioPlayer = player;
             
             // Game Title Background Video Player
-            libVLC = new LibVLC();
+            libVLC = new LibVLC("--mouse-hide-timeout=2147483647"); // Stop hiding the mouse cursor
             mediaPlayer = new MediaPlayer(libVLC);
             mGameTitleLoopBackground = new Media(libVLC, "data/video/title.mp4", FromType.FromPath);
             vvGameTitleBackground.MediaPlayer = mediaPlayer;
