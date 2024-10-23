@@ -1,6 +1,9 @@
 # IntelliJ IDE
 .idea/
 
+# Visual Studio Code
+.vscode/
+
 # Game Data
 data/
 
