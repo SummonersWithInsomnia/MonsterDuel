@@ -39,16 +39,12 @@ namespace MonsterDuel
             {
                 "--mouse-hide-timeout=2147483647",
                 "--no-audio",
-                "--rmtosd-mouse-events",
-                "--mouse-events"
+                //"--rmtosd-mouse-events",
+                //"--mouse-events"
             };
             libVLC = new LibVLC(options); 
             mediaPlayer = new MediaPlayer(libVLC);
-            
-            // Enable mouse input events
-            // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
-            mediaPlayer.EnableMouseInput = true;
-            
+            mediaPlayer.EnableMouseInput = false;
             mGameTitleLoopBackground = new Media(libVLC, "data/video/title.mp4", FromType.FromPath);
             vvGameTitleBackground.MediaPlayer = mediaPlayer;
             
@@ -60,8 +56,20 @@ namespace MonsterDuel
                     mediaPlayer.Position = 0.4f;
                 }
             };
+
+            // Fixed a bug that cannot get MouseClick events
+            // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
+            mediaPlayer.Playing += OnPlaying;
             
             // Events
+        }
+
+        private void OnPlaying(object source, EventArgs args)
+        {
+            // Fixed a bug that cannot get MouseClick events
+            // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
+            mediaPlayer.EnableMouseInput = false;
+            mediaPlayer.EnableKeyInput = false;
         }
 
         public async Task Start()
@@ -78,12 +86,15 @@ namespace MonsterDuel
             SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
 
             lbStartGame.Visible = false;
+            
             await Task.Delay(2700);
+            
             lbStartGame.Visible = true;
             lbStartGameColorTimer.Start();
+            
             lbStartGame.MouseClick += PressToStartGame;
-            // lbCopyright.MouseClick += PressToStartGame;
-            // vvGameTitleBackground.MouseClick += PressToStartGame;
+            lbCopyright.MouseClick += PressToStartGame;
+            vvGameTitleBackground.MouseClick += PressToStartGame;
             
             // double loopVideoStartPoint = mediaPlayer.Position;
             // Console.WriteLine("loopVideoStartPoint: " + loopVideoStartPoint);
@@ -103,8 +114,8 @@ namespace MonsterDuel
             lbStartGame.ForeColor = Color.FromArgb(255, 255, 255);
             lbCopyright.Visible = true;
             lbStartGame.MouseClick -= PressToStartGame;
-            // lbCopyright.MouseClick -= PressToStartGame;
-            // vvGameTitleBackground.MouseClick -= PressToStartGame;
+            lbCopyright.MouseClick -= PressToStartGame;
+            vvGameTitleBackground.MouseClick -= PressToStartGame;
         }
 
         private VideoView vvGameTitleBackground = new VideoView
