@@ -57,7 +57,7 @@ namespace MonsterDuel
             Location = new Point(472, 455),
             Text = "",
             Font = new Font("Courier New", 68f, FontStyle.Italic | FontStyle.Bold, GraphicsUnit.Pixel),
-            ForeColor = Color.Snow
+            ForeColor = Color.White
         };
         
         private Label lbPresent = new Label
@@ -66,7 +66,7 @@ namespace MonsterDuel
             Location = new Point(850, 585),
             Text = "",
             Font = new Font("Courier New", 46f, FontStyle.Bold, GraphicsUnit.Pixel),
-            ForeColor = Color.Snow
+            ForeColor = Color.White
         };
     }
 }
