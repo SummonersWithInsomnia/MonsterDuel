@@ -101,12 +101,14 @@
   <ItemGroup>
     <Compile Include="AudioPlayer\AudioPlayer.cs" />
     <Compile Include="AudioPlayer\LoopWaveStream.cs" />
-    <Compile Include="Particle.cs" />
-    <Compile Include="ParticleSender.cs">
+    <Compile Include="Effects\SceneEffect.cs" />
+    <Compile Include="Effects\TextEffect.cs" />
+    <Compile Include="MenuButton.cs" />
+    <Compile Include="Particle\Particle.cs" />
+    <Compile Include="Particle\ParticleSender.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="SaveData.cs" />
-    <Compile Include="SceneEffect.cs" />
     <Compile Include="SelectSaveData.cs" />
     <Compile Include="Test.cs">
       <SubType>Form</SubType>
@@ -114,7 +116,6 @@
     <Compile Include="Test.Designer.cs">
       <DependentUpon>Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="TextEffect.cs" />
     <Compile Include="Game.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -33,7 +33,7 @@ namespace MonsterDuel
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
-            //SetStyle(ControlStyles.Opaque, true);
+            SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
             
@@ -63,15 +63,15 @@ namespace MonsterDuel
             timer.Start();
         }
         
-        // protected override CreateParams CreateParams
-        // {
-        //     get
-        //     {
-        //         CreateParams cp = base.CreateParams;
-        //         cp.ExStyle = cp.ExStyle | 0x20; // WS_EX_TRANSPARENT
-        //         return cp;
-        //     }
-        // }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle = cp.ExStyle | 0x20; // WS_EX_TRANSPARENT
+                return cp;
+            }
+        }
         
         protected override void OnPaintBackground(PaintEventArgs args)
         {
