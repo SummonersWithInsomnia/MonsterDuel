@@ -17,14 +17,38 @@ namespace MonsterDuel
         private MediaPlayer mediaPlayer;
         private Media mGameTitleLoopBackground;
 
+        private bool menuOpened;
+        private Timer lbStartGameColorTimer;
+        private bool increaseColorRGB;
+
         public GameTitle(Form source, AudioPlayer player)
         {
             sourceForm = source;
             audioPlayer = player;
+
+            lbStartGameColorTimer = new Timer();
+            lbStartGameColorTimer.Interval = 50;
+            lbStartGameColorTimer.Tick += lbStartGameColorTimerTick;
             
             // Game Title Background Video Player
-            libVLC = new LibVLC("--mouse-hide-timeout=2147483647"); // Stop hiding the mouse cursor
+            // Options
+            // https://wiki.videolan.org/VLC_command-line_help/
+            // - Stop hiding the mouse cursor
+            // - No audio
+            var options = new string[]
+            {
+                "--mouse-hide-timeout=2147483647",
+                "--no-audio",
+                "--rmtosd-mouse-events",
+                "--mouse-events"
+            };
+            libVLC = new LibVLC(options); 
             mediaPlayer = new MediaPlayer(libVLC);
+            
+            // Enable mouse input events
+            // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
+            mediaPlayer.EnableMouseInput = true;
+            
             mGameTitleLoopBackground = new Media(libVLC, "data/video/title.mp4", FromType.FromPath);
             vvGameTitleBackground.MediaPlayer = mediaPlayer;
             
@@ -36,37 +60,58 @@ namespace MonsterDuel
                     mediaPlayer.Position = 0.4f;
                 }
             };
+            
+            // Events
         }
 
         public async Task Start()
         {
-            audioPlayer.PlayBGM("data/bgm/test.mp3");
+            audioPlayer.PlayBGM("data/bgm/test2.mp3");
             PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "data/effect/scene/black.png", 500, 20);
             
+            sourceForm.Controls.Add(lbStartGame);
             sourceForm.Controls.Add(lbCopyright);
             
             sourceForm.Controls.Add(vvGameTitleBackground);
             mediaPlayer.Play(mGameTitleLoopBackground);
             
             SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+
+            lbStartGame.Visible = false;
+            await Task.Delay(2700);
+            lbStartGame.Visible = true;
+            lbStartGameColorTimer.Start();
+            lbStartGame.MouseClick += PressToStartGame;
+            // lbCopyright.MouseClick += PressToStartGame;
+            // vvGameTitleBackground.MouseClick += PressToStartGame;
             
-            // await Task.Delay(2800);
             // double loopVideoStartPoint = mediaPlayer.Position;
             // Console.WriteLine("loopVideoStartPoint: " + loopVideoStartPoint);
-            
+
+            // Console.WriteLine("lbStartGame.Width: " + lbStartGame.Width);
+            // Console.WriteLine("lbStartGame.Height: " + lbStartGame.Height);
             // Console.WriteLine("lbCopyright.Width: " + lbCopyright.Width);
             // Console.WriteLine("lbCopyright.Height: " + lbCopyright.Height);
         }
 
         public async Task Stop()
         {
-            
+            // Reset the status
+            menuOpened = false;
+            increaseColorRGB = false;
+            lbStartGame.Visible = true;
+            lbStartGame.ForeColor = Color.FromArgb(255, 255, 255);
+            lbCopyright.Visible = true;
+            lbStartGame.MouseClick -= PressToStartGame;
+            // lbCopyright.MouseClick -= PressToStartGame;
+            // vvGameTitleBackground.MouseClick -= PressToStartGame;
         }
 
         private VideoView vvGameTitleBackground = new VideoView
         {
             Size = new Size(1920, 1080),
-            Location = new Point(0, 0)
+            Location = new Point(0, 0),
+            BackColor = Color.Black
         };
         
         private Label lbCopyright = new Label
@@ -75,7 +120,67 @@ namespace MonsterDuel
             Location = new Point(713, 997),
             Text = "\u00a9 2024 Summoners with Insomnia",
             Font = new Font("Courier New", 26f, FontStyle.Bold, GraphicsUnit.Pixel),
-            ForeColor = Color.Snow
+            ForeColor = Color.White,
+            Visible = true
         };
+
+        private Label lbStartGame = new Label
+        {
+            AutoSize = true,
+            Location = new Point(782, 756),
+            Text = "Press to Start",
+            Font = new Font("Courier New", 40f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.FromArgb(255, 255, 255),
+            Visible = true
+        };
+
+        private void lbStartGameColorTimerTick(object source, EventArgs args)
+        {
+            Color current = lbStartGame.ForeColor;
+            int r = current.R;
+            int g = current.G;
+            int b = current.B;
+
+            if (increaseColorRGB)
+            {
+                if (r < 255) r+=10;
+                if (g < 255) g+=10;
+                if (b < 255) b+=10;
+            }
+            else
+            {
+                if (r > 0) r-=10;
+                if (g > 0) g-=10;
+                if (b > 0) b-=10;
+            }
+
+            if (r > 255) r = 255;
+            if (g > 255) g = 255;
+            if (b > 255) b = 255;
+            
+            if (r < 0) r = 0;
+            if (g < 0) g = 0;
+            if (b < 0) b = 0;
+            
+            if (r == 255 && g == 255 && b == 255)
+            {
+                increaseColorRGB = false;
+            }
+            else if (r == 0 && g == 0 && b == 0)
+            {
+                increaseColorRGB = true;
+            }
+            
+            lbStartGame.ForeColor = Color.FromArgb(r, g, b);
+        }
+
+        private void PressToStartGame(object source, MouseEventArgs args)
+        {
+            if (args.Button == MouseButtons.Left)
+            {
+                menuOpened = true;
+                Console.WriteLine("Got it");
+            }
+        }
     }
 }
