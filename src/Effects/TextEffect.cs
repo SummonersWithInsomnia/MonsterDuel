@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Drawing;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -47,9 +49,27 @@ namespace MonsterDuel
                 // r -= rStep;
                 g -= gStep;
                 b -= bStep;
+
+                // if (r < 0) r = 0;
+                if (g < 0) g = 0;
+                if (b < 0) b = 0;
+                
                 label.ForeColor = System.Drawing.Color.FromArgb(r, g, b);
                 await Task.Delay(waitTime);
             }
+        }
+        
+        public static async void LabelButton_MouseEnter(object sender, EventArgs e)
+        {
+            Label lb = (Label)sender;
+            await TextColorTurnRedFromWhite(lb, 100, 10);
+        }
+        
+        public static async void LabelButton_MouseLeave(object sender, EventArgs e)
+        {
+            Label lb = (Label)sender;
+            await Task.Delay(100);
+            lb.ForeColor = Color.FromArgb(255, 255, 255);
         }
     }
 }

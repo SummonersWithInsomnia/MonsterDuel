@@ -100,13 +100,13 @@ namespace MonsterDuel
             lbCopyright.MouseClick += HandleGameTitleBackGroundEvent;
             vvGameTitleBackground.MouseClick += HandleGameTitleBackGroundEvent;
             
-            lbGameMenuVSMode.MouseEnter += GameMenuItem_MouseEnter;
-            // lbGameMenuStoryMode.MouseEnter += GameMenuItem_MouseEnter;
-            lbGameMenuExitGame.MouseEnter += GameMenuItem_MouseEnter;
+            lbGameMenuVSMode.MouseEnter += TextEffect.LabelButton_MouseEnter;
+            // lbGameMenuStoryMode.MouseEnter += TextEffect.LabelButton_MouseEnter;
+            lbGameMenuExitGame.MouseEnter += TextEffect.LabelButton_MouseEnter;
             
-            lbGameMenuVSMode.MouseLeave += GameMenuItem_MouseLeave;
-            // lbGameMenuStoryMode.MouseLeave += GameMenuItem_MouseLeave;
-            lbGameMenuExitGame.MouseLeave += GameMenuItem_MouseLeave;
+            lbGameMenuVSMode.MouseLeave += TextEffect.LabelButton_MouseLeave;
+            // lbGameMenuStoryMode.MouseLeave += TextEffect.LabelButton_MouseLeave;
+            lbGameMenuExitGame.MouseLeave += TextEffect.LabelButton_MouseLeave;
             
             lbGameMenuVSMode.MouseClick += GameMenuItem_VSMode_MouseClick;
             lbGameMenuStoryMode.MouseClick += GameMenuItem_StoryMode_MouseClick;
@@ -272,19 +272,6 @@ namespace MonsterDuel
             ForeColor = Color.FromArgb(255, 255, 255),
             Visible = false
         };
-        
-        private async void GameMenuItem_MouseEnter(object sender, EventArgs e)
-        {
-            Label lb = (Label)sender;
-            await TextEffect.TextColorTurnRedFromWhite(lb, 100, 10);
-        }
-
-        private async void GameMenuItem_MouseLeave(object sender, EventArgs e)
-        {
-            Label lb = (Label)sender;
-            await Task.Delay(100);
-            lb.ForeColor = Color.FromArgb(255, 255, 255);
-        }
         
         private async void GameMenuItem_VSMode_MouseClick(object sender, MouseEventArgs e)
         {

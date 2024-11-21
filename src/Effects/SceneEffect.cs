@@ -10,8 +10,8 @@ namespace MonsterDuel
         {
             PictureBox pb = new PictureBox
             {
-                Size = new Size(1920, 1080),
-                Location = new Point(-1920, 0),
+                Size = new Size(1280, 720),
+                Location = new Point(-1280, 0),
                 ImageLocation = filepath,
                 BorderStyle = BorderStyle.None
             };
@@ -20,7 +20,7 @@ namespace MonsterDuel
             pb.BringToFront();
             
             int waitTime = duration / step;
-            int move = 1920 / step;
+            int move = 1280 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -39,8 +39,8 @@ namespace MonsterDuel
         {
             PictureBox pb = new PictureBox
             {
-                Size = new Size(1920, 1080),
-                Location = new Point(1920, 0),
+                Size = new Size(1280, 720),
+                Location = new Point(1280, 0),
                 ImageLocation = filepath,
                 BorderStyle = BorderStyle.None
             };
@@ -49,7 +49,7 @@ namespace MonsterDuel
             pb.BringToFront();
             
             int waitTime = duration / step;
-            int move = 1920 / step;
+            int move = 1280 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -67,7 +67,7 @@ namespace MonsterDuel
         public static async Task CutOutFromRight(Form source, PictureBox pb, int duration, int step)
         {
             int waitTime = duration / step;
-            int move = 1920 / step;
+            int move = 1280 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -76,7 +76,7 @@ namespace MonsterDuel
                 await Task.Delay(waitTime);
             }
 
-            Point final = new Point(1920, 0);
+            Point final = new Point(1280, 0);
             pb.Location = final;
             
             source.Controls.Remove(pb);
@@ -86,7 +86,7 @@ namespace MonsterDuel
         public static async Task CutOutFromLeft(Form source, PictureBox pb, int duration, int step)
         {
             int waitTime = duration / step;
-            int move = 1920 / step;
+            int move = 1280 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -95,7 +95,7 @@ namespace MonsterDuel
                 await Task.Delay(waitTime);
             }
 
-            Point final = new Point(-1920, 0);
+            Point final = new Point(-1280, 0);
             pb.Location = final;
             
             source.Controls.Remove(pb);
@@ -106,8 +106,8 @@ namespace MonsterDuel
         {
             PictureBox pb = new PictureBox
             {
-                Size = new Size(1920, 1080),
-                Location = new Point(0, -1080),
+                Size = new Size(1280, 720),
+                Location = new Point(0, -720),
                 ImageLocation = filepath,
                 BorderStyle = BorderStyle.None
             };
@@ -116,7 +116,7 @@ namespace MonsterDuel
             pb.BringToFront();
             
             int waitTime = duration / step;
-            int move = 1080 / step;
+            int move = 720 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -135,8 +135,8 @@ namespace MonsterDuel
         {
             PictureBox pb = new PictureBox
             {
-                Size = new Size(1920, 1080),
-                Location = new Point(0, 1080),
+                Size = new Size(1280, 720),
+                Location = new Point(0, 720),
                 ImageLocation = filepath,
                 BorderStyle = BorderStyle.None
             };
@@ -145,7 +145,7 @@ namespace MonsterDuel
             pb.BringToFront();
             
             int waitTime = duration / step;
-            int move = 1080 / step;
+            int move = 720 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -163,7 +163,7 @@ namespace MonsterDuel
         public static async Task CutOutFromTop(Form source, PictureBox pb, int duration, int step)
         {
             int waitTime = duration / step;
-            int move = 1080 / step;
+            int move = 720 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -172,7 +172,7 @@ namespace MonsterDuel
                 await Task.Delay(waitTime);
             }
 
-            Point final = new Point(0, -1080);
+            Point final = new Point(0, -720);
             pb.Location = final;
             
             source.Controls.Remove(pb);
@@ -182,7 +182,7 @@ namespace MonsterDuel
         public static async Task CutOutFromBottom(Form source, PictureBox pb, int duration, int step)
         {
             int waitTime = duration / step;
-            int move = 1080 / step;
+            int move = 720 / step;
 
             for (int i = 0; i < step; i++)
             {
@@ -191,7 +191,7 @@ namespace MonsterDuel
                 await Task.Delay(waitTime);
             }
 
-            Point final = new Point(0, 1080);
+            Point final = new Point(0, 720);
             pb.Location = final;
             
             source.Controls.Remove(pb);
