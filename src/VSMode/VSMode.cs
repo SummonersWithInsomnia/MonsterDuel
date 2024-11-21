@@ -46,7 +46,7 @@ namespace MonsterDuel
             // Loop range
             mediaPlayer.PositionChanged += (sender, e) =>
             {
-                if (mediaPlayer.Position > 0.3968697821f)
+                if (mediaPlayer.Position > 0.88f)
                 {
                     mediaPlayer.Position = 0.0f;
                 }
@@ -61,7 +61,7 @@ namespace MonsterDuel
             
             
             // Topmost of layer
-            
+            sourceForm.Controls.Add(lbTitle);
             
             sourceForm.Controls.Add(vvBackground);
             // Bottommost of layer
@@ -71,12 +71,24 @@ namespace MonsterDuel
             await Task.Delay(6000);
             
             await SceneEffect.CuttingOutLikeOpeningDoor(sourceForm, pbList, 50, 2);
+            
+            // Console.WriteLine("lbTitle.Width: " + lbTitle.Width);
+            // Console.WriteLine("lbTitle.Height: " + lbTitle.Height);
         }
         
         private VideoView vvBackground = new VideoView
         {
             Size = new Size(1280, 720),
             Location = new Point(0, 0)
+        };
+        
+        private Label lbTitle = new Label
+        {
+            AutoSize = true,
+            Location = new Point(103, 595),
+            Text = "VS Mode",
+            Font = new Font("Courier New", 52f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.White
         };
     }
 }
