@@ -18,17 +18,28 @@ namespace MonsterDuel
         private Media mGameTitleLoopBackground;
 
         private bool menuOpened;
-        private Timer lbStartGameColorTimer;
+        private Timer lbPressToStartGameColorChangerTimer;
         private bool increaseColorRGB;
 
         public GameTitle(Form source, AudioPlayer player)
         {
             sourceForm = source;
             audioPlayer = player;
+        }
 
-            lbStartGameColorTimer = new Timer();
-            lbStartGameColorTimer.Interval = 50;
-            lbStartGameColorTimer.Tick += lbStartGameColorTimerTick;
+        private void OnPlaying(object source, EventArgs args)
+        {
+            // Fixed a bug that cannot get MouseClick events
+            // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
+            mediaPlayer.EnableMouseInput = false;
+            mediaPlayer.EnableKeyInput = false;
+        }
+
+        public async Task Start()
+        {
+            lbPressToStartGameColorChangerTimer = new Timer();
+            lbPressToStartGameColorChangerTimer.Interval = 50;
+            lbPressToStartGameColorChangerTimer.Tick += lbPressToStartGameColorChangerTimerTick;
             
             // Game Title Background Video Player
             // Options
@@ -45,7 +56,7 @@ namespace MonsterDuel
             libVLC = new LibVLC(options); 
             mediaPlayer = new MediaPlayer(libVLC);
             mediaPlayer.EnableMouseInput = false;
-            mGameTitleLoopBackground = new Media(libVLC, "MonsterDuel_Data/video/title.mp4", FromType.FromPath);
+            mGameTitleLoopBackground = new Media(libVLC, "MonsterDuel_Data/video/title.mp4");
             vvGameTitleBackground.MediaPlayer = mediaPlayer;
             
             // Loop range
@@ -61,61 +72,56 @@ namespace MonsterDuel
             // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
             mediaPlayer.Playing += OnPlaying;
             
-            // Events
-        }
-
-        private void OnPlaying(object source, EventArgs args)
-        {
-            // Fixed a bug that cannot get MouseClick events
-            // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
-            mediaPlayer.EnableMouseInput = false;
-            mediaPlayer.EnableKeyInput = false;
-        }
-
-        public async Task Start()
-        {
             audioPlayer.PlayBGM("MonsterDuel_Data/bgm/title.mp3");
             PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
             
-            sourceForm.Controls.Add(lbStartGame);
+            // Topmost of layer
+            sourceForm.Controls.Add(lbGameMenuVSMode);
+            sourceForm.Controls.Add(lbGameMenuStoryMode);
+            sourceForm.Controls.Add(lbGameMenuExitGame);
+            
+            sourceForm.Controls.Add(lbPressToStartGame);
             sourceForm.Controls.Add(lbCopyright);
             
             sourceForm.Controls.Add(vvGameTitleBackground);
+            // Bottommost of layer
+            
             mediaPlayer.Play(mGameTitleLoopBackground);
             
             SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
-
-            lbStartGame.Visible = false;
             
             await Task.Delay(2700);
             
-            lbStartGame.Visible = true;
-            lbStartGameColorTimer.Start();
+            lbPressToStartGame.Visible = true;
+            lbPressToStartGameColorChangerTimer.Start();
             
-            lbStartGame.MouseClick += PressToStartGame;
-            lbCopyright.MouseClick += PressToStartGame;
-            vvGameTitleBackground.MouseClick += PressToStartGame;
+            // Events
+            lbPressToStartGame.MouseClick += HandleGameTitleBackGroundEvent;
+            lbCopyright.MouseClick += HandleGameTitleBackGroundEvent;
+            vvGameTitleBackground.MouseClick += HandleGameTitleBackGroundEvent;
+            
+            lbGameMenuVSMode.MouseEnter += GameMenuItem_MouseEnter;
+            // lbGameMenuStoryMode.MouseEnter += GameMenuItem_MouseEnter;
+            lbGameMenuExitGame.MouseEnter += GameMenuItem_MouseEnter;
+            
+            lbGameMenuVSMode.MouseLeave += GameMenuItem_MouseLeave;
+            // lbGameMenuStoryMode.MouseLeave += GameMenuItem_MouseLeave;
+            lbGameMenuExitGame.MouseLeave += GameMenuItem_MouseLeave;
+            
+            lbGameMenuVSMode.MouseClick += GameMenuItem_VSMode_MouseClick;
+            lbGameMenuStoryMode.MouseClick += GameMenuItem_StoryMode_MouseClick;
+            lbGameMenuExitGame.MouseClick += GameMenuItem_ExitGame_MouseClick;
             
             // double loopVideoStartPoint = mediaPlayer.Position;
             // Console.WriteLine("loopVideoStartPoint: " + loopVideoStartPoint);
 
-            Console.WriteLine("lbStartGame.Width: " + lbStartGame.Width);
-            Console.WriteLine("lbStartGame.Height: " + lbStartGame.Height);
-            Console.WriteLine("lbCopyright.Width: " + lbCopyright.Width);
-            Console.WriteLine("lbCopyright.Height: " + lbCopyright.Height);
-        }
-
-        public async Task Stop()
-        {
-            // Reset the status
-            menuOpened = false;
-            increaseColorRGB = false;
-            lbStartGame.Visible = true;
-            lbStartGame.ForeColor = Color.FromArgb(255, 255, 255);
-            lbCopyright.Visible = true;
-            lbStartGame.MouseClick -= PressToStartGame;
-            lbCopyright.MouseClick -= PressToStartGame;
-            vvGameTitleBackground.MouseClick -= PressToStartGame;
+            // Console.WriteLine("lbPressToStartGame.Width: " + lbPressToStartGame.Width);
+            // Console.WriteLine("lbPressToStartGame.Height: " + lbPressToStartGame.Height);
+            // Console.WriteLine("lbCopyright.Width: " + lbCopyright.Width);
+            // Console.WriteLine("lbCopyright.Height: " + lbCopyright.Height);
+            
+            Console.WriteLine("lbGameMenuStoryMode.Width: " + lbGameMenuStoryMode.Width);
+            Console.WriteLine("lbGameMenuStoryMode.Height: " + lbGameMenuStoryMode.Height);
         }
 
         private VideoView vvGameTitleBackground = new VideoView
@@ -127,26 +133,26 @@ namespace MonsterDuel
         private Label lbCopyright = new Label
         {
             AutoSize = true,
-            Location = new Point(421, 651),
+            Location = new Point(467, 651),
             Text = "\u00a9 2024 Summoners with Insomnia",
-            Font = new Font("Courier New", 24f, FontStyle.Bold, GraphicsUnit.Pixel),
+            Font = new Font("Courier New", 18f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.White,
             Visible = true
         };
 
-        private Label lbStartGame = new Label
+        private Label lbPressToStartGame = new Label
         {
             AutoSize = true,
             Location = new Point(474, 460),
             Text = "Press to Start",
             Font = new Font("Courier New", 36f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.FromArgb(255, 255, 255),
-            Visible = true
+            Visible = false
         };
 
-        private void lbStartGameColorTimerTick(object source, EventArgs args)
+        private void lbPressToStartGameColorChangerTimerTick(object source, EventArgs args)
         {
-            Color current = lbStartGame.ForeColor;
+            Color current = lbPressToStartGame.ForeColor;
             int r = current.R;
             int g = current.G;
             int b = current.B;
@@ -181,16 +187,184 @@ namespace MonsterDuel
                 increaseColorRGB = true;
             }
             
-            lbStartGame.ForeColor = Color.FromArgb(r, g, b);
+            lbPressToStartGame.ForeColor = Color.FromArgb(r, g, b);
         }
 
-        private void PressToStartGame(object source, MouseEventArgs args)
+        private void HandleGameTitleBackGroundEvent(object source, MouseEventArgs args)
         {
-            if (args.Button == MouseButtons.Left)
+            if (args.Button == MouseButtons.Left && menuOpened == false)
             {
                 menuOpened = true;
-                Console.WriteLine("Got it");
+                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                lbPressToStartGame.Visible = false;
+                
+                openGameMenu();
             }
+            else if (args.Button == MouseButtons.Right && menuOpened == true)
+            {
+                menuOpened = false;
+                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                lbPressToStartGame.Visible = true;
+                
+                closeGameMenu();
+            }
+            
+        }
+
+        private async void openGameMenu()
+        {
+            lbPressToStartGame.MouseClick -= HandleGameTitleBackGroundEvent;
+            lbCopyright.MouseClick -= HandleGameTitleBackGroundEvent;
+            vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
+            
+            lbGameMenuVSMode.Visible = true;
+            await Task.Delay(100);
+            lbGameMenuStoryMode.Visible = true;
+            await Task.Delay(100);
+            lbGameMenuExitGame.Visible = true;
+            
+            lbPressToStartGame.MouseClick += HandleGameTitleBackGroundEvent;
+            lbCopyright.MouseClick += HandleGameTitleBackGroundEvent;
+            vvGameTitleBackground.MouseClick += HandleGameTitleBackGroundEvent;
+        }
+
+        private void closeGameMenu()
+        {
+            lbGameMenuVSMode.Visible = false;
+            lbGameMenuStoryMode.Visible = false;
+            lbGameMenuExitGame.Visible = false;
+        }
+
+        private Label lbGameMenuVSMode = new Label
+        {
+            AutoSize = false,
+            Location = new Point(964, 389),
+            Size = new Size(238, 41),
+            TextAlign = ContentAlignment.MiddleCenter,
+            Text = "VS Mode",
+            Font = new Font("Courier New", 36f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.FromArgb(255, 255, 255),
+            Visible = false
+        };
+
+        private Label lbGameMenuStoryMode = new Label
+        {
+            AutoSize = false,
+            Location = new Point(964, 460),
+            Size = new Size(238, 41),
+            TextAlign = ContentAlignment.MiddleCenter,
+            Text = "Story Mode",
+            Font = new Font("Courier New", 36f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.FromArgb(128, 128, 128),
+            Visible = false
+        };
+
+        private Label lbGameMenuExitGame = new Label
+        {
+            AutoSize = false,
+            Location = new Point(964, 531),
+            Size = new Size(238, 41),
+            TextAlign = ContentAlignment.MiddleCenter,
+            Text = "Exit Game",
+            Font = new Font("Courier New", 36f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.FromArgb(255, 255, 255),
+            Visible = false
+        };
+        
+        private async void GameMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            Label lb = (Label)sender;
+            await TextEffect.TextColorTurnRedFromWhite(lb, 100, 10);
+        }
+
+        private async void GameMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            Label lb = (Label)sender;
+            await Task.Delay(100);
+            lb.ForeColor = Color.FromArgb(255, 255, 255);
+        }
+        
+        private async void GameMenuItem_VSMode_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // TODO: Start VS Mode
+                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                menuOpened = false;
+                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                lbPressToStartGame.Visible = true;
+                
+                closeGameMenu();
+            }
+        }
+        
+        private async void GameMenuItem_StoryMode_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                audioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                menuOpened = false;
+                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                lbPressToStartGame.Visible = true;
+                
+                closeGameMenu();
+            }
+        }
+        
+        private async void GameMenuItem_ExitGame_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                lbPressToStartGame.MouseClick -= HandleGameTitleBackGroundEvent;
+                lbCopyright.MouseClick -= HandleGameTitleBackGroundEvent;
+                vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
+                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                menuOpened = false;
+                closeGameMenu();
+                
+                await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+                await Task.Delay(500);
+                Application.Exit();
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                menuOpened = false;
+                closeGameMenu();
+                
+                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                lbPressToStartGame.Visible = true;
+            }
+        }
+
+        private async void openSaveDataMenu()
+        {
+        }
+        
+        private async void closeSaveDataMenu()
+        {
+        }
+
+        public async void Dispose()
+        {
+            lbPressToStartGameColorChangerTimer.Stop();
+            lbPressToStartGameColorChangerTimer.Dispose();
+            mediaPlayer.Stop();
+            mediaPlayer.Dispose();
+            libVLC.Dispose();
+            mGameTitleLoopBackground.Dispose();
+            
+            sourceForm.Controls.Remove(lbCopyright);
+            sourceForm.Controls.Remove(lbPressToStartGame);
+            sourceForm.Controls.Remove(lbGameMenuVSMode);
+            sourceForm.Controls.Remove(lbGameMenuStoryMode);
+            sourceForm.Controls.Remove(lbGameMenuExitGame);
+            sourceForm.Controls.Remove(vvGameTitleBackground);
         }
     }
 }

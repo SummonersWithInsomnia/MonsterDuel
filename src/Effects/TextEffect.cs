@@ -31,5 +31,25 @@ namespace MonsterDuel
 
             label.Text = "";
         }
+        
+        public static async Task TextColorTurnRedFromWhite(Label label, int duration, int step)
+        {
+            int waitTime = duration / step;
+            int r = 255;
+            int g = 255;
+            int b = 255;
+            // int rStep = r / step;
+            int gStep = g / step;
+            int bStep = b / step;
+            
+            for (int i = 0; i < step; i++)
+            {
+                // r -= rStep;
+                g -= gStep;
+                b -= bStep;
+                label.ForeColor = System.Drawing.Color.FromArgb(r, g, b);
+                await Task.Delay(waitTime);
+            }
+        }
     }
 }

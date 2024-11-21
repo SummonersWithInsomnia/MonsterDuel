@@ -176,6 +176,9 @@
     <Content Include="MonsterDuel_Data\se\no.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MonsterDuel_Data\se\not_available.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonsterDuel_Data\se\yes.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
