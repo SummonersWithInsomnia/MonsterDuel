@@ -288,8 +288,15 @@ namespace MonsterDuel
         {
             if (e.Button == MouseButtons.Left)
             {
-                // TODO: Start VS Mode
                 audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                
+                PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+                audioPlayer.StopBGM();
+                await Dispose();
+                sourceForm.Controls.Remove(pb);
+                
+                VSMode vsMode = new VSMode(sourceForm, audioPlayer);
+                await vsMode.Start();
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -342,15 +349,7 @@ namespace MonsterDuel
             }
         }
 
-        private async void openSaveDataMenu()
-        {
-        }
-        
-        private async void closeSaveDataMenu()
-        {
-        }
-
-        public async void Dispose()
+        public async Task Dispose()
         {
             lbPressToStartGameColorChangerTimer.Stop();
             lbPressToStartGameColorChangerTimer.Dispose();

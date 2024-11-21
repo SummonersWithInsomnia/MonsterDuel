@@ -24,6 +24,11 @@ namespace MonsterDuel
                 bgmPlayer.Play();
             }
         }
+        
+        public void StopBGM()
+        {
+            bgmPlayer.Stop();
+        }
 
         public void PlaySE(string sePath)
         {
