@@ -278,6 +278,7 @@ namespace MonsterDuel
             if (e.Button == MouseButtons.Left)
             {
                 audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                closeGameMenu();
                 
                 PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
                 audioPlayer.StopBGM();
