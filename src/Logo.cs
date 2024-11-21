@@ -34,12 +34,11 @@ namespace MonsterDuel
             await TextEffect.Typewriter(lbTeamName, teamName, tnDuration, tnStep);
             await Task.Delay(200);
             await TextEffect.Typewriter(lbPresent, present, pDuration, pStep);
-            
-            // Console.WriteLine("lbTeamName.Width: " + lbTeamName.Width);
-            // Console.WriteLine("lbTeamName.Height: " + lbTeamName.Height);
-            
             await Task.Delay(500);
             
+            // Get the sizes of the labels
+            // Console.WriteLine("lbTeamName.Width: " + lbTeamName.Width);
+            // Console.WriteLine("lbTeamName.Height: " + lbTeamName.Height);
             // Console.WriteLine("lbPresent.Width: " + lbPresent.Width);
             // Console.WriteLine("lbPresent.Height: " + lbPresent.Height);
             
@@ -54,18 +53,18 @@ namespace MonsterDuel
         private Label lbTeamName = new Label
         {
             AutoSize = true,
-            Location = new Point(472, 455),
+            Location = new Point(268, 280),
             Text = "",
-            Font = new Font("Courier New", 68f, FontStyle.Italic | FontStyle.Bold, GraphicsUnit.Pixel),
+            Font = new Font("Courier New", 52f, FontStyle.Italic | FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.White
         };
         
         private Label lbPresent = new Label
         {
             AutoSize = true,
-            Location = new Point(850, 585),
+            Location = new Point(543, 360),
             Text = "",
-            Font = new Font("Courier New", 46f, FontStyle.Bold, GraphicsUnit.Pixel),
+            Font = new Font("Courier New", 40f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.White
         };
     }

@@ -33,7 +33,7 @@ namespace MonsterDuel
 
         private async Task Start()
         {
-            await logo.Start();
+            // await logo.Start();
             await gameTitle.Start();
         }
     }

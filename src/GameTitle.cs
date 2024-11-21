@@ -45,7 +45,7 @@ namespace MonsterDuel
             libVLC = new LibVLC(options); 
             mediaPlayer = new MediaPlayer(libVLC);
             mediaPlayer.EnableMouseInput = false;
-            mGameTitleLoopBackground = new Media(libVLC, "data/video/title.mp4", FromType.FromPath);
+            mGameTitleLoopBackground = new Media(libVLC, "MonsterDuel_Data/video/title.mp4", FromType.FromPath);
             vvGameTitleBackground.MediaPlayer = mediaPlayer;
             
             // Loop range
@@ -74,8 +74,8 @@ namespace MonsterDuel
 
         public async Task Start()
         {
-            audioPlayer.PlayBGM("data/bgm/test2.mp3");
-            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "data/effect/scene/black.png", 500, 20);
+            audioPlayer.PlayBGM("MonsterDuel_Data/bgm/title.mp3");
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
             
             sourceForm.Controls.Add(lbStartGame);
             sourceForm.Controls.Add(lbCopyright);
@@ -99,10 +99,10 @@ namespace MonsterDuel
             // double loopVideoStartPoint = mediaPlayer.Position;
             // Console.WriteLine("loopVideoStartPoint: " + loopVideoStartPoint);
 
-            // Console.WriteLine("lbStartGame.Width: " + lbStartGame.Width);
-            // Console.WriteLine("lbStartGame.Height: " + lbStartGame.Height);
-            // Console.WriteLine("lbCopyright.Width: " + lbCopyright.Width);
-            // Console.WriteLine("lbCopyright.Height: " + lbCopyright.Height);
+            Console.WriteLine("lbStartGame.Width: " + lbStartGame.Width);
+            Console.WriteLine("lbStartGame.Height: " + lbStartGame.Height);
+            Console.WriteLine("lbCopyright.Width: " + lbCopyright.Width);
+            Console.WriteLine("lbCopyright.Height: " + lbCopyright.Height);
         }
 
         public async Task Stop()
@@ -120,18 +120,16 @@ namespace MonsterDuel
 
         private VideoView vvGameTitleBackground = new VideoView
         {
-            Size = new Size(1920, 1080),
-            Location = new Point(0, 0),
-            // BackColor = Color.Black
-            // Only for WPF
+            Size = new Size(1280, 720),
+            Location = new Point(0, 0)
         };
         
         private Label lbCopyright = new Label
         {
             AutoSize = true,
-            Location = new Point(713, 997),
+            Location = new Point(421, 651),
             Text = "\u00a9 2024 Summoners with Insomnia",
-            Font = new Font("Courier New", 26f, FontStyle.Bold, GraphicsUnit.Pixel),
+            Font = new Font("Courier New", 24f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.White,
             Visible = true
         };
@@ -139,9 +137,9 @@ namespace MonsterDuel
         private Label lbStartGame = new Label
         {
             AutoSize = true,
-            Location = new Point(782, 756),
+            Location = new Point(474, 460),
             Text = "Press to Start",
-            Font = new Font("Courier New", 40f, FontStyle.Bold, GraphicsUnit.Pixel),
+            Font = new Font("Courier New", 36f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.FromArgb(255, 255, 255),
             Visible = true
         };

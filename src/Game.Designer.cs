@@ -37,12 +37,12 @@ namespace MonsterDuel
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1920, 1080);
+            this.ClientSize = new System.Drawing.Size(1280, 720);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1926, 1115);
-            this.MinimumSize = new System.Drawing.Size(1926, 1115);
+            this.MaximumSize = new System.Drawing.Size(1286, 755);
+            this.MinimumSize = new System.Drawing.Size(1286, 755);
             this.Name = "Game";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
