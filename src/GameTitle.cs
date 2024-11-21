@@ -88,7 +88,7 @@ namespace MonsterDuel
             
             mediaPlayer.Play(mGameTitleLoopBackground);
             
-            SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+            await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
             
             await Task.Delay(2700);
             
@@ -120,8 +120,8 @@ namespace MonsterDuel
             // Console.WriteLine("lbCopyright.Width: " + lbCopyright.Width);
             // Console.WriteLine("lbCopyright.Height: " + lbCopyright.Height);
             
-            Console.WriteLine("lbGameMenuStoryMode.Width: " + lbGameMenuStoryMode.Width);
-            Console.WriteLine("lbGameMenuStoryMode.Height: " + lbGameMenuStoryMode.Height);
+            // Console.WriteLine("lbGameMenuStoryMode.Width: " + lbGameMenuStoryMode.Width);
+            // Console.WriteLine("lbGameMenuStoryMode.Height: " + lbGameMenuStoryMode.Height);
         }
 
         private VideoView vvGameTitleBackground = new VideoView
@@ -295,7 +295,7 @@ namespace MonsterDuel
                 PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
                 audioPlayer.StopBGM();
                 await Dispose();
-                sourceForm.Controls.Remove(pb);
+                await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
                 
                 VSMode vsMode = new VSMode(sourceForm, audioPlayer);
                 await vsMode.Start();
@@ -334,8 +334,11 @@ namespace MonsterDuel
                 audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 closeGameMenu();
                 
-                await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
-                await Task.Delay(500);
+                PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+                audioPlayer.StopBGM();
+                await Dispose();
+                await SceneEffect.CutOutFromLeft(sourceForm, pb, 500, 20);
+                
                 Application.Exit();
             }
             else if (e.Button == MouseButtons.Right)
