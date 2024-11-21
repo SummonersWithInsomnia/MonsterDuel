@@ -194,7 +194,6 @@ namespace MonsterDuel
         {
             if (args.Button == MouseButtons.Left && menuOpened == false)
             {
-                menuOpened = true;
                 audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 lbPressToStartGame.Visible = false;
                 
@@ -202,7 +201,6 @@ namespace MonsterDuel
             }
             else if (args.Button == MouseButtons.Right && menuOpened == true)
             {
-                menuOpened = false;
                 audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
                 
@@ -213,6 +211,8 @@ namespace MonsterDuel
 
         private async void openGameMenu()
         {
+            menuOpened = true;
+            
             lbPressToStartGame.MouseClick -= HandleGameTitleBackGroundEvent;
             lbCopyright.MouseClick -= HandleGameTitleBackGroundEvent;
             vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
@@ -230,6 +230,8 @@ namespace MonsterDuel
 
         private void closeGameMenu()
         {
+            menuOpened = false;
+            
             lbGameMenuVSMode.Visible = false;
             lbGameMenuStoryMode.Visible = false;
             lbGameMenuExitGame.Visible = false;
@@ -300,7 +302,6 @@ namespace MonsterDuel
             }
             else if (e.Button == MouseButtons.Right)
             {
-                menuOpened = false;
                 audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
                 
@@ -316,7 +317,6 @@ namespace MonsterDuel
             }
             else if (e.Button == MouseButtons.Right)
             {
-                menuOpened = false;
                 audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
                 
@@ -332,7 +332,6 @@ namespace MonsterDuel
                 lbCopyright.MouseClick -= HandleGameTitleBackGroundEvent;
                 vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
                 audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
-                menuOpened = false;
                 closeGameMenu();
                 
                 await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
@@ -341,7 +340,6 @@ namespace MonsterDuel
             }
             else if (e.Button == MouseButtons.Right)
             {
-                menuOpened = false;
                 closeGameMenu();
                 
                 audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
