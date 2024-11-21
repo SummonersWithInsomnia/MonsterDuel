@@ -46,7 +46,7 @@ namespace MonsterDuel
             // Loop range
             mediaPlayer.PositionChanged += (sender, e) =>
             {
-                if (mediaPlayer.Position > 0.396869f)
+                if (mediaPlayer.Position > 0.3968697821f)
                 {
                     mediaPlayer.Position = 0.0f;
                 }
