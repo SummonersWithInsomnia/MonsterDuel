@@ -16,7 +16,6 @@ namespace MonsterDuel
     {
         public AudioPlayer audioPlayer;
         private Logo logo;
-        private GameTitle gameTitle;
         
         public Game()
         {
@@ -25,8 +24,7 @@ namespace MonsterDuel
             audioPlayer = new AudioPlayer();
             Core.Initialize(); // LibVLC
             
-            logo = new Logo(this);
-            gameTitle = new GameTitle(this, audioPlayer);
+            logo = new Logo(this, audioPlayer);
 
             Start();
         }
@@ -34,7 +32,6 @@ namespace MonsterDuel
         private async Task Start()
         {
             await logo.Start();
-            await gameTitle.Start();
         }
     }
 }
