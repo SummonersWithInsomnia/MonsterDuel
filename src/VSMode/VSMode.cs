@@ -16,11 +16,36 @@ namespace MonsterDuel
         private LibVLC libVLC;
         private MediaPlayer mediaPlayer;
         private Media mLoopBackground;
+
+        private int selectedMonsterCounter;
+        private Dictionary<string, bool> selectedMonsters;
+        private Dictionary<string, Monster> availableMonsters;
+
+        private MonsterDetailCard monsterDetailCard;
         
         public VSMode(Form source, AudioPlayer player)
         {
             sourceForm = source;
             audioPlayer = player;
+
+
+            selectedMonsterCounter = 0;
+            selectedMonsters = new Dictionary<string, bool>();
+            availableMonsters = new Dictionary<string, Monster>();
+            
+            MonsterList.Init();
+            foreach (var item in MonsterList.All)
+            {
+                if (item.Value.Available)
+                {
+                    selectedMonsters.Add(item.Key, false);
+                    availableMonsters.Add(item.Key, item.Value);
+                }
+            }
+
+            monsterDetailCard = new MonsterDetailCard(this);
+            monsterDetailCard.Location = new Point(0, 50);
+            monsterDetailCard.Visible = false;
         }
         
         public async Task Start()
@@ -48,7 +73,7 @@ namespace MonsterDuel
             {
                 if (mediaPlayer.Position > 0.88f)
                 {
-                    mediaPlayer.Position = 0.0f;
+                    mediaPlayer.Position = 0.01f;
                 }
             };
             
@@ -61,8 +86,42 @@ namespace MonsterDuel
             
             
             // Topmost of layer
-            sourceForm.Controls.Add(lbTitle);
+            //sourceForm.Controls.Add(pbMessageBox);
             
+            sourceForm.Controls.Add(monsterDetailCard);
+
+            const int xStart = 32;
+            const int yStart = 100;
+            const int xGap = 32;
+            const int yGap = 24;
+
+            int xIndex = xStart;
+            int yIndex = yStart;
+            int col = 0;
+            int row = 0;
+            
+            foreach (var item in availableMonsters)
+            {
+                MonsterMiniCard mmc = new MonsterMiniCard(this, item.Value);
+                mmc.Location = new Point(xIndex, yIndex);
+                
+                xIndex += mmc.Size.Width + xGap;
+                col++;
+                if (col > 3)
+                {
+                    xIndex = xStart;
+
+                    yIndex += yGap;
+                    row++;
+                }
+                
+                sourceForm.Controls.Add(mmc);
+            }
+            
+            sourceForm.Controls.Add(lbTitle);
+            sourceForm.Controls.Add(lbInstruction);
+            sourceForm.Controls.Add(lbNumberOfSelectedMonsters);
+            sourceForm.Controls.Add(lbNext);
             sourceForm.Controls.Add(vvBackground);
             // Bottommost of layer
             
@@ -71,9 +130,17 @@ namespace MonsterDuel
             await Task.Delay(6000);
             
             await SceneEffect.CuttingOutLikeOpeningDoor(sourceForm, pbList, 50, 2);
-            
+
+            lbNext.MouseClick += lbNext_MouseClick;
+
             // Console.WriteLine("lbTitle.Width: " + lbTitle.Width);
             // Console.WriteLine("lbTitle.Height: " + lbTitle.Height);
+            // Console.WriteLine("lbInstruction.Width: " + lbInstruction.Width);
+            // Console.WriteLine("lbInstruction.Height: " + lbInstruction.Height);
+            // Console.WriteLine("lbNumberOfSelectedMonsters.Width: " + lbNumberOfSelectedMonsters.Width);
+            // Console.WriteLine("lbNumberOfSelectedMonsters.Height: " + lbNumberOfSelectedMonsters.Height);
+            // Console.WriteLine("lbNext.Width: " + lbNext.Width);
+            // Console.WriteLine("lbNext.Height: " + lbNext.Height);
         }
         
         private VideoView vvBackground = new VideoView
@@ -85,10 +152,107 @@ namespace MonsterDuel
         private Label lbTitle = new Label
         {
             AutoSize = true,
-            Location = new Point(103, 595),
-            Text = "VS Mode",
+            Location = new Point(30, 30),
+            Text = "Select Your Monsters",
             Font = new Font("Courier New", 52f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.White
+        };
+        
+        private Label lbInstruction = new Label
+        {
+            AutoSize = true,
+            Location = new Point(30, 633),
+            Text = "Left Click: Select or Unselect Monster\nRight Click: Check Details of Monster",
+            Font = new Font("Courier New", 24f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.White
+        };
+        
+        private Label lbNumberOfSelectedMonsters = new Label
+        {
+            AutoSize = true,
+            Location = new Point(750, 633),
+            Text = "0 / 6",
+            Font = new Font("Courier New", 52f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.White
+        };
+        
+        private Label lbNext = new Label
+        {
+            AutoSize = true,
+            Location = new Point(1050, 633),
+            Text = "Next",
+            Font = new Font("Courier New", 52f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.FromArgb(128, 128, 128)
+        };
+
+        private void lbNext_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && selectedMonsterCounter == 6)
+            {
+                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            }
+            else
+            {
+                audioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+            }
+        }
+
+        public void AddMonster(Monster monster)
+        {
+            if (selectedMonsterCounter == 6)
+            {
+                audioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+                return;
+            }
+            
+            audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            selectedMonsterCounter++;
+            selectedMonsters[monster.Name] = true;
+            
+            updateLbNumberOfSelectedMonsters();
+        }
+
+        public void RemoveMonster(Monster monster)
+        {
+            audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            selectedMonsterCounter--;
+            selectedMonsters[monster.Name] = false;
+            updateLbNumberOfSelectedMonsters();
+        }
+
+        private void updateLbNumberOfSelectedMonsters()
+        {
+            if (selectedMonsterCounter == 6)
+            {
+                lbNext.ForeColor = Color.White;
+            }
+            else
+            {
+                lbNext.ForeColor = Color.FromArgb(128, 128, 128);
+            }
+            
+            lbNumberOfSelectedMonsters.Text = selectedMonsterCounter + " / 6";
+        }
+
+        public void ShowDetailsOfMonster(Monster monster)
+        {
+            lbNext.MouseClick -= lbNext_MouseClick;
+            audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            monsterDetailCard.Show(monster);
+        }
+
+        public void CloseDetailsOfMonster()
+        {
+            audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+            lbNext.MouseClick += lbNext_MouseClick;
+        }
+
+        private PictureBox pbMessageBox = new PictureBox
+        {
+            Size = new Size(1280, 480),
+            Location = new Point(0, 120),
+            BackColor = Color.Black,
+            BorderStyle = BorderStyle.None
         };
     }
 }

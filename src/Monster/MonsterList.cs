@@ -4,6 +4,7 @@ namespace MonsterDuel
 {
     public static class MonsterList
     {
+        // Maximum: 16 monsters
         public static Dictionary<string, Monster> All = new Dictionary<string, Monster>();
 
         public static void Init()
