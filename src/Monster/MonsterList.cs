@@ -46,8 +46,60 @@ namespace MonsterDuel
                     }
                 }
             });
-            
-            
+
+            All.Add("Jin", new Monster
+            {
+                Name = "Jin",
+                Health = 600,
+                Attack = 180,
+                Defense = 150,
+                Speed = 150,
+                Element = "Warrior",
+                Available = true,
+                IconPath = "MonsterDuel_Data/monsters/icons/Jin.png",
+                FrontImagePath = "MonsterDuel_Data/monsters/Jin_front.png",
+                BackImagePath = "MonsterDuel_Data/monsters/Jin_back.png",
+                Skills = new Dictionary<string, ISkill>
+                {
+                    {
+                        "Quick Jab", new AttackSkill
+                        {
+                            Name = "Quick Jab",
+                            Description = "Cause the enemy damage and hits twice.",
+                            HitRate = 100, Limit = 30, Element = "Normal", Damage = 20
+                        },
+                          "Barrier Break", new AttackSkill
+                        {
+                            Name = "Barrier Break",
+                            Description = "Cause the enemy damage and breaks any shield on the target .",
+                            HitRate = 100, Limit = 30, Element = "Normal", Damage = 20
+                        }
+                       
+                    },
+                    {
+                        "Meditate", new BuffSkill
+                        {
+                            Name = "Meditate",
+                            Description =
+                                "Restores HP to the user.",
+                            HitRate = 100, Limit = 30, Element = "Normal", Buffs =
+                            {
+                                new Buff { Name = "Jin Heal", Duration = 1, Property = "Heal", Value = 250 },
+                            }
+                        },
+                         "Deflection", new BuffSkill
+                        {   
+                            Name = "Deflection",
+                            Description =
+                                "Reduces incoming damage.",
+                            HitRate = 100, Limit = 30, Element = "Normal", Buffs =
+                            {                
+                                new Buff { Name = "Jin Defense", Duration = 2, Property = "Defense", Value = 25% * Health }
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 }
