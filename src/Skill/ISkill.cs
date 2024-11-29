@@ -9,6 +9,6 @@ namespace MonsterDuel
         int Limit { get; set; }
         int HitRate { get; set; }
         String Element { get; set; }
-        String Type { get; set; }
+        String Type { get; }
     }
 }

@@ -7,7 +7,7 @@
         public int Limit { get; set; }
         public int HitRate { get; set; }
         public string Element { get; set; }
-        public string Type { get; set; } = "Healing";
+        public string Type { get; } = "Healing";
         public int Heal { get; set; }
     }
 }
