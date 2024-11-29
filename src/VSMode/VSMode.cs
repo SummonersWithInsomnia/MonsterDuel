@@ -214,7 +214,7 @@ namespace MonsterDuel
 
         public void RemoveMonster(Monster monster)
         {
-            audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
             selectedMonsterCounter--;
             selectedMonsters[monster.Name] = false;
             updateLbNumberOfSelectedMonsters();
