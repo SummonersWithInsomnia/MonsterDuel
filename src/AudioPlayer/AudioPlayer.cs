@@ -21,6 +21,7 @@ namespace MonsterDuel
             if (bgmPlayer.PlaybackState != PlaybackState.Playing)
             {
                 bgmPlayer.Init(loopWaveStream);
+                bgmPlayer.Volume = 1.0f;
                 bgmPlayer.Play();
             }
         }
@@ -34,6 +35,7 @@ namespace MonsterDuel
         {
             sePlayer = new WaveOutEvent();
             seReader = new AudioFileReader(sePath);
+            sePlayer.Volume = 1.0f;
             sePlayer.Init(seReader);
             sePlayer.Play();
         }
