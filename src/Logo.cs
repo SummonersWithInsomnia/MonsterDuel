@@ -10,12 +10,10 @@ namespace MonsterDuel
     public class Logo
     {
         private Form sourceForm;
-        private AudioPlayer audioPlayer;
 
-        public Logo(Form source, AudioPlayer player)
+        public Logo(Form source)
         {
             sourceForm = source;
-            audioPlayer = player;
         }
 
         public async Task Start()
@@ -51,7 +49,7 @@ namespace MonsterDuel
             sourceForm.Controls.Remove(lbTeamName);
             sourceForm.Controls.Remove(lbPresent);
             
-            GameTitle gameTitle = new GameTitle(sourceForm, audioPlayer);
+            GameTitle gameTitle = new GameTitle(sourceForm);
             await gameTitle.Start();
         }
         

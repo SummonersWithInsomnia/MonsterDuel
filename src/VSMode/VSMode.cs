@@ -11,7 +11,6 @@ namespace MonsterDuel
     public class VSMode
     {
         private Form sourceForm;
-        public AudioPlayer AudioPlayer;
         
         private LibVLC libVLC;
         private MediaPlayer mediaPlayer;
@@ -23,11 +22,9 @@ namespace MonsterDuel
 
         private MonsterDetailCard monsterDetailCard;
         
-        public VSMode(Form source, AudioPlayer player)
+        public VSMode(Form source)
         {
             sourceForm = source;
-            AudioPlayer = player;
-
 
             SelectedMonsterCounter = 0;
             selectedMonsters = new Dictionary<string, bool>();

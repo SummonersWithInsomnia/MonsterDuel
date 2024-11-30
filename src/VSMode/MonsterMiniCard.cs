@@ -55,7 +55,7 @@ namespace MonsterDuel
                 }
                 else
                 {
-                    vsMode.AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+                    AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
                 }
             }
             else if (e.Button == MouseButtons.Right)

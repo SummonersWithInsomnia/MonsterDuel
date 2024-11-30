@@ -11,7 +11,6 @@ namespace MonsterDuel
     public class GameTitle
     {
         private Form sourceForm;
-        private AudioPlayer audioPlayer;
         
         private LibVLC libVLC;
         private MediaPlayer mediaPlayer;
@@ -21,10 +20,9 @@ namespace MonsterDuel
         private Timer lbPressToStartGameColorChangerTimer;
         private bool increaseColorRGB;
 
-        public GameTitle(Form source, AudioPlayer player)
+        public GameTitle(Form source)
         {
             sourceForm = source;
-            audioPlayer = player;
         }
 
         private void OnPlaying(object source, EventArgs args)
@@ -72,7 +70,7 @@ namespace MonsterDuel
             // https://code.videolan.org/videolan/LibVLCSharp/-/issues/323
             mediaPlayer.Playing += OnPlaying;
             
-            audioPlayer.PlayBGM("MonsterDuel_Data/bgm/title.mp3");
+            AudioPlayer.PlayBGM("MonsterDuel_Data/bgm/title.mp3");
             PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
             
             // Topmost of layer
@@ -194,14 +192,14 @@ namespace MonsterDuel
         {
             if (args.Button == MouseButtons.Left && menuOpened == false)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 lbPressToStartGame.Visible = false;
                 
                 openGameMenu();
             }
             else if (args.Button == MouseButtons.Right && menuOpened == true)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
                 
                 closeGameMenu();
@@ -277,20 +275,20 @@ namespace MonsterDuel
         {
             if (e.Button == MouseButtons.Left)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 closeGameMenu();
                 
                 PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
-                audioPlayer.StopBGM();
+                AudioPlayer.StopBGM();
                 await Dispose();
                 await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
                 
-                VSMode vsMode = new VSMode(sourceForm, audioPlayer);
+                VSMode vsMode = new VSMode(sourceForm);
                 await vsMode.Start();
             }
             else if (e.Button == MouseButtons.Right)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
                 
                 closeGameMenu();
@@ -301,11 +299,11 @@ namespace MonsterDuel
         {
             if (e.Button == MouseButtons.Left)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
             }
             else if (e.Button == MouseButtons.Right)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
                 
                 closeGameMenu();
@@ -319,11 +317,11 @@ namespace MonsterDuel
                 lbPressToStartGame.MouseClick -= HandleGameTitleBackGroundEvent;
                 lbCopyright.MouseClick -= HandleGameTitleBackGroundEvent;
                 vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
-                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 closeGameMenu();
                 
                 PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
-                audioPlayer.StopBGM();
+                AudioPlayer.StopBGM();
                 await Dispose();
                 await SceneEffect.CutOutFromLeft(sourceForm, pb, 500, 20);
                 
@@ -333,7 +331,7 @@ namespace MonsterDuel
             {
                 closeGameMenu();
                 
-                audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
             }
         }

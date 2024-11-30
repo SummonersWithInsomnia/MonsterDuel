@@ -14,17 +14,15 @@ namespace MonsterDuel
 {
     public partial class Game : Form
     {
-        public AudioPlayer audioPlayer;
         private Logo logo;
         
         public Game()
         {
             // Init
             InitializeComponent();
-            audioPlayer = new AudioPlayer();
             Core.Initialize(); // LibVLC
             
-            logo = new Logo(this, audioPlayer);
+            logo = new Logo(this);
 
             Start();
         }

@@ -2,19 +2,14 @@
 
 namespace MonsterDuel
 {
-    public class AudioPlayer
+    public static class AudioPlayer
     {
-        private WaveOutEvent bgmPlayer;
-        private WaveOutEvent sePlayer;
-        private AudioFileReader bgmReader;
-        private AudioFileReader seReader;
-
-        public AudioPlayer()
-        {
-            bgmPlayer = new WaveOutEvent();
-        }
-
-        public void PlayBGM(string bgmPath)
+        private static WaveOutEvent bgmPlayer = new WaveOutEvent();
+        private static WaveOutEvent sePlayer;
+        private static AudioFileReader bgmReader;
+        private static AudioFileReader seReader;
+        
+        public static void PlayBGM(string bgmPath)
         {
             bgmReader = new AudioFileReader(bgmPath);
             var loopWaveStream = new LoopWaveStream(bgmReader);
@@ -26,12 +21,12 @@ namespace MonsterDuel
             }
         }
         
-        public void StopBGM()
+        public static void StopBGM()
         {
             bgmPlayer.Stop();
         }
 
-        public void PlaySE(string sePath)
+        public static void PlaySE(string sePath)
         {
             sePlayer = new WaveOutEvent();
             seReader = new AudioFileReader(sePath);
