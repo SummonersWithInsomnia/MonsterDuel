@@ -5,8 +5,8 @@ namespace MonsterDuel.Battle
 {
     public class Battle
     {
-        public List<IPlayer> LeftPlayers { get; set; }
-        public List<IPlayer> RightPlayers { get; set; }
+        public IPlayer LeftPlayer { get; set; }
+        public IPlayer RightPlayer { get; set; }
         
         public BattleMap BattleMap { get; set; }
     }
