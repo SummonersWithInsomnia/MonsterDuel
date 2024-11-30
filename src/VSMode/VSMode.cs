@@ -30,7 +30,10 @@ namespace MonsterDuel
         
         private Dictionary<string, int> fightingMonsters;
         
-        
+        // Opponent
+        private Dictionary<string, bool> opponentSelectedMonsters;
+        private Dictionary<int, string> opponentSelectedMonsterIndex;
+        private List<OpponentMonsterMiniCard> opponentSelectedMonsterMiniCards;
         
         public VSMode(Form source)
         {
@@ -101,12 +104,59 @@ namespace MonsterDuel
                 "MonsterDuel_Data/effect/scene/vs_left.png", 
                 "MonsterDuel_Data/effect/scene/vs_right.png", 50, 5);
             
-            
             // Topmost of layer
             confirmSixMonstersWarningMessageBox.Visible = true;
             sourceForm.Controls.Add(confirmSixMonstersWarningMessageBox);
             
             sourceForm.Controls.Add(monsterDetailCard);
+            
+            // Start of Team Configuration
+            
+            opponentSelectedMonsters = new Dictionary<string, bool>();
+            opponentSelectedMonsterIndex = new Dictionary<int, string>();
+            int monsterIndex = 0;
+            foreach (var item in MonsterList.All)
+            {
+                opponentSelectedMonsters.Add(item.Key, false);
+                opponentSelectedMonsterIndex.Add(monsterIndex, item.Key);
+                monsterIndex++;
+            }
+            
+            int opponentSelectedMonsterCounter = 0;
+            while (opponentSelectedMonsterCounter < 6)
+            {
+                Random random = new Random();
+                int index = random.Next(0, opponentSelectedMonsterIndex.Count);
+                if (opponentSelectedMonsters[opponentSelectedMonsterIndex[index]])
+                {
+                    continue;
+                }
+                
+                opponentSelectedMonsters[opponentSelectedMonsterIndex[index]] = true;
+                opponentSelectedMonsterCounter++;
+            }
+            
+            opponentSelectedMonsterMiniCards = new List<OpponentMonsterMiniCard>();
+            
+            int opponentMonsterMiniCardGapY = 5;
+            int opponentMonsterMiniCardX = 1000 - 10;
+            int opponentMonsterMiniCardY = 77 + 5;
+            
+            foreach (var item in opponentSelectedMonsters)
+            {
+                if (item.Value)
+                {
+                    OpponentMonsterMiniCard omc = new OpponentMonsterMiniCard(this, MonsterList.All[item.Key]);
+                    omc.Location = new Point(opponentMonsterMiniCardX, opponentMonsterMiniCardY);
+                    opponentMonsterMiniCardY += 80 + opponentMonsterMiniCardGapY;
+                    
+                    sourceForm.Controls.Add(omc);
+                    opponentSelectedMonsterMiniCards.Add(omc);
+                    omc.Visible = false;
+                }
+            }
+            
+            // End of Team Configuration
 
             const int xStart = 32;
             const int yStart = 100;
@@ -143,10 +193,14 @@ namespace MonsterDuel
             sourceForm.Controls.Add(lbNumberOfSelectedMonsters);
             sourceForm.Controls.Add(lbNext);
             sourceForm.Controls.Add(lbNumberOfFightingMonsters);
+            
+            sourceForm.Controls.Add(lbOpponentTeam);
+            
             sourceForm.Controls.Add(lbStart);
             sourceForm.Controls.Add(vvBackground);
             // Bottommost of layer
             
+            lbOpponentTeam.Visible = false;
             lbNumberOfFightingMonsters.Visible = false;
             lbStart.Visible = false;
             
@@ -229,6 +283,15 @@ namespace MonsterDuel
             Text = "Start",
             Font = new Font("Courier New", 52f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.FromArgb(128, 128, 128)
+        };
+        
+        private Label lbOpponentTeam = new Label
+        {
+            AutoSize = true,
+            Location = new Point(1000, 50),
+            Text = "Opponent Team",
+            Font = new Font("Courier New", 24f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.White
         };
 
         private void lbNext_MouseClick(object sender, MouseEventArgs e)
@@ -326,6 +389,7 @@ namespace MonsterDuel
             sourceForm.Controls.Remove(lbNext);
             
             lbTitle.Text = "Team Configuration";
+            lbOpponentTeam.Visible = true;
             lbNumberOfFightingMonsters.Visible = true;
             lbStart.Visible = true;
             
@@ -334,9 +398,17 @@ namespace MonsterDuel
             {
                 if (item.Value)
                 {
-                    fightingMonsters.Add(item.Key, 0);
+                    fightingMonsters.Add(item.Key, -1);
                 }
             }
+
+            foreach (var omc in opponentSelectedMonsterMiniCards)
+            {
+                omc.Visible = true;
+            }
+            
+            Console.WriteLine("lbOpponentTeam.Width: " + lbOpponentTeam.Width);
+            Console.WriteLine("lbOpponentTeam.Height: " + lbOpponentTeam.Height);
             
             await Task.Delay(1000);
             
