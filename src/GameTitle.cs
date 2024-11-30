@@ -26,8 +26,6 @@ namespace MonsterDuel
         public GameTitle(Form source)
         {
             sourceForm = source;
-            
-            exitGameWarningMessageBox = new WarningMessageBox(sourceForm);
         }
 
         private void OnPlaying(object source, EventArgs args)
@@ -40,6 +38,8 @@ namespace MonsterDuel
 
         public async Task Start()
         {
+            exitGameWarningMessageBox = new WarningMessageBox(sourceForm);
+            
             lbPressToStartGameColorChangerTimer = new Timer();
             lbPressToStartGameColorChangerTimer.Interval = 50;
             lbPressToStartGameColorChangerTimer.Tick += lbPressToStartGameColorChangerTimerTick;
