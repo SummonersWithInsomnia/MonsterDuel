@@ -14,6 +14,7 @@ namespace MonsterDuel
             InitializeComponent();
 
             this.vsMode = vsMode;
+            Visible = false;
         }
 
         public async void Show(Monster monster)

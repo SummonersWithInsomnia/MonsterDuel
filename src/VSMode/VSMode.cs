@@ -43,7 +43,6 @@ namespace MonsterDuel
             }
 
             monsterDetailCard = new MonsterDetailCard(this);
-            monsterDetailCard.Visible = false;
         }
         
         public async Task Start()
