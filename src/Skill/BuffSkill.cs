@@ -11,6 +11,6 @@ namespace MonsterDuel
         public string Element { get; set; }
         public string Type { get; } = "Buff";
 
-        public List<Buff> Buffs { get; set; } = new List<Buff>();
+        public List<Buff> Buffs { get; set; }
     }
 }

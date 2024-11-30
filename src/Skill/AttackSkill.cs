@@ -9,5 +9,6 @@
         public string Element { get; set; }
         public string Type { get; } = "Attack";
         public int Damage { get; set; }
+        public bool MultipleTargets { get; set;  } = false;
     }
 }
