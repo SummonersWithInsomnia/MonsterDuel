@@ -130,6 +130,8 @@
     <Compile Include="src\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="src\AudioPlayer\LoopWaveStream.cs" />
     <Compile Include="src\Battle\Battle.cs" />
+    <Compile Include="src\Battle\BattleController.cs" />
+    <Compile Include="src\Battle\BattleMap.cs" />
     <Compile Include="src\Effects\SceneEffect.cs" />
     <Compile Include="src\Effects\TextEffect.cs" />
     <Compile Include="src\Game.cs">
@@ -144,7 +146,9 @@
     <Compile Include="src\Monster\MonsterList.cs" />
     <Compile Include="src\Particle\Particle.cs" />
     <Compile Include="src\Particle\ParticleSender.cs" />
+    <Compile Include="src\Player\AI.cs" />
     <Compile Include="src\Player\IPlayer.cs" />
+    <Compile Include="src\Player\Player.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Skill\AttackAndBuffSkill.cs" />

@@ -10,13 +10,13 @@ namespace MonsterDuel
         public int Attack { get; set; }
         public int Defense { get; set; }
         public int Speed { get; set; }
-        public String Description { get; set; }
-        public String Element { get; set; }
+        public string Description { get; set; }
+        public string Element { get; set; }
         public List<Buff> Buffs { get; set; }
         public bool Available { get; set; }
-        public String IconPath { get; set; }
-        public String FrontImagePath { get; set; }
-        public String BackImagePath { get; set; }
+        public string IconPath { get; set; }
+        public string FrontImagePath { get; set; }
+        public string BackImagePath { get; set; }
         public Dictionary<string, ISkill> Skills { get; set; }
     }
 }

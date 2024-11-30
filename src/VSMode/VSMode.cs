@@ -28,6 +28,10 @@ namespace MonsterDuel
         private Timer confirmSixMonstersMarkCheckerTimer;
         private bool isConfirmSixMonstersWarningMessageBoxOpen;
         
+        private Dictionary<string, int> fightingMonsters;
+        
+        
+        
         public VSMode(Form source)
         {
             sourceForm = source;
@@ -324,6 +328,15 @@ namespace MonsterDuel
             lbTitle.Text = "Team Configuration";
             lbNumberOfFightingMonsters.Visible = true;
             lbStart.Visible = true;
+            
+            fightingMonsters = new Dictionary<string, int>();
+            foreach (var item in selectedMonsters)
+            {
+                if (item.Value)
+                {
+                    fightingMonsters.Add(item.Key, 0);
+                }
+            }
             
             await Task.Delay(1000);
             
