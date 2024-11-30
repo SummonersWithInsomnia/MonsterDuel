@@ -26,6 +26,7 @@ namespace MonsterDuel
         
         private WarningMessageBox confirmSixMonstersWarningMessageBox;
         private Timer confirmSixMonstersMarkCheckerTimer;
+        private bool isConfirmSixMonstersWarningMessageBoxOpen;
         
         public VSMode(Form source)
         {
@@ -35,6 +36,7 @@ namespace MonsterDuel
             confirmSixMonstersMarkCheckerTimer = new Timer();
             confirmSixMonstersMarkCheckerTimer.Interval = 50;
             confirmSixMonstersMarkCheckerTimer.Tick += confirmSixMonstersMarkCheckerTimerTick;
+            isConfirmSixMonstersWarningMessageBoxOpen = false;
 
             SelectedMonsterCounter = 0;
             selectedMonsters = new Dictionary<string, bool>();
@@ -231,6 +233,8 @@ namespace MonsterDuel
             {
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 confirmSixMonstersWarningMessageBox.Show("Are you sure to confirm these six monsters?\nAfter you confirm, you cannot go back to this page.", "Confirm");
+                isConfirmSixMonstersWarningMessageBoxOpen = true;
+                lbNext.MouseClick -= lbNext_MouseClick;
             }
             else
             {
@@ -290,6 +294,12 @@ namespace MonsterDuel
 
         private async void confirmSixMonstersMarkCheckerTimerTick(object sender, EventArgs e)
         {
+            if (confirmSixMonstersWarningMessageBox.Visible == false && isConfirmSixMonstersWarningMessageBoxOpen)
+            {
+                isConfirmSixMonstersWarningMessageBoxOpen = false;
+                lbNext.MouseClick += lbNext_MouseClick;
+            }
+            
             if (confirmSixMonstersWarningMessageBox.Result)
             {
                 confirmSixMonstersMarkCheckerTimer.Stop();
