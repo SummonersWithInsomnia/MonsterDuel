@@ -110,6 +110,7 @@ namespace MonsterDuel
             this.Controls.Add(this.lbSkills);
             this.Controls.Add(this.lbAttributes);
             this.Controls.Add(this.lbMonsterName);
+            this.Location = new System.Drawing.Point(0, 50);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "MonsterDetailCard";
             this.Size = new System.Drawing.Size(1280, 620);

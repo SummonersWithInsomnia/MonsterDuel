@@ -22,6 +22,8 @@ namespace MonsterDuel
 
         private MonsterDetailCard monsterDetailCard;
         
+        private List<MonsterMiniCard> monsterMiniCards = new List<MonsterMiniCard>();
+        
         public VSMode(Form source)
         {
             sourceForm = source;
@@ -41,7 +43,6 @@ namespace MonsterDuel
             }
 
             monsterDetailCard = new MonsterDetailCard(this);
-            monsterDetailCard.Location = new Point(0, 50);
             monsterDetailCard.Visible = false;
         }
         
@@ -83,7 +84,6 @@ namespace MonsterDuel
             
             
             // Topmost of layer
-            //sourceForm.Controls.Add(pbMessageBox);
             
             sourceForm.Controls.Add(monsterDetailCard);
 
@@ -114,6 +114,7 @@ namespace MonsterDuel
                 }
                 
                 sourceForm.Controls.Add(mmc);
+                monsterMiniCards.Add(mmc);
             }
             
             sourceForm.Controls.Add(lbTitle);
@@ -244,13 +245,5 @@ namespace MonsterDuel
             AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
             lbNext.MouseClick += lbNext_MouseClick;
         }
-
-        private PictureBox pbMessageBox = new PictureBox
-        {
-            Size = new Size(1280, 480),
-            Location = new Point(0, 120),
-            BackColor = Color.Black,
-            BorderStyle = BorderStyle.None
-        };
     }
 }
