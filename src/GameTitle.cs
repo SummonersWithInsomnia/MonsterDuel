@@ -61,6 +61,10 @@ namespace MonsterDuel
                 //"--mouse-events"
             };
             libVLC = new LibVLC(options); 
+            
+            // https://videolan.videolan.me/vlc/group__libvlc__core.html#gaa3f8e90ec55de9bb63408c6c3680fb2e
+            libVLC.SetUserAgent("Monster Duel", "Monster Duel");
+            
             mediaPlayer = new MediaPlayer(libVLC);
             mediaPlayer.EnableMouseInput = false;
             mGameTitleLoopBackground = new Media(libVLC, "MonsterDuel_Data/video/title.mp4");

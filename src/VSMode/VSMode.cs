@@ -22,15 +22,25 @@ namespace MonsterDuel
 
         private MonsterDetailCard monsterDetailCard;
         
-        private List<MonsterMiniCard> monsterMiniCards = new List<MonsterMiniCard>();
+        private List<MonsterMiniCard> monsterMiniCards;
+        
+        private WarningMessageBox comfirmSixMonstersWarningMessageBox;
+        private Timer comfirmSixMonstersMarkCheckerTimer;
         
         public VSMode(Form source)
         {
             sourceForm = source;
+            
+            comfirmSixMonstersWarningMessageBox = new WarningMessageBox(sourceForm);
+            comfirmSixMonstersMarkCheckerTimer = new Timer();
+            comfirmSixMonstersMarkCheckerTimer.Interval = 50;
+            comfirmSixMonstersMarkCheckerTimer.Tick += comfirmSixMonstersMarkCheckerTimerTick;
 
             SelectedMonsterCounter = 0;
             selectedMonsters = new Dictionary<string, bool>();
             availableMonsters = new Dictionary<string, Monster>();
+            
+            monsterMiniCards = new List<MonsterMiniCard>();
             
             MonsterList.Init();
             foreach (var item in MonsterList.All)
@@ -59,7 +69,11 @@ namespace MonsterDuel
                 //"--rmtosd-mouse-events",
                 //"--mouse-events"
             };
-            libVLC = new LibVLC(options); 
+            libVLC = new LibVLC(options);
+            
+            // https://videolan.videolan.me/vlc/group__libvlc__core.html#gaa3f8e90ec55de9bb63408c6c3680fb2e
+            libVLC.SetUserAgent("Monster Duel", "Monster Duel");
+
             mediaPlayer = new MediaPlayer(libVLC);
             mediaPlayer.EnableMouseInput = false;
             mLoopBackground = new Media(libVLC, "MonsterDuel_Data/video/vs_mode_60.mp4");
@@ -83,6 +97,8 @@ namespace MonsterDuel
             
             
             // Topmost of layer
+            comfirmSixMonstersWarningMessageBox.Visible = true;
+            sourceForm.Controls.Add(comfirmSixMonstersWarningMessageBox);
             
             sourceForm.Controls.Add(monsterDetailCard);
 
@@ -124,6 +140,9 @@ namespace MonsterDuel
             // Bottommost of layer
             
             mediaPlayer.Play(mLoopBackground);
+            
+            comfirmSixMonstersWarningMessageBox.Visible = false;
+            comfirmSixMonstersMarkCheckerTimer.Start();
             
             await Task.Delay(6000);
             
@@ -188,6 +207,7 @@ namespace MonsterDuel
             if (e.Button == MouseButtons.Left && SelectedMonsterCounter == 6)
             {
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                comfirmSixMonstersWarningMessageBox.Show("Are you sure to confirm these six monsters?", "Confirm");
             }
             else
             {
@@ -243,6 +263,14 @@ namespace MonsterDuel
         {
             AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
             lbNext.MouseClick += lbNext_MouseClick;
+        }
+
+        private async void comfirmSixMonstersMarkCheckerTimerTick(object sender, EventArgs e)
+        {
+            if (comfirmSixMonstersWarningMessageBox.Result)
+            {
+                comfirmSixMonstersMarkCheckerTimer.Stop();
+            }
         }
     }
 }
