@@ -11,13 +11,13 @@ namespace MonsterDuel
     public class VSMode
     {
         private Form sourceForm;
-        private AudioPlayer audioPlayer;
+        public AudioPlayer AudioPlayer;
         
         private LibVLC libVLC;
         private MediaPlayer mediaPlayer;
         private Media mLoopBackground;
 
-        private int selectedMonsterCounter;
+        public int SelectedMonsterCounter;
         private Dictionary<string, bool> selectedMonsters;
         private Dictionary<string, Monster> availableMonsters;
 
@@ -26,10 +26,10 @@ namespace MonsterDuel
         public VSMode(Form source, AudioPlayer player)
         {
             sourceForm = source;
-            audioPlayer = player;
+            AudioPlayer = player;
 
 
-            selectedMonsterCounter = 0;
+            SelectedMonsterCounter = 0;
             selectedMonsters = new Dictionary<string, bool>();
             availableMonsters = new Dictionary<string, Monster>();
             
@@ -77,7 +77,7 @@ namespace MonsterDuel
                 }
             };
             
-            audioPlayer.PlayBGM("MonsterDuel_Data/bgm/vs_mode.mp3");
+            AudioPlayer.PlayBGM("MonsterDuel_Data/bgm/vs_mode.mp3");
             await Task.Delay(1700);
             
             List<PictureBox> pbList = await SceneEffect.CuttingInLikeClosingDoor(sourceForm,
@@ -105,14 +105,15 @@ namespace MonsterDuel
                 MonsterMiniCard mmc = new MonsterMiniCard(this, item.Value);
                 mmc.Location = new Point(xIndex, yIndex);
                 
-                xIndex += mmc.Size.Width + xGap;
+                xIndex += 280 + xGap;
                 col++;
                 if (col > 3)
                 {
                     xIndex = xStart;
 
-                    yIndex += yGap;
+                    yIndex += 100 + yGap;
                     row++;
+                    col = 0;
                 }
                 
                 sourceForm.Controls.Add(mmc);
@@ -187,26 +188,26 @@ namespace MonsterDuel
 
         private void lbNext_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && selectedMonsterCounter == 6)
+            if (e.Button == MouseButtons.Left && SelectedMonsterCounter == 6)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
             }
             else
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
             }
         }
 
         public void AddMonster(Monster monster)
         {
-            if (selectedMonsterCounter == 6)
+            if (SelectedMonsterCounter == 6)
             {
-                audioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
                 return;
             }
             
-            audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
-            selectedMonsterCounter++;
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            SelectedMonsterCounter++;
             selectedMonsters[monster.Name] = true;
             
             updateLbNumberOfSelectedMonsters();
@@ -214,15 +215,15 @@ namespace MonsterDuel
 
         public void RemoveMonster(Monster monster)
         {
-            audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
-            selectedMonsterCounter--;
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+            SelectedMonsterCounter--;
             selectedMonsters[monster.Name] = false;
             updateLbNumberOfSelectedMonsters();
         }
 
         private void updateLbNumberOfSelectedMonsters()
         {
-            if (selectedMonsterCounter == 6)
+            if (SelectedMonsterCounter == 6)
             {
                 lbNext.ForeColor = Color.White;
             }
@@ -231,19 +232,19 @@ namespace MonsterDuel
                 lbNext.ForeColor = Color.FromArgb(128, 128, 128);
             }
             
-            lbNumberOfSelectedMonsters.Text = selectedMonsterCounter + " / 6";
+            lbNumberOfSelectedMonsters.Text = SelectedMonsterCounter + " / 6";
         }
 
         public void ShowDetailsOfMonster(Monster monster)
         {
             lbNext.MouseClick -= lbNext_MouseClick;
-            audioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
             monsterDetailCard.Show(monster);
         }
 
         public void CloseDetailsOfMonster()
         {
-            audioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
             lbNext.MouseClick += lbNext_MouseClick;
         }
 

@@ -43,15 +43,19 @@ namespace MonsterDuel
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (!Selected)
+                if (!Selected && vsMode.SelectedMonsterCounter < 6)
                 {
                     Selected = true;
                     vsMode.AddMonster(monster);
                 }
-                else
+                else if (Selected)
                 {
                     Selected = false;
                     vsMode.RemoveMonster(monster);
+                }
+                else
+                {
+                    vsMode.AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
                 }
             }
             else if (e.Button == MouseButtons.Right)
