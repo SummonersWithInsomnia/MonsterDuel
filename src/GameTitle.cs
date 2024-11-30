@@ -19,10 +19,15 @@ namespace MonsterDuel
         private bool menuOpened;
         private Timer lbPressToStartGameColorChangerTimer;
         private bool increaseColorRGB;
+        
+        private WarningMessageBox exitGameWarningMessageBox;
+        private Timer exitGameMarkCheckerTimer;
 
         public GameTitle(Form source)
         {
             sourceForm = source;
+            
+            exitGameWarningMessageBox = new WarningMessageBox(sourceForm);
         }
 
         private void OnPlaying(object source, EventArgs args)
@@ -38,6 +43,10 @@ namespace MonsterDuel
             lbPressToStartGameColorChangerTimer = new Timer();
             lbPressToStartGameColorChangerTimer.Interval = 50;
             lbPressToStartGameColorChangerTimer.Tick += lbPressToStartGameColorChangerTimerTick;
+
+            exitGameMarkCheckerTimer = new Timer();
+            exitGameMarkCheckerTimer.Interval = 50;
+            exitGameMarkCheckerTimer.Tick += exitGameMarkCheckerTimerTick;
             
             // Game Title Background Video Player
             // Options
@@ -74,6 +83,9 @@ namespace MonsterDuel
             PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
             
             // Topmost of layer
+            exitGameWarningMessageBox.Visible = true;
+            sourceForm.Controls.Add(exitGameWarningMessageBox);
+            
             sourceForm.Controls.Add(lbGameMenuVSMode);
             sourceForm.Controls.Add(lbGameMenuStoryMode);
             sourceForm.Controls.Add(lbGameMenuExitGame);
@@ -85,6 +97,9 @@ namespace MonsterDuel
             // Bottommost of layer
             
             mediaPlayer.Play(mGameTitleLoopBackground);
+            
+            exitGameWarningMessageBox.Visible = false;
+            exitGameMarkCheckerTimer.Start();
             
             await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
             
@@ -187,24 +202,32 @@ namespace MonsterDuel
             
             lbPressToStartGame.ForeColor = Color.FromArgb(r, g, b);
         }
+        
+        private async void exitGameMarkCheckerTimerTick(object source, EventArgs args)
+        {
+            if (exitGameWarningMessageBox.Result)
+            {
+                exitGameMarkCheckerTimer.Stop();
+                await ExitGame();
+            }
+        }
 
         private void HandleGameTitleBackGroundEvent(object source, MouseEventArgs args)
         {
-            if (args.Button == MouseButtons.Left && menuOpened == false)
+            if (args.Button == MouseButtons.Left && menuOpened == false && exitGameWarningMessageBox.Visible == false)
             {
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 lbPressToStartGame.Visible = false;
                 
                 openGameMenu();
             }
-            else if (args.Button == MouseButtons.Right && menuOpened == true)
+            else if (args.Button == MouseButtons.Right && menuOpened == true && exitGameWarningMessageBox.Visible == false)
             {
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                 lbPressToStartGame.Visible = true;
                 
                 closeGameMenu();
             }
-            
         }
 
         private async void openGameMenu()
@@ -314,18 +337,8 @@ namespace MonsterDuel
         {
             if (e.Button == MouseButtons.Left)
             {
-                lbPressToStartGame.MouseClick -= HandleGameTitleBackGroundEvent;
-                lbCopyright.MouseClick -= HandleGameTitleBackGroundEvent;
-                vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
+                exitGameWarningMessageBox.Show("Are you sure you want to exit the game?", "Exit Game");
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
-                closeGameMenu();
-                
-                PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
-                AudioPlayer.StopBGM();
-                await Dispose();
-                await SceneEffect.CutOutFromLeft(sourceForm, pb, 500, 20);
-                
-                Application.Exit();
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -338,6 +351,8 @@ namespace MonsterDuel
 
         public async Task Dispose()
         {
+            exitGameMarkCheckerTimer.Stop();
+            exitGameMarkCheckerTimer.Dispose();
             lbPressToStartGameColorChangerTimer.Stop();
             lbPressToStartGameColorChangerTimer.Dispose();
             mediaPlayer.Stop();
@@ -351,6 +366,22 @@ namespace MonsterDuel
             sourceForm.Controls.Remove(lbGameMenuStoryMode);
             sourceForm.Controls.Remove(lbGameMenuExitGame);
             sourceForm.Controls.Remove(vvGameTitleBackground);
+            sourceForm.Controls.Remove(exitGameWarningMessageBox);
+        }
+
+        public async Task ExitGame()
+        {
+            lbPressToStartGame.MouseClick -= HandleGameTitleBackGroundEvent;
+            lbCopyright.MouseClick -= HandleGameTitleBackGroundEvent;
+            vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
+            closeGameMenu();
+                
+            PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+            AudioPlayer.StopBGM();
+            await Dispose();
+            await SceneEffect.CutOutFromLeft(sourceForm, pb, 500, 20);
+                
+            Application.Exit();
         }
     }
 }
