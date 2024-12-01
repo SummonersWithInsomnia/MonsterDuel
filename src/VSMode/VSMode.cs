@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LibVLCSharp.Shared;
@@ -416,6 +417,100 @@ namespace MonsterDuel
             }
             
             lbNumberOfSelectedMonsters.Text = SelectedMonsterCounter + " / 6";
+        }
+
+        public void MarkMonsterOrder()
+        {
+            if (SelectedMonsterCounterForOrdering == 3)
+            {
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+                return;
+            }
+            
+            SelectedMonsterCounterForOrdering++;
+            
+            // Update the fighting monsters
+            foreach (var mmco in monsterMiniCardsWithOrder)
+            {
+                fightingMonsters[mmco.Monster.Name] = mmco.Order;
+            }
+            
+            resortMonsterOrder();
+            updateLbNumberOfFightingMonsters();
+        }
+        
+        public void UnmarkMonsterOrder()
+        {
+            SelectedMonsterCounterForOrdering--;
+            
+            // Update the fighting monsters
+            foreach (var mmco in monsterMiniCardsWithOrder)
+            {
+                fightingMonsters[mmco.Monster.Name] = mmco.Order;
+            }
+            
+            resortMonsterOrder();
+            updateLbNumberOfFightingMonsters();
+        }
+
+        private void resortMonsterOrder()
+        {
+            Dictionary<int, string> temp = new Dictionary<int, string>();
+            
+            foreach (var item in fightingMonsters)
+            {
+                if (item.Value == -1)
+                {
+                    continue;
+                }
+                temp.Add(item.Value, item.Key);
+            }
+
+            if (temp.Count != 0)
+            {
+                temp = temp.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+                            
+                int index = 0;
+                foreach (var item in temp)
+                {
+                    if (item.Key == index)
+                    {
+                        index++;
+                        continue;
+                    }
+                    
+                    fightingMonsters[item.Value] = index;
+                    index++;
+                }
+
+                foreach (var item in fightingMonsters)
+                {
+                    foreach (var card in monsterMiniCardsWithOrder)
+                    {
+                        if (item.Key != card.Monster.Name)
+                        {
+                            continue;
+                        }
+                        
+                        card.Order = item.Value;
+                        card.UpdateOrder();
+                    }
+                }
+            }
+        }
+
+        private void updateLbNumberOfFightingMonsters()
+        {
+            if (SelectedMonsterCounterForOrdering == 3)
+            {
+                lbStart.ForeColor = Color.White;
+            }
+            else
+            {
+                lbStart.ForeColor = Color.FromArgb(128, 128, 128);
+            }
+            
+            lbNumberOfFightingMonsters.Text = SelectedMonsterCounterForOrdering + " / 3";
         }
 
         public void ShowDetailsOfMonster(Monster monster)

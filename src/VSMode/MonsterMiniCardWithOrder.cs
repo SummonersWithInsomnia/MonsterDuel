@@ -32,6 +32,12 @@ public partial class MonsterMiniCardWithOrder : UserControl
         pbMonsterIcon.Image = File.Exists(Monster.IconPath) ? Image.FromFile(Monster.IconPath) : null;
     }
     
+    public void UpdateOrder()
+    {
+        if (Order == -1) return;
+        lbOrder.Text = "#" + (Order + 1).ToString();
+    }
+    
     private void MonsterMiniCardWithOrder_MouseEnter(object sender, EventArgs e)
     {
         if (!Selected)
@@ -55,12 +61,18 @@ public partial class MonsterMiniCardWithOrder : UserControl
             if (!Selected && vsMode.SelectedMonsterCounterForOrdering < 3)
             {
                 Selected = true;
+                Order = vsMode.SelectedMonsterCounterForOrdering;
+                lbOrder.Text = "#" + (Order + 1).ToString();
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                vsMode.MarkMonsterOrder();
             }
             else if (Selected)
             {
                 Selected = false;
+                Order = -1;
+                lbOrder.Text = "";
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+                vsMode.UnmarkMonsterOrder();
             }
             else
             {
