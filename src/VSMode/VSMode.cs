@@ -32,6 +32,9 @@ namespace MonsterDuel
         
         private Dictionary<string, int> fightingMonsters;
         
+        // private MonsterMiniCardWithOrder testMonsterMiniCardWithOrder;
+        // private MonsterMiniCardWithOrder testMonsterMiniCardWithOrder2;
+        
         // Opponent
         private Dictionary<string, bool> opponentSelectedMonsters;
         private Dictionary<int, string> opponentSelectedMonsterIndex;
@@ -122,6 +125,11 @@ namespace MonsterDuel
             monsterPlaceholders.Add(MonsterList.All["Rhaegal"]);
             monsterPlaceholders.Add(MonsterList.All["Visereon"]);
             
+            // testMonsterMiniCardWithOrder = new MonsterMiniCardWithOrder();
+            // testMonsterMiniCardWithOrder.Location = new Point(90, 161);
+            // testMonsterMiniCardWithOrder2 = new MonsterMiniCardWithOrder();
+            // testMonsterMiniCardWithOrder2.Location = new Point(470, 161);
+            
             opponentSelectedMonsters = new Dictionary<string, bool>();
             opponentSelectedMonsterIndex = new Dictionary<int, string>();
             int monsterIndex = 0;
@@ -202,17 +210,24 @@ namespace MonsterDuel
             sourceForm.Controls.Add(lbInstruction);
             sourceForm.Controls.Add(lbNumberOfSelectedMonsters);
             sourceForm.Controls.Add(lbNext);
-            sourceForm.Controls.Add(lbNumberOfFightingMonsters);
             
+            sourceForm.Controls.Add(lbYourTeam);
             sourceForm.Controls.Add(lbOpponentTeam);
-            
+            sourceForm.Controls.Add(lbNumberOfFightingMonsters);
             sourceForm.Controls.Add(lbStart);
+            
+            // sourceForm.Controls.Add(testMonsterMiniCardWithOrder);
+            // sourceForm.Controls.Add(testMonsterMiniCardWithOrder2);
+            
             sourceForm.Controls.Add(vvBackground);
             // Bottommost of layer
-            
+            lbYourTeam.Visible = false;
             lbOpponentTeam.Visible = false;
             lbNumberOfFightingMonsters.Visible = false;
             lbStart.Visible = false;
+            
+            // testMonsterMiniCardWithOrder.Visible = false;
+            // testMonsterMiniCardWithOrder2.Visible = false;
             
             mediaPlayer.Play(mLoopBackground);
             
@@ -301,6 +316,15 @@ namespace MonsterDuel
             Location = new Point(1000, 50),
             Text = "Opponent Team",
             Font = new Font("Courier New", 24f, FontStyle.Bold, GraphicsUnit.Pixel),
+            ForeColor = Color.White
+        };
+        
+        private Label lbYourTeam = new Label
+        {
+            AutoSize = true,
+            Location = new Point(350, 110),
+            Text = "Your Team",
+            Font = new Font("Courier New", 36f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.White
         };
 
@@ -399,9 +423,13 @@ namespace MonsterDuel
             sourceForm.Controls.Remove(lbNext);
             
             lbTitle.Text = "Team Configuration";
+            lbYourTeam.Visible = true;
             lbOpponentTeam.Visible = true;
             lbNumberOfFightingMonsters.Visible = true;
             lbStart.Visible = true;
+            
+            // testMonsterMiniCardWithOrder.Visible = true;
+            // testMonsterMiniCardWithOrder2.Visible = true;
             
             fightingMonsters = new Dictionary<string, int>();
             foreach (var item in selectedMonsters)
@@ -417,8 +445,10 @@ namespace MonsterDuel
                 omc.Visible = true;
             }
             
-            Console.WriteLine("lbOpponentTeam.Width: " + lbOpponentTeam.Width);
-            Console.WriteLine("lbOpponentTeam.Height: " + lbOpponentTeam.Height);
+            // Console.WriteLine("lbOpponentTeam.Width: " + lbOpponentTeam.Width);
+            // Console.WriteLine("lbOpponentTeam.Height: " + lbOpponentTeam.Height);
+            Console.WriteLine("lbYourTeam.Width: " + lbYourTeam.Width);
+            Console.WriteLine("lbYourTeam.Height: " + lbYourTeam.Height);
             
             await Task.Delay(1000);
             
