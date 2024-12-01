@@ -29,7 +29,7 @@ namespace MonsterDuel
         private bool isConfirmSixMonstersWarningMessageBoxOpen;
         
         private List<Monster> monsterPlaceholders;
-        
+        private List<MonsterMiniCardWithOrder> monsterMiniCardsWithOrder;
         private Dictionary<string, int> fightingMonsters;
         
         // private MonsterMiniCardWithOrder testMonsterMiniCardWithOrder;
@@ -129,6 +129,31 @@ namespace MonsterDuel
             // testMonsterMiniCardWithOrder.Location = new Point(90, 161);
             // testMonsterMiniCardWithOrder2 = new MonsterMiniCardWithOrder();
             // testMonsterMiniCardWithOrder2.Location = new Point(470, 161);
+            
+            monsterMiniCardsWithOrder = new List<MonsterMiniCardWithOrder>();
+            int monsterMiniCardWithOrderGapX = 30;
+            int monsterMiniCardWithOrderGapY = 30;
+            int monsterMiniCardWithOrderX = 90;
+            int monsterMiniCardWithOrderY = 211;
+            int monsterMiniCardWithOrderCounter = 0;
+            
+            foreach (var monster in monsterPlaceholders)
+            {
+                MonsterMiniCardWithOrder mmco = new MonsterMiniCardWithOrder(this, monster, -1);
+                mmco.Location = new Point(monsterMiniCardWithOrderX, monsterMiniCardWithOrderY);
+                monsterMiniCardWithOrderX += 350 + monsterMiniCardWithOrderGapX;
+                monsterMiniCardWithOrderCounter++;
+
+                if (monsterMiniCardWithOrderCounter % 2 == 0)
+                {
+                    monsterMiniCardWithOrderX = 90;
+                    monsterMiniCardWithOrderY += 100 + monsterMiniCardWithOrderGapY;
+                }
+                
+                sourceForm.Controls.Add(mmco);
+                monsterMiniCardsWithOrder.Add(mmco);
+                mmco.Visible = false;
+            }
             
             opponentSelectedMonsters = new Dictionary<string, bool>();
             opponentSelectedMonsterIndex = new Dictionary<int, string>();
@@ -322,7 +347,7 @@ namespace MonsterDuel
         private Label lbYourTeam = new Label
         {
             AutoSize = true,
-            Location = new Point(350, 110),
+            Location = new Point(350, 130),
             Text = "Your Team",
             Font = new Font("Courier New", 36f, FontStyle.Bold, GraphicsUnit.Pixel),
             ForeColor = Color.White
@@ -443,6 +468,11 @@ namespace MonsterDuel
             foreach (var omc in opponentSelectedMonsterMiniCards)
             {
                 omc.Visible = true;
+            }
+
+            foreach (var mmco in monsterMiniCardsWithOrder)
+            {
+                mmco.Visible = true;
             }
             
             // Console.WriteLine("lbOpponentTeam.Width: " + lbOpponentTeam.Width);
