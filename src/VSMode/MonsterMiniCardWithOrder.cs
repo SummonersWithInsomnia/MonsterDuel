@@ -22,4 +22,11 @@ public partial class MonsterMiniCardWithOrder : UserControl
         lbMonsterName.Text = Monster.Name;
         pbMonsterIcon.Image = File.Exists(Monster.IconPath) ? Image.FromFile(Monster.IconPath) : null;
     }
+
+    public void Switch(Monster monster)
+    {
+        Monster = monster;
+        lbMonsterName.Text = Monster.Name;
+        pbMonsterIcon.Image = File.Exists(Monster.IconPath) ? Image.FromFile(Monster.IconPath) : null;
+    }
 }

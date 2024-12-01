@@ -469,7 +469,15 @@ namespace MonsterDuel
             {
                 omc.Visible = true;
             }
-
+            
+            int monsterMiniCardsWithOrderIndex = 0;
+            foreach (var item in fightingMonsters)
+            {
+                Monster monster = availableMonsters[item.Key];
+                monsterMiniCardsWithOrder[monsterMiniCardsWithOrderIndex].Switch(monster);
+                monsterMiniCardsWithOrderIndex++;
+            }
+            
             foreach (var mmco in monsterMiniCardsWithOrder)
             {
                 mmco.Visible = true;
