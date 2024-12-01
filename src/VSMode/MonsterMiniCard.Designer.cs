@@ -71,6 +71,7 @@ namespace MonsterDuel
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.lbMonsterName);
             this.Controls.Add(this.pbMonsterIcon);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "MonsterMiniCard";
             this.Size = new System.Drawing.Size(280, 100);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MonsterMiniCard_MouseDown);
