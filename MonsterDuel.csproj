@@ -181,6 +181,12 @@
     <Compile Include="src\VSMode\MonsterMiniCard.Designer.cs">
       <DependentUpon>MonsterMiniCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\VSMode\MonsterMiniCardWithOrder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\VSMode\MonsterMiniCardWithOrder.Designer.cs">
+      <DependentUpon>MonsterMiniCardWithOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\VSMode\OpponentMonsterMiniCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -214,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\VSMode\MonsterMiniCard.resx">
       <DependentUpon>MonsterMiniCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\VSMode\MonsterMiniCardWithOrder.resx">
+      <DependentUpon>MonsterMiniCardWithOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\VSMode\OpponentMonsterMiniCard.resx">
       <DependentUpon>OpponentMonsterMiniCard.cs</DependentUpon>

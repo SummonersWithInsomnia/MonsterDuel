@@ -28,6 +28,8 @@ namespace MonsterDuel
         private Timer confirmSixMonstersMarkCheckerTimer;
         private bool isConfirmSixMonstersWarningMessageBoxOpen;
         
+        private List<Monster> monsterPlaceholders;
+        
         private Dictionary<string, int> fightingMonsters;
         
         // Opponent
@@ -111,6 +113,14 @@ namespace MonsterDuel
             sourceForm.Controls.Add(monsterDetailCard);
             
             // Start of Team Configuration
+            
+            monsterPlaceholders = new List<Monster>();
+            monsterPlaceholders.Add(MonsterList.All["V"]);
+            monsterPlaceholders.Add(MonsterList.All["Jin"]);
+            monsterPlaceholders.Add(MonsterList.All["Jungkook"]);
+            monsterPlaceholders.Add(MonsterList.All["Jimin"]);
+            monsterPlaceholders.Add(MonsterList.All["Rhaegal"]);
+            monsterPlaceholders.Add(MonsterList.All["Visereon"]);
             
             opponentSelectedMonsters = new Dictionary<string, bool>();
             opponentSelectedMonsterIndex = new Dictionary<int, string>();
