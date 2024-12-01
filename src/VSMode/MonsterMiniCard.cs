@@ -46,11 +46,13 @@ namespace MonsterDuel
                 if (!Selected && vsMode.SelectedMonsterCounter < 6)
                 {
                     Selected = true;
+                    AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                     vsMode.AddMonster(monster);
                 }
                 else if (Selected)
                 {
                     Selected = false;
+                    AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
                     vsMode.RemoveMonster(monster);
                 }
                 else

@@ -32,6 +32,8 @@ namespace MonsterDuel
         private List<MonsterMiniCardWithOrder> monsterMiniCardsWithOrder;
         private Dictionary<string, int> fightingMonsters;
         
+        public int SelectedMonsterCounterForOrdering;
+        
         // private MonsterMiniCardWithOrder testMonsterMiniCardWithOrder;
         // private MonsterMiniCardWithOrder testMonsterMiniCardWithOrder2;
         
@@ -51,6 +53,7 @@ namespace MonsterDuel
             isConfirmSixMonstersWarningMessageBoxOpen = false;
 
             SelectedMonsterCounter = 0;
+            SelectedMonsterCounterForOrdering = 0;
             selectedMonsters = new Dictionary<string, bool>();
             availableMonsters = new Dictionary<string, Monster>();
             
@@ -264,6 +267,7 @@ namespace MonsterDuel
             await SceneEffect.CuttingOutLikeOpeningDoor(sourceForm, pbList, 50, 2);
 
             lbNext.MouseClick += lbNext_MouseClick;
+            lbStart.MouseClick += lbStart_MouseClick;
 
             // Console.WriteLine("lbTitle.Width: " + lbTitle.Width);
             // Console.WriteLine("lbTitle.Height: " + lbTitle.Height);
@@ -367,6 +371,17 @@ namespace MonsterDuel
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
             }
         }
+        
+        private void lbStart_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && SelectedMonsterCounterForOrdering == 3)
+            {
+            }
+            else
+            {
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/not_available.wav");
+            }
+        }
 
         public void AddMonster(Monster monster)
         {
@@ -376,7 +391,6 @@ namespace MonsterDuel
                 return;
             }
             
-            AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
             SelectedMonsterCounter++;
             selectedMonsters[monster.Name] = true;
             
@@ -385,7 +399,6 @@ namespace MonsterDuel
 
         public void RemoveMonster(Monster monster)
         {
-            AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
             SelectedMonsterCounter--;
             selectedMonsters[monster.Name] = false;
             updateLbNumberOfSelectedMonsters();
@@ -407,8 +420,10 @@ namespace MonsterDuel
 
         public void ShowDetailsOfMonster(Monster monster)
         {
-            lbNext.MouseClick -= lbNext_MouseClick;
             AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            lbNext.MouseClick -= lbNext_MouseClick;
+            lbStart.MouseClick -= lbStart_MouseClick;
+            
             monsterDetailCard.Show(monster);
         }
 
@@ -416,6 +431,7 @@ namespace MonsterDuel
         {
             AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
             lbNext.MouseClick += lbNext_MouseClick;
+            lbStart.MouseClick += lbStart_MouseClick;
         }
 
         private async void confirmSixMonstersMarkCheckerTimerTick(object sender, EventArgs e)
@@ -485,8 +501,8 @@ namespace MonsterDuel
             
             // Console.WriteLine("lbOpponentTeam.Width: " + lbOpponentTeam.Width);
             // Console.WriteLine("lbOpponentTeam.Height: " + lbOpponentTeam.Height);
-            Console.WriteLine("lbYourTeam.Width: " + lbYourTeam.Width);
-            Console.WriteLine("lbYourTeam.Height: " + lbYourTeam.Height);
+            // Console.WriteLine("lbYourTeam.Width: " + lbYourTeam.Width);
+            // Console.WriteLine("lbYourTeam.Height: " + lbYourTeam.Height);
             
             await Task.Delay(1000);
             

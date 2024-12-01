@@ -46,6 +46,9 @@ partial class MonsterMiniCardWithOrder
         this.pbMonsterIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
         this.pbMonsterIcon.TabIndex = 0;
         this.pbMonsterIcon.TabStop = false;
+        this.pbMonsterIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MonsterMiniCardWithOrder_MouseDown);
+        this.pbMonsterIcon.MouseEnter += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseEnter);
+        this.pbMonsterIcon.MouseLeave += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseLeave);
         // 
         // lbMonsterName
         // 
@@ -58,6 +61,9 @@ partial class MonsterMiniCardWithOrder
         this.lbMonsterName.TabIndex = 1;
         this.lbMonsterName.Text = "Monster Name";
         this.lbMonsterName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.lbMonsterName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MonsterMiniCardWithOrder_MouseDown);
+        this.lbMonsterName.MouseEnter += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseEnter);
+        this.lbMonsterName.MouseLeave += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseLeave);
         // 
         // lbOrder
         // 
@@ -70,6 +76,9 @@ partial class MonsterMiniCardWithOrder
         this.lbOrder.TabIndex = 2;
         this.lbOrder.Text = "#?";
         this.lbOrder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.lbOrder.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MonsterMiniCardWithOrder_MouseDown);
+        this.lbOrder.MouseEnter += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseEnter);
+        this.lbOrder.MouseLeave += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseLeave);
         // 
         // MonsterMiniCardWithOrder
         // 
@@ -81,6 +90,9 @@ partial class MonsterMiniCardWithOrder
         this.Margin = new System.Windows.Forms.Padding(0);
         this.Name = "MonsterMiniCardWithOrder";
         this.Size = new System.Drawing.Size(350, 100);
+        this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MonsterMiniCardWithOrder_MouseDown);
+        this.MouseEnter += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseEnter);
+        this.MouseLeave += new System.EventHandler(this.MonsterMiniCardWithOrder_MouseLeave);
         ((System.ComponentModel.ISupportInitialize)(this.pbMonsterIcon)).EndInit();
         this.ResumeLayout(false);
     }
