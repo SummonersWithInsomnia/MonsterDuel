@@ -661,7 +661,9 @@ namespace MonsterDuel
                 CurrentMonster = playerMonsterOrder[0],
                 IconPath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].IconPath,
                 FrontImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FrontImagePath,
-                BackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].BackImagePath
+                BackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].BackImagePath,
+                FullFrontImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FullFrontImagePath,
+                FullBackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FullBackImagePath
             };
             
             Dictionary<string, Monster> opponentMonsters = new Dictionary<string, Monster>();

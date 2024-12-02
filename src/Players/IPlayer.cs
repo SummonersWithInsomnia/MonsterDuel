@@ -12,6 +12,9 @@ namespace MonsterDuel
         string IconPath { get; set; }
         string FrontImagePath { get; set; }
         string BackImagePath { get; set; }
+        string FullFrontImagePath { get; set; }
+        string FullBackImagePath { get; set; }
+        
         Task CommandMonster();
         Task SwitchMonster();
 
