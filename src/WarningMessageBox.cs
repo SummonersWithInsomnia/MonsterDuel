@@ -32,6 +32,7 @@ namespace MonsterDuel
         {
             lbMessage.Text = message;
             lbHeader.Text = header;
+            Result = false;
             
             Visible = true;
             Location = new Point(0, 360);
@@ -73,6 +74,7 @@ namespace MonsterDuel
             if (e.Button == MouseButtons.Left)
             {
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                Result = false;
                 Hide();
             }
             else if (e.Button == MouseButtons.Right)

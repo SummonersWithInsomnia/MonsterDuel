@@ -11,15 +11,15 @@ namespace MonsterDuel
 {
     public class VSMode
     {
-        private Form sourceForm;
+        private readonly Form sourceForm;
         
         private LibVLC libVLC;
         private MediaPlayer mediaPlayer;
         private Media mLoopBackground;
 
         public int SelectedMonsterCounter;
-        private Dictionary<string, bool> selectedMonsters;
-        private Dictionary<string, Monster> availableMonsters;
+        private readonly Dictionary<string, bool> selectedMonsters;
+        private readonly Dictionary<string, Monster> availableMonsters;
 
         private MonsterDetailCard monsterDetailCard;
         
@@ -27,7 +27,11 @@ namespace MonsterDuel
         
         private WarningMessageBox confirmSixMonstersWarningMessageBox;
         private Timer confirmSixMonstersMarkCheckerTimer;
-        private bool isConfirmSixMonstersWarningMessageBoxOpen;
+        private bool isConfirmSixMonstersWarningMessageBoxOpened;
+
+        private WarningMessageBox startDuelWarningMessageBox;
+        private Timer startDuelMarkCheckerTimer;
+        private bool isStartDuelWarningMessageBoxOpened;
         
         private List<Monster> monsterPlaceholders;
         private List<MonsterMiniCardWithOrder> monsterMiniCardsWithOrder;
@@ -51,7 +55,13 @@ namespace MonsterDuel
             confirmSixMonstersMarkCheckerTimer = new Timer();
             confirmSixMonstersMarkCheckerTimer.Interval = 50;
             confirmSixMonstersMarkCheckerTimer.Tick += confirmSixMonstersMarkCheckerTimerTick;
-            isConfirmSixMonstersWarningMessageBoxOpen = false;
+            isConfirmSixMonstersWarningMessageBoxOpened = false;
+            
+            startDuelWarningMessageBox = new WarningMessageBox(sourceForm);
+            startDuelMarkCheckerTimer = new Timer();
+            startDuelMarkCheckerTimer.Interval = 50;
+            startDuelMarkCheckerTimer.Tick += startDuelMarkCheckerTimerTick;
+            isStartDuelWarningMessageBoxOpened = false;
 
             SelectedMonsterCounter = 0;
             SelectedMonsterCounterForOrdering = 0;
@@ -116,18 +126,23 @@ namespace MonsterDuel
             // Topmost of layer
             confirmSixMonstersWarningMessageBox.Visible = true;
             sourceForm.Controls.Add(confirmSixMonstersWarningMessageBox);
+
+            startDuelWarningMessageBox.Visible = true;
+            sourceForm.Controls.Add(startDuelWarningMessageBox);
             
             sourceForm.Controls.Add(monsterDetailCard);
             
             // Start of Team Configuration
             
-            monsterPlaceholders = new List<Monster>();
-            monsterPlaceholders.Add(MonsterList.All["V"]);
-            monsterPlaceholders.Add(MonsterList.All["Jin"]);
-            monsterPlaceholders.Add(MonsterList.All["Jungkook"]);
-            monsterPlaceholders.Add(MonsterList.All["Jimin"]);
-            monsterPlaceholders.Add(MonsterList.All["Rhaegal"]);
-            monsterPlaceholders.Add(MonsterList.All["Visereon"]);
+            monsterPlaceholders =
+            [
+                MonsterList.All["V"],
+                MonsterList.All["Jin"],
+                MonsterList.All["Jungkook"],
+                MonsterList.All["Jimin"],
+                MonsterList.All["Rhaegal"],
+                MonsterList.All["Visereon"]
+            ];
             
             // testMonsterMiniCardWithOrder = new MonsterMiniCardWithOrder();
             // testMonsterMiniCardWithOrder.Location = new Point(90, 161);
@@ -262,6 +277,8 @@ namespace MonsterDuel
             
             confirmSixMonstersWarningMessageBox.Visible = false;
             confirmSixMonstersMarkCheckerTimer.Start();
+
+            startDuelWarningMessageBox.Visible = false;
             
             await Task.Delay(6000);
             
@@ -363,8 +380,8 @@ namespace MonsterDuel
             if (e.Button == MouseButtons.Left && SelectedMonsterCounter == 6)
             {
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
-                confirmSixMonstersWarningMessageBox.Show("Are you sure to confirm these six monsters?\nAfter you confirm, you cannot go back to this page.", "Confirm");
-                isConfirmSixMonstersWarningMessageBoxOpen = true;
+                confirmSixMonstersWarningMessageBox.Show("Are you sure to confirm these six monsters?\nAfter you confirm, you cannot go back to this page.", "Confirm Monsters");
+                isConfirmSixMonstersWarningMessageBoxOpened = true;
                 lbNext.MouseClick -= lbNext_MouseClick;
             }
             else
@@ -377,6 +394,10 @@ namespace MonsterDuel
         {
             if (e.Button == MouseButtons.Left && SelectedMonsterCounterForOrdering == 3)
             {
+                AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+                startDuelWarningMessageBox.Show("Are you sure to start the duel with these three monsters?", "Start Duel");
+                isStartDuelWarningMessageBoxOpened = true;
+                lbStart.MouseClick -= lbStart_MouseClick;
             }
             else
             {
@@ -407,15 +428,8 @@ namespace MonsterDuel
 
         private void updateLbNumberOfSelectedMonsters()
         {
-            if (SelectedMonsterCounter == 6)
-            {
-                lbNext.ForeColor = Color.White;
-            }
-            else
-            {
-                lbNext.ForeColor = Color.FromArgb(128, 128, 128);
-            }
-            
+            lbNext.ForeColor = SelectedMonsterCounter == 6 ? Color.White : Color.FromArgb(128, 128, 128);
+
             lbNumberOfSelectedMonsters.Text = SelectedMonsterCounter + " / 6";
         }
 
@@ -501,15 +515,8 @@ namespace MonsterDuel
 
         private void updateLbNumberOfFightingMonsters()
         {
-            if (SelectedMonsterCounterForOrdering == 3)
-            {
-                lbStart.ForeColor = Color.White;
-            }
-            else
-            {
-                lbStart.ForeColor = Color.FromArgb(128, 128, 128);
-            }
-            
+            lbStart.ForeColor = SelectedMonsterCounterForOrdering == 3 ? Color.White : Color.FromArgb(128, 128, 128);
+
             lbNumberOfFightingMonsters.Text = SelectedMonsterCounterForOrdering + " / 3";
         }
 
@@ -531,9 +538,9 @@ namespace MonsterDuel
 
         private async void confirmSixMonstersMarkCheckerTimerTick(object sender, EventArgs e)
         {
-            if (confirmSixMonstersWarningMessageBox.Visible == false && isConfirmSixMonstersWarningMessageBoxOpen)
+            if (confirmSixMonstersWarningMessageBox.Visible == false && isConfirmSixMonstersWarningMessageBoxOpened)
             {
-                isConfirmSixMonstersWarningMessageBoxOpen = false;
+                isConfirmSixMonstersWarningMessageBoxOpened = false;
                 lbNext.MouseClick += lbNext_MouseClick;
             }
             
@@ -541,6 +548,21 @@ namespace MonsterDuel
             {
                 confirmSixMonstersMarkCheckerTimer.Stop();
                 await displayTeamConfiguration();
+            }
+        }
+
+        private async void startDuelMarkCheckerTimerTick(object sender, EventArgs e)
+        {
+            if (startDuelWarningMessageBox.Visible == false && isStartDuelWarningMessageBoxOpened)
+            {
+                isStartDuelWarningMessageBoxOpened = false;
+                lbStart.MouseClick += lbStart_MouseClick;
+            }
+
+            if (startDuelWarningMessageBox.Result)
+            {
+                startDuelMarkCheckerTimer.Stop();
+                await startDuel();
             }
         }
 
@@ -602,6 +624,11 @@ namespace MonsterDuel
             await Task.Delay(1000);
             
             await SceneEffect.CuttingOutLikeOpeningDoor(sourceForm, pbList, 50, 2);
+            startDuelMarkCheckerTimer.Start();
+        }
+
+        private async Task startDuel()
+        {
         }
     }
 }
