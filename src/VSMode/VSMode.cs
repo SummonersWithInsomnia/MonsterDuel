@@ -629,6 +629,51 @@ namespace MonsterDuel
 
         private async Task startDuel()
         {
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+            AudioPlayer.StopBGM();
+            await Dispose();
+            await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+            
+            // foreach (Control control in sourceForm.Controls)
+            // {
+            //     Console.WriteLine(control.Name);
+            // }
+            // Console.WriteLine(sourceForm.Controls.Count);
+            
+            
+        }
+
+        public async Task Dispose()
+        {
+            sourceForm.Controls.Remove(lbTitle);
+            sourceForm.Controls.Remove(lbYourTeam);
+            sourceForm.Controls.Remove(lbOpponentTeam);
+            sourceForm.Controls.Remove(lbNumberOfFightingMonsters);
+            sourceForm.Controls.Remove(lbStart);
+            
+            mediaPlayer.Stop();
+            mediaPlayer.Dispose();
+            libVLC.Dispose();
+            sourceForm.Controls.Remove(vvBackground);
+            vvBackground.Dispose();
+            
+            confirmSixMonstersMarkCheckerTimer.Dispose();
+            startDuelMarkCheckerTimer.Dispose();
+
+            foreach (var mmco in monsterMiniCardsWithOrder)
+            {
+                sourceForm.Controls.Remove(mmco);
+            }
+            
+            foreach (var omc in opponentSelectedMonsterMiniCards)
+            {
+                sourceForm.Controls.Remove(omc);
+            }
+            
+            sourceForm.Controls.Remove(monsterDetailCard);
+            sourceForm.Controls.Remove(confirmSixMonstersWarningMessageBox);
+            sourceForm.Controls.Remove(startDuelWarningMessageBox);
+            sourceForm.Controls.Remove(lbInstruction);
         }
     }
 }

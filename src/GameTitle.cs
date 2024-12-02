@@ -310,6 +310,12 @@ namespace MonsterDuel
                 await Dispose();
                 await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
                 
+                // foreach (Control control in sourceForm.Controls)
+                // {
+                //     Console.WriteLine(control.Name);
+                // }
+                // Console.WriteLine(sourceForm.Controls.Count);
+                
                 VSMode vsMode = new VSMode(sourceForm);
                 await vsMode.Start();
             }
