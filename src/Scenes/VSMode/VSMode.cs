@@ -655,13 +655,13 @@ namespace MonsterDuel
             
             IPlayer player = new Player
             {
-                Name = "Player",
+                Name = PlayerImageList.CurrentPlayerName,
                 Monsters = playerMonsters,
                 MonsterOrder = playerMonsterOrder,
                 CurrentMonster = playerMonsterOrder[0],
-                IconPath = "",
-                FrontImagePath = "",
-                BackImagePath = ""
+                IconPath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].IconPath,
+                FrontImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FrontImagePath,
+                BackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].BackImagePath
             };
             
             Dictionary<string, Monster> opponentMonsters = new Dictionary<string, Monster>();
