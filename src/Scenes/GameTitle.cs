@@ -84,7 +84,7 @@ namespace MonsterDuel
             mediaPlayer.Playing += OnPlaying;
             
             AudioPlayer.PlayBGM("MonsterDuel_Data/bgm/title.mp3");
-            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 200, 10);
             
             // Topmost of layer
             exitGameWarningMessageBox.Visible = true;
@@ -105,7 +105,7 @@ namespace MonsterDuel
             exitGameWarningMessageBox.Visible = false;
             exitGameMarkCheckerTimer.Start();
             
-            await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+            await SceneEffect.CutOutFromRight(sourceForm, pb, 200, 10);
             
             await Task.Delay(2700);
             
@@ -305,19 +305,27 @@ namespace MonsterDuel
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 closeGameMenu();
                 
-                PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+                PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 200, 10);
                 AudioPlayer.StopBGM();
                 await Dispose();
-                await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+                await SceneEffect.CutOutFromRight(sourceForm, pb, 200, 10);
                 
                 // foreach (Control control in sourceForm.Controls)
                 // {
                 //     Console.WriteLine(control.Name);
                 // }
                 // Console.WriteLine(sourceForm.Controls.Count);
-                
-                VSMode vsMode = new VSMode(sourceForm);
-                await vsMode.Start();
+
+                if (PlayerImageList.CurrentPlayerName == "" || PlayerImageList.CurrentPlayerImageName == "")
+                {
+                    ChoosePlayerImage choosePlayerImage = new ChoosePlayerImage(sourceForm, "VSMode");
+                    await choosePlayerImage.Start();
+                }
+                else
+                {
+                    VSMode vsMode = new VSMode(sourceForm);
+                    await vsMode.Start();
+                }
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -386,10 +394,10 @@ namespace MonsterDuel
             vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
             closeGameMenu();
                 
-            PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+            PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 200, 10);
             AudioPlayer.StopBGM();
             await Dispose();
-            await SceneEffect.CutOutFromLeft(sourceForm, pb, 500, 20);
+            await SceneEffect.CutOutFromLeft(sourceForm, pb, 200, 10);
                 
             Application.Exit();
         }

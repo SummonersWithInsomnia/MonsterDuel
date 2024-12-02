@@ -280,7 +280,7 @@ namespace MonsterDuel
 
             startDuelWarningMessageBox.Visible = false;
             
-            await Task.Delay(6000);
+            await Task.Delay(5000);
             
             await SceneEffect.CuttingOutLikeOpeningDoor(sourceForm, pbList, 50, 2);
 
@@ -621,7 +621,7 @@ namespace MonsterDuel
             // Console.WriteLine("lbYourTeam.Width: " + lbYourTeam.Width);
             // Console.WriteLine("lbYourTeam.Height: " + lbYourTeam.Height);
             
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             
             await SceneEffect.CuttingOutLikeOpeningDoor(sourceForm, pbList, 50, 2);
             startDuelMarkCheckerTimer.Start();
@@ -629,10 +629,10 @@ namespace MonsterDuel
 
         private async Task startDuel()
         {
-            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 500, 20);
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 200, 10);
             AudioPlayer.StopBGM();
             await Dispose();
-            await SceneEffect.CutOutFromRight(sourceForm, pb, 500, 20);
+            await SceneEffect.CutOutFromRight(sourceForm, pb, 200, 10);
             
             // foreach (Control control in sourceForm.Controls)
             // {
