@@ -640,7 +640,64 @@ namespace MonsterDuel
             // }
             // Console.WriteLine(sourceForm.Controls.Count);
             
+            Dictionary<string, Monster> playerMonsters = new Dictionary<string, Monster>();
+            Dictionary<int, string> playerMonsterOrder = new Dictionary<int, string>();
+            foreach (var item in fightingMonsters)
+            {
+                if (item.Value == -1)
+                {
+                    continue;
+                }
+                
+                playerMonsters.Add(item.Key, availableMonsters[item.Key]);
+                playerMonsterOrder.Add(item.Value, item.Key);
+            }
             
+            IPlayer player = new Player
+            {
+                Name = "Player",
+                Monsters = playerMonsters,
+                MonsterOrder = playerMonsterOrder,
+                CurrentMonster = playerMonsterOrder[0],
+                IconPath = "",
+                FrontImagePath = "",
+                BackImagePath = ""
+            };
+            
+            Dictionary<string, Monster> opponentMonsters = new Dictionary<string, Monster>();
+            Dictionary<int, string> opponentMonsterOrder = new Dictionary<int, string>();
+            List<string> opponentMonsterOrderList = new List<string>();
+            while (opponentMonsterOrderList.Count < 3)
+            {
+                Random random = new Random();
+                int index = random.Next(0, opponentSelectedMonsterIndex.Count);
+                if (opponentMonsterOrderList.Contains(opponentSelectedMonsterIndex[index]))
+                {
+                    continue;
+                }
+                
+                opponentMonsterOrderList.Add(opponentSelectedMonsterIndex[index]);
+            }
+            
+            int opponentMonsterOrderIndex = 0;
+            foreach (var monsterName in opponentMonsterOrderList)
+            {
+                opponentMonsters.Add(monsterName, MonsterList.All[monsterName]);
+                opponentMonsterOrder.Add(opponentMonsterOrderIndex, monsterName);
+                opponentMonsterOrderIndex++;
+            }
+
+            IPlayer opponent = AIList.GetRandomAI();
+            opponent.Monsters = opponentMonsters;
+            opponent.MonsterOrder = opponentMonsterOrder;
+            opponent.CurrentMonster = opponentMonsterOrder[0];
+
+            BattleMap battleMap = BattleMapList.GetRandom();
+            string bgmPath = BattleBGMList.GetRandom();
+            Battle battle = new Battle(player, opponent, battleMap, bgmPath);
+            
+            BattleController battleController = new BattleController(sourceForm, battle);
+            await battleController.Start();
         }
 
         public async Task Dispose()

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using MonsterDuel.Player;
+using System.Windows.Forms;
+using MonsterDuel;
 
-namespace MonsterDuel.Battle
+namespace MonsterDuel
 {
     public class Battle
     {
@@ -9,5 +10,14 @@ namespace MonsterDuel.Battle
         public IPlayer RightPlayer { get; set; }
         
         public BattleMap BattleMap { get; set; }
+        public string BGMPath { get; set; }
+        
+        public Battle(IPlayer leftPlayer, IPlayer rightPlayer, BattleMap battleMap, string bgmPath)
+        {
+            LeftPlayer = leftPlayer;
+            RightPlayer = rightPlayer;
+            BattleMap = battleMap;
+            BGMPath = bgmPath;
+        }
     }
 }
