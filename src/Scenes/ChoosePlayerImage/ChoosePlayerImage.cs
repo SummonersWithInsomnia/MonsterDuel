@@ -186,6 +186,12 @@ public class ChoosePlayerImage
             PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 200, 10);
             await Dispose();
             await SceneEffect.CutOutFromRight(sourceForm, pb, 200, 10);
+            
+            // foreach (Control control in sourceForm.Controls)
+            // {
+            //     Console.WriteLine(control.Name);
+            // }
+            // Console.WriteLine(sourceForm.Controls.Count);
 
             if (gameMode == "VSMode")
             {
