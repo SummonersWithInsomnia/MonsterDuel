@@ -139,8 +139,6 @@
     <Compile Include="src\Effects\TextEffect.cs" />
     <Compile Include="src\Monster\Monster.cs" />
     <Compile Include="src\Monster\MonsterList.cs" />
-    <Compile Include="src\Particle\Particle.cs" />
-    <Compile Include="src\Particle\ParticleSender.cs" />
     <Compile Include="src\Players\AI.cs" />
     <Compile Include="src\Players\AIList.cs" />
     <Compile Include="src\Players\IPlayer.cs" />
@@ -184,6 +182,8 @@
     <Compile Include="src\System\Game.Designer.cs">
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\System\Particle\Particle.cs" />
+    <Compile Include="src\System\Particle\ParticleSender.cs" />
     <Compile Include="src\System\Test.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -454,6 +454,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="MonsterDuel_Data\battle_maps\Colosseum\" />
+    <Folder Include="MonsterDuel_Data\opponents\" />
     <Folder Include="MonsterDuel_Data\players\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
