@@ -120,8 +120,8 @@ namespace MonsterDuel
             await Task.Delay(1700);
             
             List<PictureBox> pbList = await SceneEffect.CuttingInLikeClosingDoor(sourceForm,
-                "MonsterDuel_Data/effect/scenes/vs_left.png", 
-                "MonsterDuel_Data/effect/scenes/vs_right.png", 50, 5);
+                "MonsterDuel_Data/effects/scenes/vs_left.png", 
+                "MonsterDuel_Data/effects/scenes/vs_right.png", 50, 5);
             
             // Topmost of layer
             confirmSixMonstersWarningMessageBox.Visible = true;
@@ -569,8 +569,8 @@ namespace MonsterDuel
         private async Task displayTeamConfiguration()
         {
             List<PictureBox> pbList = await SceneEffect.CuttingInLikeClosingDoor(sourceForm,
-                "MonsterDuel_Data/effect/scenes/vs_left.png", 
-                "MonsterDuel_Data/effect/scenes/vs_right.png", 50, 5);
+                "MonsterDuel_Data/effects/scenes/vs_left.png", 
+                "MonsterDuel_Data/effects/scenes/vs_right.png", 50, 5);
             
             foreach (var miniCard in monsterMiniCards)
             {
@@ -629,7 +629,7 @@ namespace MonsterDuel
 
         private async Task startDuel()
         {
-            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scenes/black.png", 200, 10);
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effects/scenes/black.png", 200, 10);
             AudioPlayer.StopBGM();
             await Dispose();
             await SceneEffect.CutOutFromRight(sourceForm, pb, 200, 10);

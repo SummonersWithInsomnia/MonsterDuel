@@ -137,6 +137,12 @@
     <Compile Include="src\Effects\BattleSceneEffect.cs" />
     <Compile Include="src\Effects\SceneEffect.cs" />
     <Compile Include="src\Effects\TextEffect.cs" />
+    <Compile Include="src\Effects\VSBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Effects\VSBar.Designer.cs">
+      <DependentUpon>VSBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Monster\Monster.cs" />
     <Compile Include="src\Monster\MonsterList.cs" />
     <Compile Include="src\Players\AI.cs" />
@@ -214,6 +220,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="src\Effects\VSBar.resx">
+      <DependentUpon>VSBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Scenes\ChoosePlayerImage\PlayerImageCard.resx">
       <DependentUpon>PlayerImageCard.cs</DependentUpon>
     </EmbeddedResource>
@@ -284,13 +293,19 @@
     <Content Include="MonsterDuel_Data\bgm\vs_mode.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\effect\scenes\black.png">
+    <Content Include="MonsterDuel_Data\effects\scenes\black.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\effect\scenes\vs_left.png">
+    <Content Include="MonsterDuel_Data\effects\scenes\vs_bar_left.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\effect\scenes\vs_right.png">
+    <Content Include="MonsterDuel_Data\effects\scenes\vs_bar_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MonsterDuel_Data\effects\scenes\vs_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MonsterDuel_Data\effects\scenes\vs_right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\monsters\Frodo_back.png">
@@ -479,6 +494,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MonsterDuel_Data\battle_maps\Colosseum\" />
+    <Folder Include="MonsterDuel_Data\effects\skills\" />
     <Folder Include="MonsterDuel_Data\opponents\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

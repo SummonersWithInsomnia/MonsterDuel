@@ -84,7 +84,7 @@ namespace MonsterDuel
             mediaPlayer.Playing += OnPlaying;
             
             AudioPlayer.PlayBGM("MonsterDuel_Data/bgm/title.mp3");
-            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scenes/black.png", 200, 10);
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effects/scenes/black.png", 200, 10);
             
             // Topmost of layer
             exitGameWarningMessageBox.Visible = true;
@@ -305,7 +305,7 @@ namespace MonsterDuel
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 closeGameMenu();
                 
-                PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scenes/black.png", 200, 10);
+                PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effects/scenes/black.png", 200, 10);
                 AudioPlayer.StopBGM();
                 await Dispose();
                 await SceneEffect.CutOutFromRight(sourceForm, pb, 200, 10);
@@ -394,7 +394,7 @@ namespace MonsterDuel
             vvGameTitleBackground.MouseClick -= HandleGameTitleBackGroundEvent;
             closeGameMenu();
                 
-            PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effect/scenes/black.png", 200, 10);
+            PictureBox pb = await SceneEffect.CutInFromRight(sourceForm, "MonsterDuel_Data/effects/scenes/black.png", 200, 10);
             AudioPlayer.StopBGM();
             await Dispose();
             await SceneEffect.CutOutFromLeft(sourceForm, pb, 200, 10);
