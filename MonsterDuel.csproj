@@ -284,13 +284,13 @@
     <Content Include="MonsterDuel_Data\bgm\vs_mode.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\effect\scene\black.png">
+    <Content Include="MonsterDuel_Data\effect\scenes\black.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\effect\scene\vs_left.png">
+    <Content Include="MonsterDuel_Data\effect\scenes\vs_left.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\effect\scene\vs_right.png">
+    <Content Include="MonsterDuel_Data\effect\scenes\vs_right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\monsters\Frodo_back.png">

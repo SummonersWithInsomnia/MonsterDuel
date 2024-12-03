@@ -45,7 +45,7 @@ public class ChoosePlayerImage
         playerImageType1.Location = new Point(284, 104);
         playerImageType2.Location = new Point(711, 104);
         
-        PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 100, 10);
+        PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scenes/black.png", 100, 10);
         
         // Topmost of layer
         
@@ -93,7 +93,7 @@ public class ChoosePlayerImage
         if (SelectedPlayerImageName != "")
         {
             selectedPlayerImageTimer.Stop();
-            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 200, 10);
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scenes/black.png", 200, 10);
             
             lbTitle.Text = "Input Player Name";
             playerImageType1.Visible = false;
@@ -183,7 +183,7 @@ public class ChoosePlayerImage
             
             focusOnPlayerNameTimer.Stop();
             
-            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scene/black.png", 200, 10);
+            PictureBox pb = await SceneEffect.CutInFromLeft(sourceForm, "MonsterDuel_Data/effect/scenes/black.png", 200, 10);
             await Dispose();
             await SceneEffect.CutOutFromRight(sourceForm, pb, 200, 10);
             

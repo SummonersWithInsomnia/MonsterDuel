@@ -11,8 +11,7 @@ public static class BattleMapList
         {
             Name = "Colosseum",
             IconPath = "",
-            BackgroundImagePath = "",
-            OpeningImagePath = "",
+            BackgroundImagePath = ""
         }
     ];
     
