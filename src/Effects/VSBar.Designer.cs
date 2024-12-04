@@ -44,7 +44,6 @@ partial class VSBar
         this.lbLeftPlayerName.Name = "lbLeftPlayerName";
         this.lbLeftPlayerName.Size = new System.Drawing.Size(620, 40);
         this.lbLeftPlayerName.TabIndex = 0;
-        this.lbLeftPlayerName.Text = "Left Player Name";
         this.lbLeftPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // lbRightPlayerName
@@ -56,7 +55,6 @@ partial class VSBar
         this.lbRightPlayerName.Name = "lbRightPlayerName";
         this.lbRightPlayerName.Size = new System.Drawing.Size(620, 40);
         this.lbRightPlayerName.TabIndex = 1;
-        this.lbRightPlayerName.Text = "Right Player Name";
         this.lbRightPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // VSBar

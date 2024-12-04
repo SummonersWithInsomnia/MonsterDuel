@@ -6,32 +6,54 @@ namespace MonsterDuel;
 
 public partial class VSBar : UserControl
 {
-    private Form sourceForm;
-    
     private IPlayer leftPlayer;
     private IPlayer rightPlayer;
-    
-    private PictureBox leftPlayerIcon;
-    private PictureBox rightPlayerIcon;
 
-    private int duration = 500;
-    private int step = 3;
+    private int duration = 200;
+    private int step = 5;
     
-    public VSBar(Form source, IPlayer left, IPlayer right)
+    public VSBar(IPlayer left, IPlayer right)
     {
         InitializeComponent();
         
-        sourceForm = source;
         leftPlayer = left;
         rightPlayer = right;
+        
+        leftPlayerIcon.ImageLocation = leftPlayer.VSBarIconPath;
+        rightPlayerIcon.ImageLocation = rightPlayer.VSBarIconPath;
+        
+        leftBar.Controls.Add(leftPlayerIcon);
+        rightBar.Controls.Add(rightPlayerIcon);
+        leftBar.Controls.Add(vsLogoLeft);
+        rightBar.Controls.Add(vsLogoRight);
+        
+        Controls.Add(leftBar);
+        Controls.Add(rightBar);
+
+        leftPlayerIcon.Visible = false;
+        rightPlayerIcon.Visible = false;
+        vsLogoLeft.Visible = false;
+        vsLogoRight.Visible = false;
     }
     
     public VSBar()
     {
+        // For testing
+        
         InitializeComponent();
+        
+        leftBar.Controls.Add(leftPlayerIcon);
+        rightBar.Controls.Add(rightPlayerIcon);
+        leftBar.Controls.Add(vsLogoLeft);
+        rightBar.Controls.Add(vsLogoRight);
         
         Controls.Add(leftBar);
         Controls.Add(rightBar);
+
+        leftPlayerIcon.Visible = false;
+        rightPlayerIcon.Visible = false;
+        vsLogoLeft.Visible = false;
+        vsLogoRight.Visible = false;
     }
 
     public async Task Start()
@@ -52,6 +74,18 @@ public partial class VSBar : UserControl
         leftBar.Location = leftBarFinal;
         Point rightBarFinal = new Point(640, 0);
         rightBar.Location = rightBarFinal;
+        
+        leftPlayerIcon.Visible = true;
+        rightPlayerIcon.Visible = true;
+        vsLogoLeft.Visible = true;
+        vsLogoRight.Visible = true;
+
+        TextEffect.Typewriter(lbLeftPlayerName, "Left Player Name", 200, 5);
+        TextEffect.Typewriter(lbRightPlayerName, "Right Player Name", 200, 5);
+        
+        await Task.Delay(5000);
+        
+        Parent.Controls.Remove(this);
     }
 
     private PictureBox leftBar = new PictureBox
@@ -70,5 +104,39 @@ public partial class VSBar : UserControl
         BorderStyle = BorderStyle.None
     };
     
-    private PictureBox vsLogo = new PictureBox { };
+    private PictureBox vsLogoLeft = new PictureBox
+    {
+        Size = new Size(120, 240),
+        Location = new Point(520, 10),
+        ImageLocation = "MonsterDuel_Data/effects/scenes/vs_bar_logo_left.png",
+        BackColor = Color.Transparent,
+        BorderStyle = BorderStyle.None
+    };
+    
+    private PictureBox vsLogoRight = new PictureBox
+    {
+        Size = new Size(120, 240),
+        Location = new Point(0, 10),
+        ImageLocation = "MonsterDuel_Data/effects/scenes/vs_bar_logo_right.png",
+        BackColor = Color.Transparent,
+        BorderStyle = BorderStyle.None
+    };
+    
+    private PictureBox leftPlayerIcon = new PictureBox
+    {
+        Size = new Size(520, 240),
+        Location = new Point(0, 10),
+        ImageLocation = "MonsterDuel_Data/players/Type1/Type1_vs_bar_icon.png",
+        BackColor = Color.Transparent,
+        BorderStyle = BorderStyle.None
+    };
+    
+    private PictureBox rightPlayerIcon = new PictureBox
+    {
+        Size = new Size(520, 240),
+        Location = new Point(120, 10),
+        ImageLocation = "MonsterDuel_Data/players/Type1/Type1_vs_bar_icon.png",
+        BackColor = Color.Transparent,
+        BorderStyle = BorderStyle.None
+    };
 }

@@ -11,8 +11,7 @@ public static class AIList
         {
             Name = "Ai",
             IconPath = "",
-            FrontImagePath = "",
-            BackImagePath = "",
+            VSBarIconPath = "",
             FullFrontImagePath = "",
             FullBackImagePath = ""
         }
@@ -24,8 +23,7 @@ public static class AIList
         {
             Name = "Noah",
             IconPath = PlayerImageList.All["Type 1"].IconPath,
-            FrontImagePath = PlayerImageList.All["Type 1"].FrontImagePath,
-            BackImagePath = PlayerImageList.All["Type 1"].BackImagePath,
+            VSBarIconPath = PlayerImageList.All["Type 1"].VSBarIconPath,
             FullFrontImagePath = PlayerImageList.All["Type 1"].FullFrontImagePath,
             FullBackImagePath = PlayerImageList.All["Type 1"].FullBackImagePath
         },
@@ -33,8 +31,7 @@ public static class AIList
         {
             Name = "Sula",
             IconPath = PlayerImageList.All["Type 2"].IconPath,
-            FrontImagePath = PlayerImageList.All["Type 2"].FrontImagePath,
-            BackImagePath = PlayerImageList.All["Type 2"].BackImagePath,
+            VSBarIconPath = PlayerImageList.All["Type 2"].VSBarIconPath,
             FullFrontImagePath = PlayerImageList.All["Type 2"].FullFrontImagePath,
             FullBackImagePath = PlayerImageList.All["Type 2"].FullBackImagePath
         }

@@ -10,8 +10,7 @@ namespace MonsterDuel
         Dictionary<int, string> MonsterOrder { get; set; }
         string CurrentMonster { get; set; }
         string IconPath { get; set; }
-        string FrontImagePath { get; set; }
-        string BackImagePath { get; set; }
+        string VSBarIconPath { get; set; }
         string FullFrontImagePath { get; set; }
         string FullBackImagePath { get; set; }
         

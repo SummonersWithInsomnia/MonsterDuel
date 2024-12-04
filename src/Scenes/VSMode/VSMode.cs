@@ -660,8 +660,7 @@ namespace MonsterDuel
                 MonsterOrder = playerMonsterOrder,
                 CurrentMonster = playerMonsterOrder[0],
                 IconPath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].IconPath,
-                FrontImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FrontImagePath,
-                BackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].BackImagePath,
+                VSBarIconPath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].VSBarIconPath,
                 FullFrontImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FullFrontImagePath,
                 FullBackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FullBackImagePath
             };

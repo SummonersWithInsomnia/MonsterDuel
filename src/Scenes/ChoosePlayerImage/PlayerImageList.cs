@@ -16,10 +16,9 @@ public static class PlayerImageList
                 ChoosingImagePath = "MonsterDuel_Data/players/Type1/Type1_choosing.png",
                 ChoosingImagePathDark = "MonsterDuel_Data/players/Type1/Type1_choosing_dark.png",
                 IconPath = "",
-                FrontImagePath = "",
-                BackImagePath = "",
-                FullFrontImagePath = "",
-                FullBackImagePath = ""
+                VSBarIconPath = "MonsterDuel_Data/players/Type1/Type1_vs_bar_icon.png",
+                FullFrontImagePath = "MonsterDuel_Data/players/Type1/Type1_full_front.png",
+                FullBackImagePath = "MonsterDuel_Data/players/Type1/Type1_full_back.png"
             }
         },
         {
@@ -29,8 +28,7 @@ public static class PlayerImageList
                 ChoosingImagePath = "MonsterDuel_Data/players/Type2/Type2_choosing.png",
                 ChoosingImagePathDark = "MonsterDuel_Data/players/Type2/Type2_choosing_dark.png",
                 IconPath = "",
-                FrontImagePath = "",
-                BackImagePath = "",
+                VSBarIconPath = "",
                 FullFrontImagePath = "",
                 FullBackImagePath = ""
             }
