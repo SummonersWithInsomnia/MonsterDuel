@@ -508,7 +508,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MonsterDuel_Data\battle_maps\Colosseum\" />
+    <Folder Include="MonsterDuel_Data\battle_maps\" />
     <Folder Include="MonsterDuel_Data\effects\skills\" />
     <Folder Include="MonsterDuel_Data\opponents\" />
   </ItemGroup>

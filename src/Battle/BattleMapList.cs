@@ -9,7 +9,7 @@ public static class BattleMapList
     [
         new BattleMap
         {
-            Name = "Colosseum",
+            Name = "Zero World",
             IconPath = "",
             BackgroundImagePath = ""
         }
