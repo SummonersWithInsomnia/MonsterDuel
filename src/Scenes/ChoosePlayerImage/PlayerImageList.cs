@@ -30,7 +30,7 @@ public static class PlayerImageList
                 IconPath = "",
                 VSBarIconPath = "MonsterDuel_Data/players/Type2/Type2_vs_bar_icon.png",
                 FullFrontImagePath = "MonsterDuel_Data/players/Type2/Type2_full_front.png",
-                FullBackImagePath = ""
+                FullBackImagePath = "MonsterDuel_Data/players/Type2/Type2_full_back.png"
             }
         }
     };

@@ -503,6 +503,9 @@
     <Content Include="MonsterDuel_Data\players\Type2\Type2_choosing_dark.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MonsterDuel_Data\players\Type2\Type2_full_back.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonsterDuel_Data\players\Type2\Type2_full_front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
