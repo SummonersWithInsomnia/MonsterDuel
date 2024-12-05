@@ -5,6 +5,6 @@ using System.Windows.Forms;
 
 namespace MonsterDuel;
 
-public class BattleSceneEffect
+public static class BattleSceneEffect
 {
 }

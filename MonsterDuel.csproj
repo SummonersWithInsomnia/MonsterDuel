@@ -129,7 +129,12 @@
   <ItemGroup>
     <Compile Include="src\AudioPlayer\AudioPlayer.cs" />
     <Compile Include="src\AudioPlayer\LoopWaveStream.cs" />
-    <Compile Include="src\Battle\Battle.cs" />
+    <Compile Include="src\Battle\Battle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Battle\Battle.Designer.cs">
+      <DependentUpon>Battle.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Battle\BattleBGMList.cs" />
     <Compile Include="src\Battle\BattleController.cs" />
     <Compile Include="src\Battle\BattleMap.cs" />
