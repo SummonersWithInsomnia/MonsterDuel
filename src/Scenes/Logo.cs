@@ -21,7 +21,7 @@ namespace MonsterDuel
             string teamName = "Summoners with Insomnia";
             string present = "Present";
             
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             
             sourceForm.Controls.Add(lbTeamName);
             sourceForm.Controls.Add(lbPresent);

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Monster Duel Main Program")]
+[assembly: AssemblyTitle("Monster Duel")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Monster Duel")]
-[assembly: AssemblyCopyright("Copyright © 2024 Yu and Corazon")]
+[assembly: AssemblyCopyright("Copyright © 2024 Yu and Cor")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

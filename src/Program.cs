@@ -14,11 +14,9 @@ namespace MonsterDuel
         [STAThread]
         static void Main()
         {
-            // TODO: Add a file checker for game resources
-            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Test());
+            Application.Run(new AppStartup());
         }
     }
 }

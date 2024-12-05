@@ -31,5 +31,11 @@ namespace MonsterDuel
         {
             await logo.Start();
         }
+
+        private void Game_Load(object sender, EventArgs e)
+        {
+            Focus();
+            Activate();
+        }
     }
 }

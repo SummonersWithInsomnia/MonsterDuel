@@ -191,6 +191,12 @@
     <Compile Include="src\Skills\HealingSkill.cs" />
     <Compile Include="src\Skills\ISkill.cs" />
     <Compile Include="src\Skills\MultipleHitAttackSkill.cs" />
+    <Compile Include="src\System\AppStartup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\System\AppStartup.Designer.cs">
+      <DependentUpon>AppStartup.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\System\Game.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Scenes\VSMode\OpponentMonsterMiniCard.resx">
       <DependentUpon>OpponentMonsterMiniCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\System\AppStartup.resx">
+      <DependentUpon>AppStartup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\System\Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
@@ -495,6 +504,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\se\yes.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MonsterDuel_Data\system\app_startup.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\system\warning_bar.png">

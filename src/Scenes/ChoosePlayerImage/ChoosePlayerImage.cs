@@ -200,7 +200,7 @@ public class ChoosePlayerImage
             }
             else
             {
-                MessageBox.Show("Invalid Game Mode", "Monster Duel Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Invalid game mode.", "Monster Duel Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }
