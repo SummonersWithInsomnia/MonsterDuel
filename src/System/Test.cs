@@ -7,12 +7,6 @@ namespace MonsterDuel
         public Test()
         {
             InitializeComponent();
-            
-            VSBar vsBar = new VSBar();
-            
-            Controls.Add(vsBar);
-            
-            vsBar.Start();
         }
     }
 }

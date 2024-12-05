@@ -35,26 +35,6 @@ public partial class VSBar : UserControl
         vsLogoLeft.Visible = false;
         vsLogoRight.Visible = false;
     }
-    
-    public VSBar()
-    {
-        // For testing
-        
-        InitializeComponent();
-        
-        leftBar.Controls.Add(leftPlayerIcon);
-        rightBar.Controls.Add(rightPlayerIcon);
-        leftBar.Controls.Add(vsLogoLeft);
-        rightBar.Controls.Add(vsLogoRight);
-        
-        Controls.Add(leftBar);
-        Controls.Add(rightBar);
-
-        leftPlayerIcon.Visible = false;
-        rightPlayerIcon.Visible = false;
-        vsLogoLeft.Visible = false;
-        vsLogoRight.Visible = false;
-    }
 
     public async Task Start()
     {
@@ -80,10 +60,10 @@ public partial class VSBar : UserControl
         vsLogoLeft.Visible = true;
         vsLogoRight.Visible = true;
 
-        TextEffect.Typewriter(lbLeftPlayerName, "Left Player Name", 200, 5);
-        TextEffect.Typewriter(lbRightPlayerName, "Right Player Name", 200, 5);
+        TextEffect.Typewriter(lbLeftPlayerName, leftPlayer.Name, 200, 5);
+        TextEffect.Typewriter(lbRightPlayerName, rightPlayer.Name, 200, 5);
         
-        await Task.Delay(5000);
+        await Task.Delay(6000);
         
         Parent.Controls.Remove(this);
     }
@@ -126,7 +106,7 @@ public partial class VSBar : UserControl
     {
         Size = new Size(520, 240),
         Location = new Point(0, 10),
-        ImageLocation = "MonsterDuel_Data/players/Type1/Type1_vs_bar_icon.png",
+        ImageLocation = "",
         BackColor = Color.Transparent,
         BorderStyle = BorderStyle.None
     };
@@ -135,7 +115,7 @@ public partial class VSBar : UserControl
     {
         Size = new Size(520, 240),
         Location = new Point(120, 10),
-        ImageLocation = "MonsterDuel_Data/players/Type1/Type1_vs_bar_icon.png",
+        ImageLocation = "",
         BackColor = Color.Transparent,
         BorderStyle = BorderStyle.None
     };

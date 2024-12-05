@@ -11,8 +11,8 @@ public static class AIList
         {
             Name = "Ai",
             IconPath = "",
-            VSBarIconPath = "",
-            FullFrontImagePath = "",
+            VSBarIconPath = "MonsterDuel_Data/opponents/Ai/Ai_vs_bar_icon.png",
+            FullFrontImagePath = "MonsterDuel_Data/opponents/Ai/Ai_full_front.png",
             FullBackImagePath = ""
         }
     ];

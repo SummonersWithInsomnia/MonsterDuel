@@ -476,6 +476,12 @@
     <Content Include="MonsterDuel_Data\monsters\V_front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MonsterDuel_Data\opponents\Ai\Ai_full_front.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MonsterDuel_Data\opponents\Ai\Ai_vs_bar_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonsterDuel_Data\players\Type1\Type1_choosing.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -522,7 +528,6 @@
   <ItemGroup>
     <Folder Include="MonsterDuel_Data\battle_maps\" />
     <Folder Include="MonsterDuel_Data\effects\skills\" />
-    <Folder Include="MonsterDuel_Data\opponents\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\VideoLAN.LibVLC.Windows.3.0.21\build\VideoLAN.LibVLC.Windows.targets" Condition="Exists('packages\VideoLAN.LibVLC.Windows.3.0.21\build\VideoLAN.LibVLC.Windows.targets')" />

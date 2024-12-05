@@ -37,23 +37,23 @@ partial class VSBar
         // 
         // lbLeftPlayerName
         // 
-        this.lbLeftPlayerName.Font = new System.Drawing.Font("Courier New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.lbLeftPlayerName.Font = new System.Drawing.Font("Courier New", 31.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.lbLeftPlayerName.ForeColor = System.Drawing.Color.White;
         this.lbLeftPlayerName.Location = new System.Drawing.Point(0, 260);
         this.lbLeftPlayerName.Margin = new System.Windows.Forms.Padding(0);
         this.lbLeftPlayerName.Name = "lbLeftPlayerName";
-        this.lbLeftPlayerName.Size = new System.Drawing.Size(620, 40);
+        this.lbLeftPlayerName.Size = new System.Drawing.Size(620, 80);
         this.lbLeftPlayerName.TabIndex = 0;
         this.lbLeftPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // lbRightPlayerName
         // 
-        this.lbRightPlayerName.Font = new System.Drawing.Font("Courier New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.lbRightPlayerName.Font = new System.Drawing.Font("Courier New", 31.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.lbRightPlayerName.ForeColor = System.Drawing.Color.White;
         this.lbRightPlayerName.Location = new System.Drawing.Point(660, 260);
         this.lbRightPlayerName.Margin = new System.Windows.Forms.Padding(0);
         this.lbRightPlayerName.Name = "lbRightPlayerName";
-        this.lbRightPlayerName.Size = new System.Drawing.Size(620, 40);
+        this.lbRightPlayerName.Size = new System.Drawing.Size(620, 80);
         this.lbRightPlayerName.TabIndex = 1;
         this.lbRightPlayerName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
@@ -63,10 +63,10 @@ partial class VSBar
         this.BackColor = System.Drawing.Color.Black;
         this.Controls.Add(this.lbRightPlayerName);
         this.Controls.Add(this.lbLeftPlayerName);
-        this.Location = new System.Drawing.Point(0, 210);
+        this.Location = new System.Drawing.Point(0, 190);
         this.Margin = new System.Windows.Forms.Padding(0);
         this.Name = "VSBar";
-        this.Size = new System.Drawing.Size(1280, 300);
+        this.Size = new System.Drawing.Size(1280, 340);
         this.ResumeLayout(false);
     }
 

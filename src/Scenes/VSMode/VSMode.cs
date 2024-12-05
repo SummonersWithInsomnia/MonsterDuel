@@ -697,6 +697,12 @@ namespace MonsterDuel
             string bgmPath = BattleBGMList.GetRandom();
             Battle battle = new Battle(player, opponent, battleMap, bgmPath);
             
+            await Task.Delay(1000);
+            
+            VSBar vsBar = new VSBar(player, opponent);
+            sourceForm.Controls.Add(vsBar);
+            await vsBar.Start();
+            
             BattleController battleController = new BattleController(sourceForm, battle);
             await battleController.Start();
         }

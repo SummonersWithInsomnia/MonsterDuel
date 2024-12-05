@@ -166,6 +166,8 @@ public partial class AppStartup : Form
         "MonsterDuel_Data/system/warning_bar.png",
         "MonsterDuel_Data/video/title.mp4",
         "MonsterDuel_Data/video/vs_mode_60.mp4",
+        "MonsterDuel_Data/opponents/Ai/Ai_full_front.png",
+        "MonsterDuel_Data/opponents/Ai/Ai_vs_bar_icon.png"
     };
 
     private void AppStartup_Load(object sender, EventArgs e)
