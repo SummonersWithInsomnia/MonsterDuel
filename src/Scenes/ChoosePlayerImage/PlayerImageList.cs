@@ -28,8 +28,8 @@ public static class PlayerImageList
                 ChoosingImagePath = "MonsterDuel_Data/players/Type2/Type2_choosing.png",
                 ChoosingImagePathDark = "MonsterDuel_Data/players/Type2/Type2_choosing_dark.png",
                 IconPath = "",
-                VSBarIconPath = "",
-                FullFrontImagePath = "",
+                VSBarIconPath = "MonsterDuel_Data/players/Type2/Type2_vs_bar_icon.png",
+                FullFrontImagePath = "MonsterDuel_Data/players/Type2/Type2_full_front.png",
                 FullBackImagePath = ""
             }
         }

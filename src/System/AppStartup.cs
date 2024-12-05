@@ -91,6 +91,12 @@ public partial class AppStartup : Form
     
     private List<string> fileList = new List<string>
     {
+        "Interop.WMPLib.dll",
+        "AxInterop.WMPLib.dll",
+        "libvlc/win-x86/libvlc.dll",
+        "libvlc/win-x86/libvlccore.dll",
+        "libvlc/win-x64/libvlc.dll",
+        "libvlc/win-x64/libvlccore.dll",
         "MonsterDuel_Data/bgm/battle_0.mp3",
         "MonsterDuel_Data/bgm/title.mp3",
         "MonsterDuel_Data/bgm/vs_mode.mp3",
@@ -167,7 +173,10 @@ public partial class AppStartup : Form
         "MonsterDuel_Data/video/title.mp4",
         "MonsterDuel_Data/video/vs_mode_60.mp4",
         "MonsterDuel_Data/opponents/Ai/Ai_full_front.png",
-        "MonsterDuel_Data/opponents/Ai/Ai_vs_bar_icon.png"
+        "MonsterDuel_Data/opponents/Ai/Ai_vs_bar_icon.png",
+        "MonsterDuel_Data/players/Type2/Type2_full_front.png",
+        "MonsterDuel_Data/players/Type2/Type2_vs_bar_icon.png",
+        "MonsterDuel_Data/se/vs_bar.wav"
     };
 
     private void AppStartup_Load(object sender, EventArgs e)

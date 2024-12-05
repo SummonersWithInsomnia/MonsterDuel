@@ -9,7 +9,7 @@ public partial class VSBar : UserControl
     private IPlayer leftPlayer;
     private IPlayer rightPlayer;
 
-    private int duration = 200;
+    private int duration = 50;
     private int step = 5;
     
     public VSBar(IPlayer left, IPlayer right)
@@ -59,6 +59,8 @@ public partial class VSBar : UserControl
         rightPlayerIcon.Visible = true;
         vsLogoLeft.Visible = true;
         vsLogoRight.Visible = true;
+        
+        AudioPlayer.PlaySE("MonsterDuel_Data/se/vs_bar.wav");
 
         TextEffect.Typewriter(lbLeftPlayerName, leftPlayer.Name, 200, 5);
         TextEffect.Typewriter(lbRightPlayerName, rightPlayer.Name, 200, 5);
