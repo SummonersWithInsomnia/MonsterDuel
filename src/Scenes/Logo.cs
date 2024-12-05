@@ -26,9 +26,9 @@ namespace MonsterDuel
             sourceForm.Controls.Add(lbTeamName);
             sourceForm.Controls.Add(lbPresent);
 
-            int tnDuration = 2000;
+            int tnDuration = 500;
             int tnStep = teamName.Length;
-            int pDuration = 500;
+            int pDuration = 200;
             int pStep = present.Length;
 
             await TextEffect.Typewriter(lbTeamName, teamName, tnDuration, tnStep);
@@ -42,9 +42,9 @@ namespace MonsterDuel
             // Console.WriteLine("lbPresent.Width: " + lbPresent.Width);
             // Console.WriteLine("lbPresent.Height: " + lbPresent.Height);
             
-            await TextEffect.TypewriterEaseOut(lbTeamName, tnDuration / 3, tnStep);
+            await TextEffect.TypewriterEaseOut(lbTeamName, tnDuration, tnStep);
             await Task.Delay(200);
-            await TextEffect.TypewriterEaseOut(lbPresent, pDuration / 4, pStep);
+            await TextEffect.TypewriterEaseOut(lbPresent, pDuration, pStep);
             
             sourceForm.Controls.Remove(lbTeamName);
             sourceForm.Controls.Remove(lbPresent);
