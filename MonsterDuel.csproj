@@ -231,6 +231,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="src\Battle\Battle.resx">
+      <DependentUpon>Battle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Effects\VSBar.resx">
       <DependentUpon>VSBar.cs</DependentUpon>
     </EmbeddedResource>

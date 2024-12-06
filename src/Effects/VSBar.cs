@@ -65,7 +65,7 @@ public partial class VSBar : UserControl
         TextEffect.Typewriter(lbLeftPlayerName, leftPlayer.Name, 200, 5);
         TextEffect.Typewriter(lbRightPlayerName, rightPlayer.Name, 200, 5);
         
-        await Task.Delay(6000);
+        await Task.Delay(5000);
         
         Parent.Controls.Remove(this);
     }

@@ -12,5 +12,7 @@ namespace MonsterDuel
         public string Type { get; } = "Buff";
 
         public List<Buff> Buffs { get; set; }
+        
+        public bool MultipleTargets { get; set;  } = false;
     }
 }

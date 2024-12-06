@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace MonsterDuel;
 
@@ -18,5 +20,7 @@ public partial class Battle : UserControl
         RightPlayer = rightPlayer;
         BattleMap = battleMap;
         BGMPath = bgmPath;
+
+        BackgroundImage = File.Exists(BattleMap.BackgroundImagePath) ? Image.FromFile(BattleMap.BackgroundImagePath) : null;
     }
 }

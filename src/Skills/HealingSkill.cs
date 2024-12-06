@@ -9,5 +9,6 @@
         public string Element { get; set; }
         public string Type { get; } = "Healing";
         public int Heal { get; set; }
+        public bool MultipleTargets { get; set;  } = false;
     }
 }

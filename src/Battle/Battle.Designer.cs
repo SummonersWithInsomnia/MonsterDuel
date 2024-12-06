@@ -25,14 +25,22 @@ partial class Battle
 
     #region Component Designer generated code
 
-    /// <summary> 
-    /// Required method for Designer support - do not modify 
+    /// <summary>
+    /// Required method for Designer support - do not modify
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent()
     {
-        components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        this.SuspendLayout();
+        // 
+        // Battle
+        // 
+        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+        this.BackColor = System.Drawing.Color.Black;
+        this.Margin = new System.Windows.Forms.Padding(0);
+        this.Name = "Battle";
+        this.Size = new System.Drawing.Size(1280, 720);
+        this.ResumeLayout(false);
     }
 
     #endregion
