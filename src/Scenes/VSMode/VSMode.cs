@@ -703,8 +703,16 @@ namespace MonsterDuel
             sourceForm.Controls.Add(vsBar);
             await vsBar.Start();
             
+            List<PictureBox> pbList = await SceneEffect.CuttingInLikeClosingGate(sourceForm,
+                "MonsterDuel_Data/effects/scenes/battle_opening_top.png", 
+                "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png", 200, 10);
+            
+            sourceForm.Controls.Remove(vsBar);
+            await Task.Delay(2000);
+            
             BattleController battleController = new BattleController(sourceForm, battle);
-            await battleController.Start();
+            battleController.Start();
+            SceneEffect.CuttingOutLikeOpeningGate(sourceForm, pbList, 100, 10);
         }
 
         public async Task Dispose()

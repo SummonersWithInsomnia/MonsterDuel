@@ -137,9 +137,19 @@
     </Compile>
     <Compile Include="src\Battle\BattleBGMList.cs" />
     <Compile Include="src\Battle\BattleController.cs" />
-    <Compile Include="src\Battle\BattleMap.cs" />
+    <Compile Include="src\Battle\BattleMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Battle\BattleMap.Designer.cs">
+      <DependentUpon>BattleMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Battle\BattleMapList.cs" />
-    <Compile Include="src\Effects\BattleSceneEffect.cs" />
+    <Compile Include="src\Battle\PlayerWithShadow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Battle\PlayerWithShadow.Designer.cs">
+      <DependentUpon>PlayerWithShadow.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Effects\SceneEffect.cs" />
     <Compile Include="src\Effects\TextEffect.cs" />
     <Compile Include="src\Effects\VSBar.cs">
@@ -234,6 +244,12 @@
     <EmbeddedResource Include="src\Battle\Battle.resx">
       <DependentUpon>Battle.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\Battle\BattleMap.resx">
+      <DependentUpon>BattleMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Battle\PlayerWithShadow.resx">
+      <DependentUpon>PlayerWithShadow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Effects\VSBar.resx">
       <DependentUpon>VSBar.cs</DependentUpon>
     </EmbeddedResource>
@@ -301,6 +317,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+    <Content Include="MonsterDuel_Data\battle_maps\Blank.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonsterDuel_Data\bgm\battle_0.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -310,7 +329,16 @@
     <Content Include="MonsterDuel_Data\bgm\vs_mode.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MonsterDuel_Data\effects\scenes\battle_opening_bottom.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MonsterDuel_Data\effects\scenes\battle_opening_top.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonsterDuel_Data\effects\scenes\black.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MonsterDuel_Data\effects\scenes\player_shadow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\effects\scenes\vs_bar_left.png">
@@ -546,7 +574,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MonsterDuel_Data\battle_maps\" />
     <Folder Include="MonsterDuel_Data\effects\skills\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

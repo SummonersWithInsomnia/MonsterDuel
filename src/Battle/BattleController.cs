@@ -18,5 +18,7 @@ public class BattleController
     public async Task Start()
     {
         sourceForm.Controls.Add(Battle);
+
+        await Battle.Start();
     }
 }

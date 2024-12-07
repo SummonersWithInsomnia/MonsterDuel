@@ -177,7 +177,11 @@ public partial class AppStartup : Form
         "MonsterDuel_Data/players/Type2/Type2_full_front.png",
         "MonsterDuel_Data/players/Type2/Type2_vs_bar_icon.png",
         "MonsterDuel_Data/se/vs_bar.wav",
-        "MonsterDuel_Data/players/Type2/Type2_full_back.png"
+        "MonsterDuel_Data/players/Type2/Type2_full_back.png",
+        "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png",
+        "MonsterDuel_Data/effects/scenes/battle_opening_top.png",
+        "MonsterDuel_Data/battle_maps/Blank.png",
+        "MonsterDuel_Data/effects/scenes/player_shadow.png"
     };
 
     private void AppStartup_Load(object sender, EventArgs e)

@@ -268,5 +268,75 @@ namespace MonsterDuel
             source.Controls.Remove(right);
             source.Refresh();
         }
+        
+        public static async Task<List<PictureBox>> CuttingInLikeClosingGate(Form source, string topFilepath, string bottomFilepath, int duration, int step)
+        {
+            PictureBox top = new PictureBox
+            {
+                Size = new Size(1280, 360),
+                Location = new Point(0, -360),
+                ImageLocation = topFilepath,
+                BorderStyle = BorderStyle.None
+            };
+            
+            PictureBox bottom = new PictureBox
+            {
+                Size = new Size(1280, 360),
+                Location = new Point(0, 720),
+                ImageLocation = bottomFilepath,
+                BorderStyle = BorderStyle.None
+            };
+            
+            source.Controls.Add(top);
+            source.Controls.Add(bottom);
+            top.BringToFront();
+            bottom.BringToFront();
+            
+            int waitTime = duration / step;
+            int move = 360 / step;
+            
+            for (int i = 0; i < step; i++)
+            {
+                Point topNext = new Point(top.Location.X, (top.Location.Y + move));
+                Point bottomNext = new Point(bottom.Location.X, (bottom.Location.Y - move));
+                top.Location = topNext;
+                bottom.Location = bottomNext;
+                await Task.Delay(waitTime);
+            }
+            
+            Point topFinal = new Point(0, 0);
+            Point bottomFinal = new Point(0, 360);
+            top.Location = topFinal;
+            bottom.Location = bottomFinal;
+            
+            return new List<PictureBox> {top, bottom};
+        }
+        
+        public static async Task CuttingOutLikeOpeningGate(Form source, List<PictureBox> pbList, int duration, int step)
+        {
+            PictureBox top = pbList[0];
+            PictureBox bottom = pbList[1];
+            
+            int waitTime = duration / step;
+            int move = 360 / step;
+            
+            for (int i = 0; i < step; i++)
+            {
+                Point topNext = new Point(top.Location.X, (top.Location.Y - move));
+                Point bottomNext = new Point(bottom.Location.X, (bottom.Location.Y + move));
+                top.Location = topNext;
+                bottom.Location = bottomNext;
+                await Task.Delay(waitTime);
+            }
+            
+            Point topFinal = new Point(0, -360);
+            Point bottomFinal = new Point(0, 720);
+            top.Location = topFinal;
+            bottom.Location = bottomFinal;
+            
+            source.Controls.Remove(top);
+            source.Controls.Remove(bottom);
+            source.Refresh();
+        }
     }
 }

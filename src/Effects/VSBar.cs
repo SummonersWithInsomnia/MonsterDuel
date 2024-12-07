@@ -66,8 +66,6 @@ public partial class VSBar : UserControl
         TextEffect.Typewriter(lbRightPlayerName, rightPlayer.Name, 200, 5);
         
         await Task.Delay(5000);
-        
-        Parent.Controls.Remove(this);
     }
 
     private PictureBox leftBar = new PictureBox
