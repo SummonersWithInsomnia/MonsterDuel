@@ -96,6 +96,7 @@ public static class MonsterList
         {
             Name = "Jin",
             Health = 110,
+            CurrentHealth = 110,
             Attack = 60,
             Defense = 50,
             Speed = 65,
@@ -170,7 +171,8 @@ public static class MonsterList
         All.Add("Suga", new Monster
         {
             Name = "Suga",
-            Health = 100,
+            Health = 1200,
+            CurrentHealth = 1200,
             Attack = 75,
             Defense = 50,
             Speed = 70,
@@ -187,11 +189,11 @@ public static class MonsterList
                     "Thunderbolt", new AttackAndDebuffSkill
                     {
                         Name = "Thunderbolt",
-                        Description = "Deals 35 damage with a 15% chance to paralyze the target",
+                        Description = "Deals 60 damage with a 50% chance to paralyze the target",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Electric",
-                        Damage = 35,
+                        Damage = 60,
                         Debuffs = new List<Buff>
                         {
                             new()
@@ -202,7 +204,7 @@ public static class MonsterList
                                 Duration = 3
                             }
                         },
-                        DebuffHitRate = 15 // 15% chance to apply debuff
+                        DebuffHitRate = 50 // 50% chance to apply debuff
                     }
                 },
                 {
@@ -263,6 +265,7 @@ public static class MonsterList
         {
             Name = "Jungkook",
             Health = 105,
+            CurrentHealth = 105,
             Attack = 80,
             Defense = 45,
             Speed = 75,
@@ -372,6 +375,7 @@ public static class MonsterList
         {
             Name = "Rap Monster",
             Health = 115,
+            CurrentHealth = 115,
             Attack = 65,
             Defense = 60,
             Speed = 55,
@@ -455,6 +459,7 @@ public static class MonsterList
         {
             Name = "J-hope",
             Health = 105,
+            CurrentHealth = 105,
             Attack = 60,
             Defense = 70,
             Speed = 60,
@@ -536,6 +541,7 @@ public static class MonsterList
         {
             Name = "Jimin",
             Health = 125,
+            CurrentHealth = 125,
             Attack = 85,
             Defense = 55,
             Speed = 50,
@@ -628,6 +634,7 @@ public static class MonsterList
         {
             Name = "Rhaegal",
             Health = 115,
+            CurrentHealth = 115,
             Attack = 80,
             Defense = 60,
             Speed = 60,
@@ -710,6 +717,7 @@ public static class MonsterList
         {
             Name = "Visereon",
             Health = 110,
+            CurrentHealth = 110,
             Attack = 75,
             Defense = 65,
             Speed = 65,
@@ -807,6 +815,7 @@ public static class MonsterList
         {
             Name = "Kylo",
             Health = 110,
+            CurrentHealth = 110,
             Attack = 80,
             Defense = 60,
             Speed = 65,
@@ -890,6 +899,7 @@ public static class MonsterList
         {
             Name = "Moonfang",
             Health = 115,
+            CurrentHealth = 115,
             Attack = 60,
             Defense = 70,
             Speed = 55,
@@ -988,6 +998,7 @@ public static class MonsterList
         {
             Name = "Tinker",
             Health = 105,
+            CurrentHealth = 105,
             Attack = 65,
             Defense = 60,
             Speed = 90,
@@ -1069,6 +1080,7 @@ public static class MonsterList
         {
             Name = "Vader",
             Health = 125,
+            CurrentHealth = 125,
             Attack = 85,
             Defense = 70,
             Speed = 45,
@@ -1152,6 +1164,7 @@ public static class MonsterList
         {
             Name = "Luke",
             Health = 105,
+            CurrentHealth = 105,
             Attack = 75,
             Defense = 65,
             Speed = 70,
@@ -1236,6 +1249,7 @@ public static class MonsterList
         {
             Name = "Frodo",
             Health = 100,
+            CurrentHealth = 100,
             Attack = 55,
             Defense = 50,
             Speed = 80,
@@ -1323,6 +1337,7 @@ public static class MonsterList
         {
             Name = "Smaug",
             Health = 105,
+            CurrentHealth = 105,
             Attack = 60,
             Defense = 65,
             Speed = 70,
@@ -1418,6 +1433,7 @@ public static class MonsterList
         {
             Name = "Phantom",
             Health = 120,
+            CurrentHealth = 120,
             Attack = 75,
             Defense = 80,
             Speed = 45,
