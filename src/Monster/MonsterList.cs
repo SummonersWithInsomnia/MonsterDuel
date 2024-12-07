@@ -229,12 +229,11 @@ public static class MonsterList
                     "Electric Surge", new AttackSkill
                     {
                         Name = "Electric Surge",
-                        Description = "Deals 30 damage to all opposing monsters",
+                        Description = "Deals 30 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Electric",
-                        Damage = 30,
-                        MultipleTargets = true
+                        Damage = 30
                     }
                 },
                 {
@@ -400,7 +399,7 @@ public static class MonsterList
                     "Second Wind", new HealingSkill
                     {
                         Name = "Second Wind",
-                        Description = "Heals 25 HP",
+                        Description = "Restores 25 HP",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Normal",
@@ -472,12 +471,11 @@ public static class MonsterList
                     "Healing Dance", new HealingSkill
                     {
                         Name = "Healing Dance",
-                        Description = "Heals all allies for 45 HP each",
+                        Description = "Restores 45 HP",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Water",
-                        Heal = 45,
-                        MultipleTargets = true
+                        Heal = 45
                     }
                 },
                 {
@@ -515,7 +513,7 @@ public static class MonsterList
                     "Water Shield", new BuffSkill
                     {
                         Name = "Water Shield",
-                        Description = "Reduces incoming damage for all allies by 20 for 2 turns",
+                        Description = "Reduces incoming damage by 20 for 2 turns",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Water",
@@ -528,8 +526,7 @@ public static class MonsterList
                                 Value = 20,
                                 Duration = 2
                             }
-                        },
-                        MultipleTargets = true
+                        }
                     }
                 }
             }
@@ -930,12 +927,11 @@ public static class MonsterList
                     "Moonlight Heal", new HealingSkill
                     {
                         Name = "Moonlight Heal",
-                        Description = "Restores 30 HP to all allies",
+                        Description = "Restores 30 HP",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dark",
                         Heal = 30,
-                        MultipleTargets = true
                     }
                 },
                 {
