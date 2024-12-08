@@ -92,4 +92,12 @@ public partial class Battle : UserControl
         Map.Refresh();
         source.Refresh();
     }
+
+    public async Task MoveRightPlayerOut()
+    {
+    }
+    
+    public async Task MoveLeftPlayerOut()
+    {
+    }
 }

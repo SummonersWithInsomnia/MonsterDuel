@@ -40,10 +40,10 @@ partial class BattleMessageBox
         this.lbText.Font = new System.Drawing.Font("Courier New", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.lbText.ForeColor = System.Drawing.Color.Black;
         this.lbText.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        this.lbText.Location = new System.Drawing.Point(30, 30);
+        this.lbText.Location = new System.Drawing.Point(40, 40);
         this.lbText.Margin = new System.Windows.Forms.Padding(0);
         this.lbText.Name = "lbText";
-        this.lbText.Size = new System.Drawing.Size(1220, 140);
+        this.lbText.Size = new System.Drawing.Size(1200, 120);
         this.lbText.TabIndex = 1;
         this.lbText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
         this.lbText.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Next);
@@ -58,6 +58,7 @@ partial class BattleMessageBox
         this.Margin = new System.Windows.Forms.Padding(0);
         this.Name = "BattleMessageBox";
         this.Size = new System.Drawing.Size(1280, 200);
+        this.VisibleChanged += new System.EventHandler(this.MessageBox_VisibleChanged);
         this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Next);
         this.ResumeLayout(false);
     }

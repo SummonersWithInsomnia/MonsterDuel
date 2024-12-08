@@ -8,13 +8,15 @@ namespace MonsterDuel
 {
     public static class TextEffect
     {
-        public static async Task Typewriter(Label lable, string text, int duration, int step)
+        public static async Task Typewriter(Label label, string text, int duration, int step)
         {
             int waitTime = duration / step;
+
+            label.Text = "";
             
             for (int i = 0; i < text.Length; i++)
             {
-                lable.Text += text[i];
+                label.Text += text[i];
                 await Task.Delay(waitTime);
             }
         }
