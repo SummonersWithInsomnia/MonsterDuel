@@ -1446,11 +1446,6 @@ public static class MonsterList
             BackImagePath = "MonsterDuel_Data/monsters/Phantom_back.png",
             Skills = new Dictionary<string, ISkill>
             {
-                //skills
-                //Shadow Sneak / Stun / 
-                //Ghost Strike / Attack /  and ignores Defense 
-                //Ethereal Shield / Shield / Absorbs 30 damage and makes the user immune to status conditions for 1 turn
-                //Haunting Aura / Attack / Deals 25 damage
                 {
                     "Shadow Sneak", new DebuffSkill
                     {
