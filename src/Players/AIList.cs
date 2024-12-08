@@ -47,4 +47,9 @@ public static class AIList
     {
         return All.Find(ai => ai.Name == name);
     }
+
+    public static AI GetAIFromSepcial(string name)
+    {
+        return Sepcial.Find(ai => ai.Name == name);
+    }
 }

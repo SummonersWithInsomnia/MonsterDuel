@@ -37,6 +37,7 @@ partial class Battle
         // 
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
         this.BackColor = System.Drawing.Color.Black;
+        this.DoubleBuffered = true;
         this.Margin = new System.Windows.Forms.Padding(0);
         this.Name = "Battle";
         this.Size = new System.Drawing.Size(1280, 720);

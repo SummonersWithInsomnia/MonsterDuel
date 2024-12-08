@@ -42,6 +42,7 @@ public partial class AppStartup : Form
             string fullPath = $"{basePath}/{filepath}";
             if (!File.Exists(fullPath))
             {
+                Console.WriteLine("Missing file: " + fullPath);
                 allFilesExist = false;
                 break;
             }
@@ -181,7 +182,7 @@ public partial class AppStartup : Form
         "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png",
         "MonsterDuel_Data/effects/scenes/battle_opening_top.png",
         "MonsterDuel_Data/battle_maps/Blank.png",
-        "MonsterDuel_Data/effects/scenes/player_shadow.png"
+        "MonsterDuel_Data/effects/scenes/battle_message_box.png"
     };
 
     private void AppStartup_Load(object sender, EventArgs e)

@@ -144,11 +144,11 @@
       <DependentUpon>BattleMap.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Battle\BattleMapList.cs" />
-    <Compile Include="src\Battle\PlayerWithShadow.cs">
+    <Compile Include="src\Battle\BattleMessageBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\Battle\PlayerWithShadow.Designer.cs">
-      <DependentUpon>PlayerWithShadow.cs</DependentUpon>
+    <Compile Include="src\Battle\BattleMessageBox.Designer.cs">
+      <DependentUpon>BattleMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Effects\SceneEffect.cs" />
     <Compile Include="src\Effects\TextEffect.cs" />
@@ -247,8 +247,8 @@
     <EmbeddedResource Include="src\Battle\BattleMap.resx">
       <DependentUpon>BattleMap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\Battle\PlayerWithShadow.resx">
-      <DependentUpon>PlayerWithShadow.cs</DependentUpon>
+    <EmbeddedResource Include="src\Battle\BattleMessageBox.resx">
+      <DependentUpon>BattleMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Effects\VSBar.resx">
       <DependentUpon>VSBar.cs</DependentUpon>
@@ -329,6 +329,9 @@
     <Content Include="MonsterDuel_Data\bgm\vs_mode.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MonsterDuel_Data\effects\scenes\battle_message_box.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonsterDuel_Data\effects\scenes\battle_opening_bottom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -336,9 +339,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\effects\scenes\black.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MonsterDuel_Data\effects\scenes\player_shadow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\effects\scenes\vs_bar_left.png">

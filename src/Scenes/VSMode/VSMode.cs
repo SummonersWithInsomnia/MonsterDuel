@@ -44,7 +44,7 @@ namespace MonsterDuel
         
         // Opponent
         private Dictionary<string, bool> opponentSelectedMonsters;
-        private Dictionary<int, string> opponentSelectedMonsterIndex;
+        private Dictionary<int, string> opponentMonsterIndex;
         private List<OpponentMonsterMiniCard> opponentSelectedMonsterMiniCards;
         
         public VSMode(Form source)
@@ -175,12 +175,12 @@ namespace MonsterDuel
             }
             
             opponentSelectedMonsters = new Dictionary<string, bool>();
-            opponentSelectedMonsterIndex = new Dictionary<int, string>();
+            opponentMonsterIndex = new Dictionary<int, string>();
             int monsterIndex = 0;
             foreach (var item in MonsterList.All)
             {
                 opponentSelectedMonsters.Add(item.Key, false);
-                opponentSelectedMonsterIndex.Add(monsterIndex, item.Key);
+                opponentMonsterIndex.Add(monsterIndex, item.Key);
                 monsterIndex++;
             }
             
@@ -188,13 +188,13 @@ namespace MonsterDuel
             while (opponentSelectedMonsterCounter < 6)
             {
                 Random random = new Random();
-                int index = random.Next(0, opponentSelectedMonsterIndex.Count);
-                if (opponentSelectedMonsters[opponentSelectedMonsterIndex[index]])
+                int index = random.Next(0, opponentMonsterIndex.Count);
+                if (opponentSelectedMonsters[opponentMonsterIndex[index]])
                 {
                     continue;
                 }
                 
-                opponentSelectedMonsters[opponentSelectedMonsterIndex[index]] = true;
+                opponentSelectedMonsters[opponentMonsterIndex[index]] = true;
                 opponentSelectedMonsterCounter++;
             }
             
@@ -668,31 +668,89 @@ namespace MonsterDuel
             Dictionary<string, Monster> opponentMonsters = new Dictionary<string, Monster>();
             Dictionary<int, string> opponentMonsterOrder = new Dictionary<int, string>();
             List<string> opponentMonsterOrderList = new List<string>();
-            while (opponentMonsterOrderList.Count < 3)
+            AI opponent = new AI();
+            bool hiddenBoss = false;
+            
+            foreach (var item in opponentSelectedMonsters)
             {
-                Random random = new Random();
-                int index = random.Next(0, opponentSelectedMonsterIndex.Count);
-                if (opponentMonsterOrderList.Contains(opponentSelectedMonsterIndex[index]))
+                if (item.Key == "Suga" && item.Value == true)
                 {
-                    continue;
+                    hiddenBoss = true;
+                }
+            }
+
+            if (hiddenBoss)
+            {
+                while (opponentMonsterOrderList.Count < 2)
+                {
+                    Random random = new Random();
+                    int index = random.Next(0, opponentMonsterIndex.Count);
+                    if (opponentMonsterOrderList.Contains(opponentMonsterIndex[index]) 
+                        || opponentMonsterIndex[index] == "Suga"
+                        || opponentSelectedMonsters[opponentMonsterIndex[index]] == false)
+                    {
+                        continue;
+                    }
+                
+                    opponentMonsterOrderList.Add(opponentMonsterIndex[index]);
                 }
                 
-                opponentMonsterOrderList.Add(opponentSelectedMonsterIndex[index]);
+                opponentMonsterOrderList.Add("Suga"); // The third monster is Suga
+                
+                int opponentMonsterOrderIndex = 0;
+                foreach (var monsterName in opponentMonsterOrderList)
+                {
+                    opponentMonsters.Add(monsterName, MonsterList.All[monsterName]);
+                    opponentMonsterOrder.Add(opponentMonsterOrderIndex, monsterName);
+                    opponentMonsterOrderIndex++;
+                }
+
+                opponent = AIList.GetAI("Ai");
+                opponent.Monsters = opponentMonsters;
+                opponent.MonsterOrder = opponentMonsterOrder;
+                opponent.CurrentMonster = opponentMonsterOrder[0];
+            }
+            else
+            {
+                while (opponentMonsterOrderList.Count < 3)
+                {
+                    Random random = new Random();
+                    int index = random.Next(0, opponentMonsterIndex.Count);
+                    if (opponentMonsterOrderList.Contains(opponentMonsterIndex[index])
+                        || opponentSelectedMonsters[opponentMonsterIndex[index]] == false)
+                    {
+                        continue;
+                    }
+                
+                    opponentMonsterOrderList.Add(opponentMonsterIndex[index]);
+                }
+            
+                int opponentMonsterOrderIndex = 0;
+                foreach (var monsterName in opponentMonsterOrderList)
+                {
+                    opponentMonsters.Add(monsterName, MonsterList.All[monsterName]);
+                    opponentMonsterOrder.Add(opponentMonsterOrderIndex, monsterName);
+                    opponentMonsterOrderIndex++;
+                }
+
+                if (PlayerImageList.CurrentPlayerImageName == "Type 1")
+                {
+                    opponent = AIList.GetAIFromSepcial("Sula"); // Type 2
+                }
+                else if (PlayerImageList.CurrentPlayerImageName == "Type 2")
+                {
+                    opponent = AIList.GetAIFromSepcial("Noah"); // Type 1
+                }
+                else
+                {
+                    opponent = AIList.GetRandomAI();
+                }
+                
+                opponent.Monsters = opponentMonsters;
+                opponent.MonsterOrder = opponentMonsterOrder;
+                opponent.CurrentMonster = opponentMonsterOrder[0];
             }
             
-            int opponentMonsterOrderIndex = 0;
-            foreach (var monsterName in opponentMonsterOrderList)
-            {
-                opponentMonsters.Add(monsterName, MonsterList.All[monsterName]);
-                opponentMonsterOrder.Add(opponentMonsterOrderIndex, monsterName);
-                opponentMonsterOrderIndex++;
-            }
-
-            IPlayer opponent = AIList.GetRandomAI();
-            opponent.Monsters = opponentMonsters;
-            opponent.MonsterOrder = opponentMonsterOrder;
-            opponent.CurrentMonster = opponentMonsterOrder[0];
-
             BattleMap battleMap = BattleMapList.GetRandom();
             string bgmPath = BattleBGMList.GetRandom();
             Battle battle = new Battle(player, opponent, battleMap, bgmPath);
@@ -703,16 +761,16 @@ namespace MonsterDuel
             sourceForm.Controls.Add(vsBar);
             await vsBar.Start();
             
-            List<PictureBox> pbList = await SceneEffect.CuttingInLikeClosingGate(sourceForm,
+            List<PictureBox> gates = await SceneEffect.CuttingInLikeClosingGate(sourceForm,
                 "MonsterDuel_Data/effects/scenes/battle_opening_top.png", 
                 "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png", 200, 10);
             
             sourceForm.Controls.Remove(vsBar);
             await Task.Delay(2000);
             
-            BattleController battleController = new BattleController(sourceForm, battle);
+            BattleController battleController = new BattleController(sourceForm, battle, gates);
             battleController.Start();
-            SceneEffect.CuttingOutLikeOpeningGate(sourceForm, pbList, 100, 10);
+            //SceneEffect.CuttingOutLikeOpeningGate(sourceForm, pbList, 100, 10);
         }
 
         public async Task Dispose()

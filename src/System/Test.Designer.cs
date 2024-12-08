@@ -41,8 +41,6 @@ namespace MonsterDuel
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1286, 755);
-            this.MinimumSize = new System.Drawing.Size(1286, 755);
             this.Name = "Test";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
