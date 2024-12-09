@@ -42,7 +42,8 @@ public class BattleController
         await MessageBoxTcs.Task;
 
         await SendMonstersAtStart();
-        
+        await DisplayMenu();
+
         // GameLoop();
     }
 
@@ -65,5 +66,9 @@ public class BattleController
         Battle.LeftPlayer.CurrentMonster = Battle.LeftPlayer.MonsterOrder[0];
         await Battle.MoveLeftPlayerOut(300, 30);
         await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 600, 60);
+    }
+
+    public async Task DisplayMenu()
+    {
     }
 }

@@ -33,6 +33,12 @@ public partial class Battle : UserControl
         Location = new Point(-233, 0)
     };
     
+    private MonsterStatusBar leftPlayerMonsterStatusBar = new MonsterStatusBar("Left Player's Monster",
+        1000, 1000, "Left");
+    
+    private MonsterStatusBar rightPlayerMonsterStatusBar = new MonsterStatusBar("Right Player's Monster",
+        1000, 1000, "Right");
+    
     public Battle(IPlayer left, IPlayer right, BattleMap map, string bgmPath)
     {
         InitializeComponent();
@@ -42,19 +48,29 @@ public partial class Battle : UserControl
         Map = map;
         BGMPath = bgmPath;
         
-        leftPlayerImage.Image = Image.FromFile(LeftPlayer.FullBackImagePath);
-        rightPlayerImage.Image = Image.FromFile(RightPlayer.FullFrontImagePath);
-
+        Image leftPlayer = Image.FromFile(LeftPlayer.FullBackImagePath);
+        Image rightPlayer = Image.FromFile(RightPlayer.FullFrontImagePath);
+        leftPlayerImage.Image = new Bitmap(leftPlayer);
+        rightPlayerImage.Image = new Bitmap(rightPlayer);
+        leftPlayer.Dispose();
+        rightPlayer.Dispose();
+        
         leftPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(LeftPlayer.SummoningColorRGB);
         rightPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(RightPlayer.SummoningColorRGB);
     }
 
     public async Task Start(Form source, List<PictureBox> gates)
     {
+        leftPlayerMonsterStatusBar.Location = new Point(780, 390);
+        rightPlayerMonsterStatusBar.Location = new Point(30, 30);
+        
         AudioPlayer.PlayBGM(BGMPath);
         
         Map.Controls.Add(leftPlayerSummoningMagic);
         Map.Controls.Add(rightPlayerSummoningMagic);
+        
+        Map.Controls.Add(leftPlayerMonsterStatusBar);
+        Map.Controls.Add(rightPlayerMonsterStatusBar);
         
         Map.Controls.Add(leftPlayerMonster);
         Map.Controls.Add(rightPlayerMonster);
@@ -65,6 +81,8 @@ public partial class Battle : UserControl
 
         leftPlayerSummoningMagic.Visible = false;
         rightPlayerSummoningMagic.Visible = false;
+        leftPlayerMonsterStatusBar.Visible = false;
+        rightPlayerMonsterStatusBar.Visible = false;
         leftPlayerMonster.Visible = false;
         rightPlayerMonster.Visible = false;
         
@@ -240,6 +258,9 @@ public partial class Battle : UserControl
         await Task.Delay(200);
         await rightPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
+        
+        rightPlayerMonsterStatusBar.Switch(RightPlayer.Monsters[monsterName].Name, RightPlayer.Monsters[monsterName].Health, RightPlayer.Monsters[monsterName].CurrentHealth, "Right");
+        rightPlayerMonsterStatusBar.Visible = true;
     }
     
     private PictureBox leftPlayerMonster = new PictureBox
@@ -339,6 +360,9 @@ public partial class Battle : UserControl
         await Task.Delay(200);
         await leftPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
+        
+        leftPlayerMonsterStatusBar.Switch(LeftPlayer.Monsters[monsterName].Name, LeftPlayer.Monsters[monsterName].Health, LeftPlayer.Monsters[monsterName].CurrentHealth, "Left");
+        leftPlayerMonsterStatusBar.Visible = true;
     }
     
 }

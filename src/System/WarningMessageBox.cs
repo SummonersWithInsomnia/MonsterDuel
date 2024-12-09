@@ -19,8 +19,9 @@ namespace MonsterDuel
             Visible = false;
 
             Image imgWarningBar = Image.FromFile("MonsterDuel_Data/system/warning_bar.png");
-            pbWarningBarTop.Image = imgWarningBar;
-            pbWarningBarBottom.Image = imgWarningBar;
+            pbWarningBarTop.Image = new Bitmap(imgWarningBar);
+            pbWarningBarBottom.Image = new Bitmap(imgWarningBar);
+            imgWarningBar.Dispose();
 
             lbYes.MouseEnter += TextEffect.LabelButton_MouseEnter;
             lbYes.MouseLeave += TextEffect.LabelButton_MouseLeave;
