@@ -148,15 +148,15 @@ public partial class Battle : UserControl
         SizeMode = PictureBoxSizeMode.StretchImage,
         BorderStyle = BorderStyle.None,
         BackColor = Color.Transparent,
-        Size = new Size(300, 300),
-        Location = new Point(930, 0)
+        Size = new Size(360, 360),
+        Location = new Point(870, 0)
     };
 
     private PictureBox rightPlayerSummoningMagic = new PictureBox
     {
         BorderStyle = BorderStyle.None,
-        Size = new Size(300, 300),
-        Location = new Point(930, 0)
+        Size = new Size(360, 360),
+        Location = new Point(870, 0)
     };
 
     private async Task rightPlayerSummoning(int duration, int step)
@@ -164,12 +164,12 @@ public partial class Battle : UserControl
         Size originalSize = rightPlayerSummoningMagic.Size;
         Point originalLocation = rightPlayerSummoningMagic.Location;
         
-        int changingSizeW = 300 / step;
-        int changingLocationX = 150 / step;
+        int changingSizeW = 360 / step;
+        int changingLocationX = 180 / step;
         int waitTime = duration / step;
 
-        rightPlayerSummoningMagic.Size = new Size(0, 300);
-        rightPlayerSummoningMagic.Location = new Point(originalLocation.X + 150, originalLocation.Y);
+        rightPlayerSummoningMagic.Size = new Size(0, 360);
+        rightPlayerSummoningMagic.Location = new Point(originalLocation.X + 180, originalLocation.Y);
 
         rightPlayerSummoningMagic.Visible = true;
 
@@ -193,8 +193,8 @@ public partial class Battle : UserControl
         Size originalSize = rightPlayerSummoningMagic.Size;
         Point originalLocation = rightPlayerSummoningMagic.Location;
         
-        int changingSizeW = 300 / step;
-        int changingLocationX = 150 / step;
+        int changingSizeW = 360 / step;
+        int changingLocationX = 180 / step;
         int waitTime = duration / step;
         
         for (int i = 0; i < step; i++)
@@ -206,8 +206,8 @@ public partial class Battle : UserControl
             await Task.Delay(waitTime);
         }
 
-        rightPlayerSummoningMagic.Size = new Size(0, 300);
-        rightPlayerSummoningMagic.Location = new Point(originalLocation.X + 150, originalLocation.Y);
+        rightPlayerSummoningMagic.Size = new Size(0, 360);
+        rightPlayerSummoningMagic.Location = new Point(originalLocation.X + 180, originalLocation.Y);
 
         rightPlayerSummoningMagic.Visible = false;
 
@@ -233,14 +233,14 @@ public partial class Battle : UserControl
         BorderStyle = BorderStyle.None,
         BackColor = Color.Transparent,
         Size = new Size(690, 690),
-        Location = new Point(0, 100)
+        Location = new Point(-80, 100)
     };
     
     private PictureBox leftPlayerSummoningMagic = new PictureBox
     {
         BorderStyle = BorderStyle.None,
         Size = new Size(690, 720),
-        Location = new Point(0, 0)
+        Location = new Point(-80, 0)
     };
     
     private async Task leftPlayerSummoning(int duration, int step)
