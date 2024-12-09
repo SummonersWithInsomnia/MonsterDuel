@@ -232,15 +232,15 @@ public partial class Battle : UserControl
         SizeMode = PictureBoxSizeMode.StretchImage,
         BorderStyle = BorderStyle.None,
         BackColor = Color.Transparent,
-        Size = new Size(690, 690),
-        Location = new Point(-80, 100)
+        Size = new Size(842, 842),
+        Location = new Point(-150, 100)
     };
     
     private PictureBox leftPlayerSummoningMagic = new PictureBox
     {
         BorderStyle = BorderStyle.None,
-        Size = new Size(690, 720),
-        Location = new Point(-80, 0)
+        Size = new Size(842, 720),
+        Location = new Point(-150, 0)
     };
     
     private async Task leftPlayerSummoning(int duration, int step)
@@ -248,12 +248,12 @@ public partial class Battle : UserControl
         Size originalSize = leftPlayerSummoningMagic.Size;
         Point originalLocation = leftPlayerSummoningMagic.Location;
         
-        int changingSizeW = 690 / step;
-        int changingLocationX = 345 / step;
+        int changingSizeW = 842 / step;
+        int changingLocationX = 421 / step;
         int waitTime = duration / step;
 
         leftPlayerSummoningMagic.Size = new Size(0, 720);
-        leftPlayerSummoningMagic.Location = new Point(originalLocation.X + 345, originalLocation.Y);
+        leftPlayerSummoningMagic.Location = new Point(originalLocation.X + 421, originalLocation.Y);
 
         leftPlayerSummoningMagic.Visible = true;
 
@@ -277,8 +277,8 @@ public partial class Battle : UserControl
         Size originalSize = leftPlayerSummoningMagic.Size;
         Point originalLocation = leftPlayerSummoningMagic.Location;
         
-        int changingSizeW = 690 / step;
-        int changingLocationX = 345 / step;
+        int changingSizeW = 842 / step;
+        int changingLocationX = 421 / step;
         int waitTime = duration / step;
         
         for (int i = 0; i < step; i++)
@@ -291,7 +291,7 @@ public partial class Battle : UserControl
         }
 
         leftPlayerSummoningMagic.Size = new Size(0, 720);
-        leftPlayerSummoningMagic.Location = new Point(originalLocation.X + 345, originalLocation.Y);
+        leftPlayerSummoningMagic.Location = new Point(originalLocation.X + 421, originalLocation.Y);
 
         leftPlayerSummoningMagic.Visible = false;
 
