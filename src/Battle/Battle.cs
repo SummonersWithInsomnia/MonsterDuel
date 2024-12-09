@@ -221,10 +221,25 @@ public partial class Battle : UserControl
     {
         await rightPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
-        rightPlayerMonster.Image = Image.FromFile(RightPlayer.Monsters[monsterName].FrontImagePath);
+        Image tempImage = File.Exists(RightPlayer.Monsters[monsterName].FrontImagePath)
+            ? Image.FromFile(RightPlayer.Monsters[monsterName].FrontImagePath)
+            : null;
+
+        if (tempImage == null)
+        {
+            MessageBox.Show("Game files are missing or broken.\nPlease reinstall the game.", "Monster Duel Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Application.Exit();
+        }
+
+        Image monsterImage = new Bitmap(tempImage);
+        tempImage.Dispose();
+        
+        rightPlayerMonster.Image = monsterImage;
         rightPlayerMonster.Visible = true;
         await Task.Delay(200);
         await rightPlayerEndSummoning((duration / 2), (step / 2));
+        Map.Refresh();
     }
     
     private PictureBox leftPlayerMonster = new PictureBox
@@ -305,10 +320,25 @@ public partial class Battle : UserControl
     {
         await leftPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
-        leftPlayerMonster.Image = Image.FromFile(LeftPlayer.Monsters[monsterName].BackImagePath);
+        Image tempImage = File.Exists(LeftPlayer.Monsters[monsterName].BackImagePath)
+            ? Image.FromFile(LeftPlayer.Monsters[monsterName].BackImagePath)
+            : null;
+
+        if (tempImage == null)
+        {
+            MessageBox.Show("Game files are missing or broken.\nPlease reinstall the game.", "Monster Duel Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Application.Exit();
+        }
+
+        Image monsterImage = new Bitmap(tempImage);
+        tempImage.Dispose();
+        
+        leftPlayerMonster.Image = monsterImage;
         leftPlayerMonster.Visible = true;
         await Task.Delay(200);
         await leftPlayerEndSummoning((duration / 2), (step / 2));
+        Map.Refresh();
     }
     
 }
