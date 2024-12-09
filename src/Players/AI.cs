@@ -15,17 +15,7 @@ public class AI : IPlayer
     public string FullBackImagePath { get; set; }
     public string SummoningColorRGB { get; set; }
 
-    public Task CommandMonster()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Task SwitchMonster()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Task Surrender()
+    public async Task<string> GetCommandString(BattleController battleController)
     {
         throw new System.NotImplementedException();
     }

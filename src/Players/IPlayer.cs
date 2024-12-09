@@ -15,9 +15,6 @@ namespace MonsterDuel
         string FullBackImagePath { get; set; }
         string SummoningColorRGB { get; set; }
 
-        Task CommandMonster();
-        Task SwitchMonster();
-
-        Task Surrender();
+        Task<string> GetCommandString(BattleController battleController);
     }
 }

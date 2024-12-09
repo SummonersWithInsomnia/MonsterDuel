@@ -32,7 +32,6 @@ public partial class BattleMessageBox : UserControl
         textList = texts;
         
         Visible = true;
-        battleController.IsMessageBoxOpened = true;
         
         await TextEffect.Typewriter(lbText, textList[0], 100, 10);
         textList.RemoveAt(0);
@@ -45,7 +44,6 @@ public partial class BattleMessageBox : UserControl
 
         autoShowLock = true;
         Visible = true;
-        battleController.IsMessageBoxOpened = true;
         
         while (textList.Count > 0)
         {
@@ -55,14 +53,12 @@ public partial class BattleMessageBox : UserControl
         }
         
         Visible = false;
-        battleController.IsMessageBoxOpened = false;
         autoShowLock = false;
     }
     
     public async Task Show(string text)
     {
         Visible = true;
-        battleController.IsMessageBoxOpened = true;
         
         await TextEffect.Typewriter(lbText, text, 100, 10);
     }
@@ -71,13 +67,11 @@ public partial class BattleMessageBox : UserControl
     {
         autoShowLock = true;
         Visible = true;
-        battleController.IsMessageBoxOpened = true;
         
         await TextEffect.Typewriter(lbText, text, 100, 10);
         await Task.Delay(2000);
         
         Visible = false;
-        battleController.IsMessageBoxOpened = false;
         autoShowLock = false;
     }
 
@@ -94,7 +88,6 @@ public partial class BattleMessageBox : UserControl
             else
             {
                 Visible = false;
-                battleController.IsMessageBoxOpened = false;
             }
         }
     }

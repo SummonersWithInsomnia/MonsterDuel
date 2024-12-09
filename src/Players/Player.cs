@@ -15,18 +15,9 @@ public class Player : IPlayer
     public string FullBackImagePath { get; set; }
     public string SummoningColorRGB { get; set; }
 
-    public Task CommandMonster()
+    public async Task<string> GetCommandString(BattleController battleController)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public Task SwitchMonster()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public Task Surrender()
-    {
-        throw new System.NotImplementedException();
+        string command =  await battleController.DisplayBattleMenu();
+        return command;
     }
 }

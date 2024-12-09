@@ -13,7 +13,6 @@ public class BattleController
     public List<PictureBox> Gates = new List<PictureBox>();
 
     private BattleMessageBox messageBox;
-    public bool IsMessageBoxOpened = false;
     public TaskCompletionSource<bool> MessageBoxTcs;
 
     private IPlayer winner;
@@ -42,16 +41,16 @@ public class BattleController
         await MessageBoxTcs.Task;
 
         await SendMonstersAtStart();
-        await DisplayMenu();
-
-        // GameLoop();
+        
+        await GameLoop();
     }
 
     public async Task GameLoop()
     {
         while (!hasWinner)
         {
-            
+            string leftPlayerCommand = await Battle.LeftPlayer.GetCommandString(this);
+            string rightPlayerCommand = await Battle.RightPlayer.GetCommandString(this);
         }
     }
 
@@ -68,7 +67,13 @@ public class BattleController
         await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 600, 60);
     }
 
-    public async Task DisplayMenu()
+    public async Task<string> DisplayBattleMenu()
     {
+        await Battle.DisplayMenu();
+
+        string commandFromBattleMenu = Battle.BattleMenu.Command;
+        Battle.BattleMenu.Command = "";
+        
+        return commandFromBattleMenu;
     }
 }

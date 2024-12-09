@@ -38,6 +38,13 @@ public partial class Battle : UserControl
     
     private MonsterStatusBar rightPlayerMonsterStatusBar = new MonsterStatusBar("Right Player's Monster",
         1000, 1000, "Right");
+
+    public BattleMenu BattleMenu;
+    public TaskCompletionSource<bool> BattleMenuTcs;
+    public SwitchMonsterMenu SwitchMonsterMenu;
+    public TaskCompletionSource<bool> SwitchMonsterMenuTcs;
+    public SurrenderMenu SurrenderMenu;
+    public TaskCompletionSource<bool> SurrenderMenuTcs;
     
     public Battle(IPlayer left, IPlayer right, BattleMap map, string bgmPath)
     {
@@ -57,6 +64,10 @@ public partial class Battle : UserControl
         
         leftPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(LeftPlayer.SummoningColorRGB);
         rightPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(RightPlayer.SummoningColorRGB);
+
+        BattleMenu = new BattleMenu(this);
+        SwitchMonsterMenu = new SwitchMonsterMenu(this);
+        SurrenderMenu = new SurrenderMenu(this);
     }
 
     public async Task Start(Form source, List<PictureBox> gates)
@@ -65,6 +76,10 @@ public partial class Battle : UserControl
         rightPlayerMonsterStatusBar.Location = new Point(30, 30);
         
         AudioPlayer.PlayBGM(BGMPath);
+        
+        Map.Controls.Add(SurrenderMenu);
+        Map.Controls.Add(SwitchMonsterMenu);
+        Map.Controls.Add(BattleMenu);
         
         Map.Controls.Add(leftPlayerSummoningMagic);
         Map.Controls.Add(rightPlayerSummoningMagic);
@@ -78,7 +93,11 @@ public partial class Battle : UserControl
         Map.Controls.Add(leftPlayerImage);
         Map.Controls.Add(rightPlayerImage);
         Controls.Add(Map);
-
+        
+        SurrenderMenu.Visible = false;
+        SwitchMonsterMenu.Visible = false;
+        BattleMenu.Visible = false;
+        
         leftPlayerSummoningMagic.Visible = false;
         rightPlayerSummoningMagic.Visible = false;
         leftPlayerMonsterStatusBar.Visible = false;
@@ -364,5 +383,25 @@ public partial class Battle : UserControl
         leftPlayerMonsterStatusBar.Switch(LeftPlayer.Monsters[monsterName].Name, LeftPlayer.Monsters[monsterName].Health, LeftPlayer.Monsters[monsterName].CurrentHealth, "Left");
         leftPlayerMonsterStatusBar.Visible = true;
     }
+
+    public async Task DisplayMenu()
+    {
+        BattleMenuTcs = new TaskCompletionSource<bool>();
+        await BattleMenu.Show();
+        await BattleMenuTcs.Task;
+    }
     
+    public async Task DisplaySwitchMonsterMenu()
+    {
+        SwitchMonsterMenuTcs = new TaskCompletionSource<bool>();
+        await SwitchMonsterMenu.Show();
+        await SwitchMonsterMenuTcs.Task;
+    }
+    
+    public async Task DisplaySurrenderMenu()
+    {
+        SurrenderMenuTcs = new TaskCompletionSource<bool>();
+        await SurrenderMenu.Show();
+        await SurrenderMenuTcs.Task;
+    }
 }
