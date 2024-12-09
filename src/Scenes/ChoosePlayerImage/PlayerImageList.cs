@@ -18,7 +18,8 @@ public static class PlayerImageList
                 IconPath = "",
                 VSBarIconPath = "MonsterDuel_Data/players/Type1/Type1_vs_bar_icon.png",
                 FullFrontImagePath = "MonsterDuel_Data/players/Type1/Type1_full_front.png",
-                FullBackImagePath = "MonsterDuel_Data/players/Type1/Type1_full_back.png"
+                FullBackImagePath = "MonsterDuel_Data/players/Type1/Type1_full_back.png",
+                SummoningColorRGB = "#c08242"
             }
         },
         {
@@ -30,7 +31,8 @@ public static class PlayerImageList
                 IconPath = "",
                 VSBarIconPath = "MonsterDuel_Data/players/Type2/Type2_vs_bar_icon.png",
                 FullFrontImagePath = "MonsterDuel_Data/players/Type2/Type2_full_front.png",
-                FullBackImagePath = "MonsterDuel_Data/players/Type2/Type2_full_back.png"
+                FullBackImagePath = "MonsterDuel_Data/players/Type2/Type2_full_back.png",
+                SummoningColorRGB = "#e5b4ff"
             }
         }
     };

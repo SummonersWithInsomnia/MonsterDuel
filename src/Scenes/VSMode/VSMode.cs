@@ -662,7 +662,8 @@ namespace MonsterDuel
                 IconPath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].IconPath,
                 VSBarIconPath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].VSBarIconPath,
                 FullFrontImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FullFrontImagePath,
-                FullBackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FullBackImagePath
+                FullBackImagePath = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].FullBackImagePath,
+                SummoningColorRGB = PlayerImageList.All[PlayerImageList.CurrentPlayerImageName].SummoningColorRGB
             };
             
             Dictionary<string, Monster> opponentMonsters = new Dictionary<string, Monster>();

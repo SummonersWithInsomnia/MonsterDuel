@@ -13,7 +13,8 @@ public static class AIList
             IconPath = "",
             VSBarIconPath = "MonsterDuel_Data/opponents/Ai/Ai_vs_bar_icon.png",
             FullFrontImagePath = "MonsterDuel_Data/opponents/Ai/Ai_full_front.png",
-            FullBackImagePath = ""
+            FullBackImagePath = "",
+            SummoningColorRGB = "#fdd2eb"
         }
     ];
     
@@ -25,7 +26,8 @@ public static class AIList
             IconPath = PlayerImageList.All["Type 1"].IconPath,
             VSBarIconPath = PlayerImageList.All["Type 1"].VSBarIconPath,
             FullFrontImagePath = PlayerImageList.All["Type 1"].FullFrontImagePath,
-            FullBackImagePath = PlayerImageList.All["Type 1"].FullBackImagePath
+            FullBackImagePath = PlayerImageList.All["Type 1"].FullBackImagePath,
+            SummoningColorRGB = "#c08242"
         },
         new AI // Player Image Type 2
         {
@@ -33,7 +35,8 @@ public static class AIList
             IconPath = PlayerImageList.All["Type 2"].IconPath,
             VSBarIconPath = PlayerImageList.All["Type 2"].VSBarIconPath,
             FullFrontImagePath = PlayerImageList.All["Type 2"].FullFrontImagePath,
-            FullBackImagePath = PlayerImageList.All["Type 2"].FullBackImagePath
+            FullBackImagePath = PlayerImageList.All["Type 2"].FullBackImagePath,
+            SummoningColorRGB = "#e5b4ff"
         }
     ];
     

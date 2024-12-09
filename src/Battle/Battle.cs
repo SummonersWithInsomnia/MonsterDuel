@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,8 +15,23 @@ public partial class Battle : UserControl
     public BattleMap Map { get; set; }
     public string BGMPath { get; set; }
     
-    private PictureBox leftPlayerImage = new PictureBox();
-    private PictureBox rightPlayerImage = new PictureBox();
+    private PictureBox leftPlayerImage = new PictureBox
+    {
+        SizeMode = PictureBoxSizeMode.StretchImage,
+        BorderStyle = BorderStyle.None,
+        BackColor = Color.Transparent,
+        Size = new Size(790, 1186),
+        Location = new Point(1280, 233)
+    };
+    
+    private PictureBox rightPlayerImage = new PictureBox
+    {
+        SizeMode = PictureBoxSizeMode.StretchImage,
+        BorderStyle = BorderStyle.None,
+        BackColor = Color.Transparent,
+        Size = new Size(233, 360),
+        Location = new Point(-233, 0)
+    };
     
     public Battle(IPlayer left, IPlayer right, BattleMap map, string bgmPath)
     {
@@ -26,29 +42,31 @@ public partial class Battle : UserControl
         Map = map;
         BGMPath = bgmPath;
         
-        leftPlayerImage.SizeMode = PictureBoxSizeMode.StretchImage;
-        rightPlayerImage.SizeMode = PictureBoxSizeMode.StretchImage;
-        leftPlayerImage.BorderStyle = BorderStyle.None;
-        rightPlayerImage.BorderStyle = BorderStyle.None;
-        leftPlayerImage.BackColor = Color.Transparent;
-        rightPlayerImage.BackColor = Color.Transparent;
         leftPlayerImage.Image = Image.FromFile(LeftPlayer.FullBackImagePath);
         rightPlayerImage.Image = Image.FromFile(RightPlayer.FullFrontImagePath);
-        
-        leftPlayerImage.Size = new Size(790, 1186);
-        rightPlayerImage.Size = new Size(233, 360);
-        
-        leftPlayerImage.Location = new Point(1280, 233);
-        rightPlayerImage.Location = new Point(-233, 0);
+
+        leftPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(LeftPlayer.SummoningColorRGB);
+        rightPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(RightPlayer.SummoningColorRGB);
     }
 
     public async Task Start(Form source, List<PictureBox> gates)
     {
         AudioPlayer.PlayBGM(BGMPath);
         
+        Map.Controls.Add(leftPlayerSummoningMagic);
+        Map.Controls.Add(rightPlayerSummoningMagic);
+        
+        Map.Controls.Add(leftPlayerMonster);
+        Map.Controls.Add(rightPlayerMonster);
+        
         Map.Controls.Add(leftPlayerImage);
         Map.Controls.Add(rightPlayerImage);
         Controls.Add(Map);
+
+        leftPlayerSummoningMagic.Visible = false;
+        rightPlayerSummoningMagic.Visible = false;
+        leftPlayerMonster.Visible = false;
+        rightPlayerMonster.Visible = false;
         
         await Opening(source, gates,300, 30);
     }
@@ -93,11 +111,204 @@ public partial class Battle : UserControl
         source.Refresh();
     }
 
-    public async Task MoveRightPlayerOut()
+    public async Task MoveRightPlayerOut(int duration, int step)
     {
+        int waitTime = duration / step;
+        int move = (1280 - 997) / step;
+        Point finalLocation = new Point(1280,0);
+
+        for (int i = 0; i < step; i++)
+        {
+            rightPlayerImage.Location = new Point((rightPlayerImage.Location.X + move), rightPlayerImage.Location.Y);
+            await Task.Delay(waitTime);
+        }
+
+        rightPlayerImage.Location = finalLocation;
+        Map.Refresh();
     }
     
-    public async Task MoveLeftPlayerOut()
+    public async Task MoveLeftPlayerOut(int duration, int step)
     {
+        int waitTime = duration / step;
+        int move = (790 - 123) / step;
+        Point finalLocation = new Point(-790, 233);
+
+        for (int i = 0; i < step; i++)
+        {
+            leftPlayerImage.Location = new Point((leftPlayerImage.Location.X - move), leftPlayerImage.Location.Y);
+            await Task.Delay(waitTime);
+        }
+
+        leftPlayerImage.Location = finalLocation;
+        Map.Refresh();
     }
+
+    private PictureBox rightPlayerMonster = new PictureBox
+    {
+        SizeMode = PictureBoxSizeMode.StretchImage,
+        BorderStyle = BorderStyle.None,
+        BackColor = Color.Transparent,
+        Size = new Size(300, 300),
+        Location = new Point(930, 0)
+    };
+
+    private PictureBox rightPlayerSummoningMagic = new PictureBox
+    {
+        BorderStyle = BorderStyle.None,
+        Size = new Size(300, 300),
+        Location = new Point(930, 0)
+    };
+
+    private async Task rightPlayerSummoning(int duration, int step)
+    {
+        Size originalSize = rightPlayerSummoningMagic.Size;
+        Point originalLocation = rightPlayerSummoningMagic.Location;
+        
+        int changingSizeW = 300 / step;
+        int changingLocationX = 150 / step;
+        int waitTime = duration / step;
+
+        rightPlayerSummoningMagic.Size = new Size(0, 300);
+        rightPlayerSummoningMagic.Location = new Point(originalLocation.X + 150, originalLocation.Y);
+
+        rightPlayerSummoningMagic.Visible = true;
+
+        for (int i = 0; i < step; i++)
+        {
+            rightPlayerSummoningMagic.Size = new((rightPlayerSummoningMagic.Size.Width + changingSizeW),
+                rightPlayerSummoningMagic.Height);
+            rightPlayerSummoningMagic.Location = new Point((rightPlayerSummoningMagic.Location.X - changingLocationX),
+                rightPlayerSummoningMagic.Location.Y);
+            await Task.Delay(waitTime);
+        }
+
+        rightPlayerSummoningMagic.Size = originalSize;
+        rightPlayerSummoningMagic.Location = originalLocation;
+        
+        Map.Refresh();
+    }
+
+    private async Task rightPlayerEndSummoning(int duration, int step)
+    {
+        Size originalSize = rightPlayerSummoningMagic.Size;
+        Point originalLocation = rightPlayerSummoningMagic.Location;
+        
+        int changingSizeW = 300 / step;
+        int changingLocationX = 150 / step;
+        int waitTime = duration / step;
+        
+        for (int i = 0; i < step; i++)
+        {
+            rightPlayerSummoningMagic.Size = new((rightPlayerSummoningMagic.Size.Width - changingSizeW),
+                rightPlayerSummoningMagic.Height);
+            rightPlayerSummoningMagic.Location = new Point((rightPlayerSummoningMagic.Location.X + changingLocationX),
+                rightPlayerSummoningMagic.Location.Y);
+            await Task.Delay(waitTime);
+        }
+
+        rightPlayerSummoningMagic.Size = new Size(0, 300);
+        rightPlayerSummoningMagic.Location = new Point(originalLocation.X + 150, originalLocation.Y);
+
+        rightPlayerSummoningMagic.Visible = false;
+
+        rightPlayerSummoningMagic.Size = originalSize;
+        rightPlayerSummoningMagic.Location = originalLocation;
+        
+        Map.Refresh();
+    }
+
+    public async Task RightPlayerSummonsMonster(string monsterName, int duration, int step)
+    {
+        await rightPlayerSummoning((duration / 2), (step / 2));
+        await Task.Delay(200);
+        rightPlayerMonster.Image = Image.FromFile(RightPlayer.Monsters[monsterName].FrontImagePath);
+        rightPlayerMonster.Visible = true;
+        await Task.Delay(200);
+        await rightPlayerEndSummoning((duration / 2), (step / 2));
+    }
+    
+    private PictureBox leftPlayerMonster = new PictureBox
+    {
+        SizeMode = PictureBoxSizeMode.StretchImage,
+        BorderStyle = BorderStyle.None,
+        BackColor = Color.Transparent,
+        Size = new Size(690, 690),
+        Location = new Point(0, 100)
+    };
+    
+    private PictureBox leftPlayerSummoningMagic = new PictureBox
+    {
+        BorderStyle = BorderStyle.None,
+        Size = new Size(690, 720),
+        Location = new Point(0, 0)
+    };
+    
+    private async Task leftPlayerSummoning(int duration, int step)
+    {
+        Size originalSize = leftPlayerSummoningMagic.Size;
+        Point originalLocation = leftPlayerSummoningMagic.Location;
+        
+        int changingSizeW = 690 / step;
+        int changingLocationX = 345 / step;
+        int waitTime = duration / step;
+
+        leftPlayerSummoningMagic.Size = new Size(0, 720);
+        leftPlayerSummoningMagic.Location = new Point(originalLocation.X + 345, originalLocation.Y);
+
+        leftPlayerSummoningMagic.Visible = true;
+
+        for (int i = 0; i < step; i++)
+        {
+            leftPlayerSummoningMagic.Size = new((leftPlayerSummoningMagic.Size.Width + changingSizeW),
+                leftPlayerSummoningMagic.Height);
+            leftPlayerSummoningMagic.Location = new Point((leftPlayerSummoningMagic.Location.X - changingLocationX),
+                leftPlayerSummoningMagic.Location.Y);
+            await Task.Delay(waitTime);
+        }
+
+        leftPlayerSummoningMagic.Size = originalSize;
+        leftPlayerSummoningMagic.Location = originalLocation;
+        
+        Map.Refresh();
+    }
+
+    private async Task leftPlayerEndSummoning(int duration, int step)
+    {
+        Size originalSize = leftPlayerSummoningMagic.Size;
+        Point originalLocation = leftPlayerSummoningMagic.Location;
+        
+        int changingSizeW = 690 / step;
+        int changingLocationX = 345 / step;
+        int waitTime = duration / step;
+        
+        for (int i = 0; i < step; i++)
+        {
+            leftPlayerSummoningMagic.Size = new((leftPlayerSummoningMagic.Size.Width - changingSizeW),
+                leftPlayerSummoningMagic.Height);
+            leftPlayerSummoningMagic.Location = new Point((leftPlayerSummoningMagic.Location.X + changingLocationX),
+                leftPlayerSummoningMagic.Location.Y);
+            await Task.Delay(waitTime);
+        }
+
+        leftPlayerSummoningMagic.Size = new Size(0, 720);
+        leftPlayerSummoningMagic.Location = new Point(originalLocation.X + 345, originalLocation.Y);
+
+        leftPlayerSummoningMagic.Visible = false;
+
+        leftPlayerSummoningMagic.Size = originalSize;
+        leftPlayerSummoningMagic.Location = originalLocation;
+        
+        Map.Refresh();
+    }
+
+    public async Task LeftPlayerSummonsMonster(string monsterName, int duration, int step)
+    {
+        await leftPlayerSummoning((duration / 2), (step / 2));
+        await Task.Delay(200);
+        leftPlayerMonster.Image = Image.FromFile(LeftPlayer.Monsters[monsterName].BackImagePath);
+        leftPlayerMonster.Visible = true;
+        await Task.Delay(200);
+        await leftPlayerEndSummoning((duration / 2), (step / 2));
+    }
+    
 }

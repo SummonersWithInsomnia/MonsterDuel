@@ -13,7 +13,8 @@ namespace MonsterDuel
         string VSBarIconPath { get; set; }
         string FullFrontImagePath { get; set; }
         string FullBackImagePath { get; set; }
-        
+        string SummoningColorRGB { get; set; }
+
         Task CommandMonster();
         Task SwitchMonster();
 

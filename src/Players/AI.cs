@@ -13,6 +13,7 @@ public class AI : IPlayer
     public string VSBarIconPath { get; set; }
     public string FullFrontImagePath { get; set; }
     public string FullBackImagePath { get; set; }
+    public string SummoningColorRGB { get; set; }
 
     public Task CommandMonster()
     {

@@ -58,12 +58,12 @@ public class BattleController
     {
         await messageBox.AutoShow("Summoner " + Battle.RightPlayer.Name + " summons " + Battle.RightPlayer.MonsterOrder[0] + ".");
         Battle.RightPlayer.CurrentMonster = Battle.RightPlayer.MonsterOrder[0];
-        await Battle.MoveRightPlayerOut();
-        //await Battle.RightPlayerSummonsMonster(Battle.RightPlayer.MonsterOrder[0]);
+        await Battle.MoveRightPlayerOut(300, 30);
+        await Battle.RightPlayerSummonsMonster(Battle.RightPlayer.MonsterOrder[0], 600, 60);
 
         await messageBox.AutoShow($"You summon {Battle.LeftPlayer.MonsterOrder[0]}.");
         Battle.LeftPlayer.CurrentMonster = Battle.LeftPlayer.MonsterOrder[0];
-        await Battle.MoveLeftPlayerOut();
-        //await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0]);
+        await Battle.MoveLeftPlayerOut(300, 30);
+        await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 600, 60);
     }
 }
