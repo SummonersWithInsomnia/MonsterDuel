@@ -31,6 +31,7 @@ namespace MonsterDuel
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Test));
             this.SuspendLayout();
             // 
             // Test
@@ -40,9 +41,9 @@ namespace MonsterDuel
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Test";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Monster Duel Test";
             this.ResumeLayout(false);
