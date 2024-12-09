@@ -19,8 +19,8 @@ public partial class PlayerImageCard : UserControl
         choosePlayerImage = cpi;
         PlayerImage = playerImage;
         
-        choosingImage = File.Exists(PlayerImage.ChoosingImagePath) ? Image.FromFile(PlayerImage.ChoosingImagePath) : null;
-        choosingImageDark = File.Exists(PlayerImage.ChoosingImagePathDark) ? Image.FromFile(PlayerImage.ChoosingImagePathDark) : null;
+        choosingImage = ImageList.GetImage(PlayerImage.ChoosingImagePath);
+        choosingImageDark = ImageList.GetImage(PlayerImage.ChoosingImagePathDark);
         
         pbPlayerImage.Image = choosingImageDark;
     }

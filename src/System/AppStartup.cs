@@ -11,20 +11,23 @@ namespace MonsterDuel;
 
 public partial class AppStartup : Form
 {
+    // Get the path which the program runs
     private string basePath = Environment.CurrentDirectory;
     
     public AppStartup()
     {
         InitializeComponent();
-
-        if (!File.Exists($"{basePath}/MonsterDuel_Data/system/app_startup.bmp"))
+        
+        BackgroundImage = ImageList.GetImage("MonsterDuel_Data/system/app_startup.bmp");
+        
+        if (BackgroundImage == null)
         {
-            MessageBox.Show("Missing game files.\nPlease reinstall the game.", "Monster Duel Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Missing or broken game files.\nPlease reinstall the game.", "Monster Duel Error", 
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
         }
         
-        BackgroundImage = Image.FromFile("MonsterDuel_Data/system/app_startup.bmp");
-        TransparencyKey = Color.White;
+        TransparencyKey = Color.White; // Skip the white pixels
         
         SetWindowRegion();
         
@@ -35,7 +38,7 @@ public partial class AppStartup : Form
     {
         await Task.Delay(6000);
         
-        bool allFilesExist = true;
+        bool allFilesExistAndCorrect = true;
         
         foreach (var filepath in fileList)
         {
@@ -43,12 +46,22 @@ public partial class AppStartup : Form
             if (!File.Exists(fullPath))
             {
                 Console.WriteLine("Missing file: " + fullPath);
-                allFilesExist = false;
+                allFilesExistAndCorrect = false;
+                break;
+            }
+        }
+
+        foreach (var pair in ImageList.All)
+        {
+            if (pair.Value == null)
+            {
+                Console.WriteLine("Broken image from file: " + basePath + "/" + pair.Key);
+                allFilesExistAndCorrect = false;
                 break;
             }
         }
         
-        if (allFilesExist)
+        if (allFilesExistAndCorrect)
         {
             Thread th = new Thread(() =>
             {
@@ -63,7 +76,8 @@ public partial class AppStartup : Form
         }
         else
         {
-            MessageBox.Show("Missing game files.\nPlease reinstall the game.", "Monster Duel Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Missing or broken game files.\nPlease reinstall the game.", "Monster Duel Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
         }
     }
@@ -81,6 +95,7 @@ public partial class AppStartup : Form
                 {
                     if (bmp.GetPixel(x, y) != TransparencyKey)
                     {
+                        // Add the location to the path where the pixel is white
                         path.AddRectangle(new Rectangle(x, y, 1, 1));
                     }
                 }

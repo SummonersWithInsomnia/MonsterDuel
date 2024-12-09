@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MonsterDuel;
@@ -7,6 +8,9 @@ public static class ImageList
 {
     public static Bitmap GetImage(string path)
     {
+        // Console.WriteLine("ImageList.GetImage(string path): " + path);
+        if (All[path] == null) return null;
+        
         return new Bitmap(All[path]);
     }
     

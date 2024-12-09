@@ -105,10 +105,11 @@ partial class BattleMenu
         this.pnSkills.Name = "pnSkills";
         this.pnSkills.Size = new System.Drawing.Size(600, 200);
         this.pnSkills.TabIndex = 1;
+        this.pnSkills.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnSkills_MouseClick);
         // 
         // lbSkill_4
         // 
-        this.lbSkill_4.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.lbSkill_4.Font = new System.Drawing.Font("Courier New", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.lbSkill_4.ForeColor = System.Drawing.Color.White;
         this.lbSkill_4.Location = new System.Drawing.Point(300, 100);
         this.lbSkill_4.Margin = new System.Windows.Forms.Padding(0);
@@ -121,7 +122,7 @@ partial class BattleMenu
         // 
         // lbSkill_3
         // 
-        this.lbSkill_3.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.lbSkill_3.Font = new System.Drawing.Font("Courier New", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.lbSkill_3.ForeColor = System.Drawing.Color.White;
         this.lbSkill_3.Location = new System.Drawing.Point(0, 100);
         this.lbSkill_3.Margin = new System.Windows.Forms.Padding(0);
@@ -134,7 +135,7 @@ partial class BattleMenu
         // 
         // lbSkill_2
         // 
-        this.lbSkill_2.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.lbSkill_2.Font = new System.Drawing.Font("Courier New", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.lbSkill_2.ForeColor = System.Drawing.Color.White;
         this.lbSkill_2.Location = new System.Drawing.Point(300, 0);
         this.lbSkill_2.Margin = new System.Windows.Forms.Padding(0);
@@ -147,7 +148,7 @@ partial class BattleMenu
         // 
         // lbSkill_1
         // 
-        this.lbSkill_1.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        this.lbSkill_1.Font = new System.Drawing.Font("Courier New", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.lbSkill_1.ForeColor = System.Drawing.Color.White;
         this.lbSkill_1.Location = new System.Drawing.Point(0, 0);
         this.lbSkill_1.Margin = new System.Windows.Forms.Padding(0);

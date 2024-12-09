@@ -455,9 +455,9 @@ public static class MonsterList
             }
         });
 
-        All.Add("J-hope", new Monster
+        All.Add("J-Hope", new Monster
         {
-            Name = "J-hope",
+            Name = "J-Hope",
             Health = 105,
             CurrentHealth = 105,
             Attack = 60,
@@ -467,9 +467,9 @@ public static class MonsterList
             Element = "Water",
             Buffs = new List<Buff>(),
             Available = true,
-            IconPath = "MonsterDuel_Data/monsters/icons/J-hope.png",
-            FrontImagePath = "MonsterDuel_Data/monsters/J-hope_front.png",
-            BackImagePath = "MonsterDuel_Data/monsters/J-hope_back.png",
+            IconPath = "MonsterDuel_Data/monsters/icons/J-Hope.png",
+            FrontImagePath = "MonsterDuel_Data/monsters/J-Hope_front.png",
+            BackImagePath = "MonsterDuel_Data/monsters/J-Hope_back.png",
             Skills = new Dictionary<string, ISkill>
             {
                 {

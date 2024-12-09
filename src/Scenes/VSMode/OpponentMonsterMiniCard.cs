@@ -15,7 +15,7 @@ public partial class OpponentMonsterMiniCard : UserControl
         this.vsMode = vsMode;
         this.monster = monster;
         
-        pbMonsterIcon.Image = File.Exists(this.monster.IconPath) ? Image.FromFile(this.monster.IconPath) : null;
+        pbMonsterIcon.Image = ImageList.GetImage(this.monster.IconPath);
         lbMonsterName.Text = monster.Name;
     }
 }

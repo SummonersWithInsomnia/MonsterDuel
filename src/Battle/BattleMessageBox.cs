@@ -20,7 +20,7 @@ public partial class BattleMessageBox : UserControl
     {
         InitializeComponent();
         
-        BackgroundImage = Image.FromFile("MonsterDuel_Data/effects/scenes/battle_message_box.png");
+        BackgroundImage = ImageList.GetImage("MonsterDuel_Data/effects/scenes/battle_message_box.png");
 
         this.battleController = battleController;
         textList = new List<string>();

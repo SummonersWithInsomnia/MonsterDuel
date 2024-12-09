@@ -20,7 +20,7 @@ namespace MonsterDuel
             this.monster = monster;
             
             lbMonsterName.Text = this.monster.Name;
-            pbMonsterIcon.Image = File.Exists(this.monster.IconPath) ? Image.FromFile(this.monster.IconPath) : null;
+            pbMonsterIcon.Image = ImageList.GetImage(this.monster.IconPath);
         }
 
         private void MonsterMiniCard_MouseEnter(object sender, EventArgs e)

@@ -18,6 +18,6 @@ public partial class BattleMap : UserControl
         IconPath = iconPath;
         BackgroundImagePath = backgroundImagePath;
 
-        BackgroundImage = File.Exists(BackgroundImagePath) ? Image.FromFile(BackgroundImagePath) : null;
+        BackgroundImage = ImageList.GetImage(BackgroundImagePath);
     }
 }

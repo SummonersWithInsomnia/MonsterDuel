@@ -55,12 +55,8 @@ public partial class Battle : UserControl
         Map = map;
         BGMPath = bgmPath;
         
-        Image leftPlayer = Image.FromFile(LeftPlayer.FullBackImagePath);
-        Image rightPlayer = Image.FromFile(RightPlayer.FullFrontImagePath);
-        leftPlayerImage.Image = new Bitmap(leftPlayer);
-        rightPlayerImage.Image = new Bitmap(rightPlayer);
-        leftPlayer.Dispose();
-        rightPlayer.Dispose();
+        leftPlayerImage.Image = ImageList.GetImage(LeftPlayer.FullBackImagePath);
+        rightPlayerImage.Image = ImageList.GetImage(RightPlayer.FullFrontImagePath);
         
         leftPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(LeftPlayer.SummoningColorRGB);
         rightPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(RightPlayer.SummoningColorRGB);
@@ -258,21 +254,7 @@ public partial class Battle : UserControl
     {
         await rightPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
-        Image tempImage = File.Exists(RightPlayer.Monsters[monsterName].FrontImagePath)
-            ? Image.FromFile(RightPlayer.Monsters[monsterName].FrontImagePath)
-            : null;
-
-        if (tempImage == null)
-        {
-            MessageBox.Show("Game files are missing or broken.\nPlease reinstall the game.", "Monster Duel Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Application.Exit();
-        }
-
-        Image monsterImage = new Bitmap(tempImage);
-        tempImage.Dispose();
-        
-        rightPlayerMonster.Image = monsterImage;
+        rightPlayerMonster.Image = ImageList.GetImage(RightPlayer.Monsters[monsterName].FrontImagePath);
         rightPlayerMonster.Visible = true;
         await Task.Delay(200);
         await rightPlayerEndSummoning((duration / 2), (step / 2));
@@ -360,21 +342,7 @@ public partial class Battle : UserControl
     {
         await leftPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
-        Image tempImage = File.Exists(LeftPlayer.Monsters[monsterName].BackImagePath)
-            ? Image.FromFile(LeftPlayer.Monsters[monsterName].BackImagePath)
-            : null;
-
-        if (tempImage == null)
-        {
-            MessageBox.Show("Game files are missing or broken.\nPlease reinstall the game.", "Monster Duel Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Application.Exit();
-        }
-
-        Image monsterImage = new Bitmap(tempImage);
-        tempImage.Dispose();
-        
-        leftPlayerMonster.Image = monsterImage;
+        leftPlayerMonster.Image = ImageList.GetImage(LeftPlayer.Monsters[monsterName].BackImagePath);
         leftPlayerMonster.Visible = true;
         await Task.Delay(200);
         await leftPlayerEndSummoning((duration / 2), (step / 2));

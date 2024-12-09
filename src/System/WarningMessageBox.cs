@@ -18,7 +18,7 @@ namespace MonsterDuel
             
             Visible = false;
 
-            Image imgWarningBar = Image.FromFile("MonsterDuel_Data/system/warning_bar.png");
+            Image imgWarningBar = ImageList.GetImage("MonsterDuel_Data/system/warning_bar.png");
             pbWarningBarTop.Image = new Bitmap(imgWarningBar);
             pbWarningBarBottom.Image = new Bitmap(imgWarningBar);
             imgWarningBar.Dispose();

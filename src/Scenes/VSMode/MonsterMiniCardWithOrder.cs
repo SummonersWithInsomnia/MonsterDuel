@@ -21,11 +21,7 @@ public partial class MonsterMiniCardWithOrder : UserControl
         this.Order = order;
         
         lbMonsterName.Text = Monster.Name;
-        
-        Image icon = File.Exists(Monster.IconPath) ? Image.FromFile(Monster.IconPath) : null;
-        pbMonsterIcon.Image = new Bitmap(icon);
-        icon.Dispose();
-        
+        pbMonsterIcon.Image = ImageList.GetImage(Monster.IconPath);
         lbOrder.Text = "";
     }
 
@@ -33,7 +29,7 @@ public partial class MonsterMiniCardWithOrder : UserControl
     {
         Monster = monster;
         lbMonsterName.Text = Monster.Name;
-        pbMonsterIcon.Image = File.Exists(Monster.IconPath) ? Image.FromFile(Monster.IconPath) : null;
+        pbMonsterIcon.Image = ImageList.GetImage(Monster.IconPath);
     }
     
     public void UpdateOrder()

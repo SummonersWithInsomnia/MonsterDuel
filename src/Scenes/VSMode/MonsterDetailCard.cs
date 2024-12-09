@@ -21,7 +21,7 @@ namespace MonsterDuel
         {
             lbMonsterName.Text = monster.Name;
             
-            lbAttributeList.Text += "ELE: " + monster.Element + Environment.NewLine; 
+            lbAttributeList.Text += "Element: " + monster.Element + Environment.NewLine; 
             lbAttributeList.Text += "HP: " + monster.Health + Environment.NewLine;
             lbAttributeList.Text += "ATK: " + monster.Attack + Environment.NewLine;
             lbAttributeList.Text += "DEF: " + monster.Defense + Environment.NewLine;
@@ -30,7 +30,7 @@ namespace MonsterDuel
             foreach (var item in monster.Skills)
             {
                 lbSkillList.Text += item.Key + " (Limit: " + item.Value.Limit + ")" + Environment.NewLine;
-                lbSkillList.Text += item.Value.Element + "(" + item.Value.Type + ")" + Environment.NewLine;
+                lbSkillList.Text += item.Value.Element + " " + item.Value.Type + Environment.NewLine;
                 lbSkillList.Text += Environment.NewLine;
             }
             

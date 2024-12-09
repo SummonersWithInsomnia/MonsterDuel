@@ -13,7 +13,7 @@ namespace MonsterDuel
             {
                 Size = new Size(1280, 720),
                 Location = new Point(-1280, 0),
-                ImageLocation = filepath,
+                Image = ImageList.GetImage(filepath),
                 BorderStyle = BorderStyle.None
             };
             
@@ -42,7 +42,7 @@ namespace MonsterDuel
             {
                 Size = new Size(1280, 720),
                 Location = new Point(1280, 0),
-                ImageLocation = filepath,
+                Image = ImageList.GetImage(filepath),
                 BorderStyle = BorderStyle.None
             };
             
@@ -109,7 +109,7 @@ namespace MonsterDuel
             {
                 Size = new Size(1280, 720),
                 Location = new Point(0, -720),
-                ImageLocation = filepath,
+                Image = ImageList.GetImage(filepath),
                 BorderStyle = BorderStyle.None
             };
             
@@ -138,7 +138,7 @@ namespace MonsterDuel
             {
                 Size = new Size(1280, 720),
                 Location = new Point(0, 720),
-                ImageLocation = filepath,
+                Image = ImageList.GetImage(filepath),
                 BorderStyle = BorderStyle.None
             };
             
@@ -205,7 +205,7 @@ namespace MonsterDuel
             {
                 Size = new Size(640, 720),
                 Location = new Point(-640, 0),
-                ImageLocation = leftFilepath,
+                Image = ImageList.GetImage(leftFilepath),
                 BorderStyle = BorderStyle.None
             };
             
@@ -213,7 +213,7 @@ namespace MonsterDuel
             {
                 Size = new Size(640, 720),
                 Location = new Point(1280, 0),
-                ImageLocation = rightFilepath,
+                Image = ImageList.GetImage(rightFilepath),
                 BorderStyle = BorderStyle.None
             };
             
@@ -275,7 +275,7 @@ namespace MonsterDuel
             {
                 Size = new Size(1280, 360),
                 Location = new Point(0, -360),
-                ImageLocation = topFilepath,
+                Image = ImageList.GetImage(topFilepath),
                 BorderStyle = BorderStyle.None
             };
             
@@ -283,7 +283,7 @@ namespace MonsterDuel
             {
                 Size = new Size(1280, 360),
                 Location = new Point(0, 720),
-                ImageLocation = bottomFilepath,
+                Image = ImageList.GetImage(bottomFilepath),
                 BorderStyle = BorderStyle.None
             };
             

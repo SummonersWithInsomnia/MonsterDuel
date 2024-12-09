@@ -63,6 +63,7 @@ public partial class BattleMenu : UserControl
     {
         if (e.Button == MouseButtons.Left)
         {
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
             pnSkills.Visible = true;
         }
     }
@@ -71,8 +72,23 @@ public partial class BattleMenu : UserControl
     {
         if (e.Button == MouseButtons.Left)
         {
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
             Command = "Command#" + ((Label)sender).Text;
             Visible = false;
+        }
+        else if(e.Button == MouseButtons.Right)
+        {
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+            pnSkills.Visible = false;
+        }
+    }
+    
+    private void pnSkills_MouseClick(object sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Right)
+        {
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/no.wav");
+            pnSkills.Visible = false;
         }
     }
     
@@ -80,6 +96,7 @@ public partial class BattleMenu : UserControl
     {
         if (e.Button == MouseButtons.Left)
         {
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
             await battle.DisplaySwitchMonsterMenu();
             if (battle.SwitchMonsterMenu.Result != "")
             {
@@ -94,6 +111,7 @@ public partial class BattleMenu : UserControl
     {
         if (e.Button == MouseButtons.Left)
         {
+            AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
             await battle.DisplaySurrenderMenu();
             if (battle.SurrenderMenu.Result != "")
             {
