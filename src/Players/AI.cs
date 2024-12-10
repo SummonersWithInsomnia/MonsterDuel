@@ -20,20 +20,18 @@ public class AI : IPlayer
     {
         string command = "";
         battleController.BattleMessageBox.ShowWaiting("Communicating...");
-
-        // TODO
+        
         Dictionary<string, Monster> monsterList = new Dictionary<string, Monster>(this.Monsters);
         string currentMonsterName = this.CurrentMonster;
         Monster currentMonster = this.Monsters[currentMonsterName];
         Dictionary<string, ISkill> currentMonsterSkills = currentMonster.Skills;
         
         // command = "Switch#MonsterName"
-
-        if (currentMonster.Health <= 0)
+        if (currentMonster.CurrentHealth <= 0)
         {
             foreach (var monsterPair in monsterList)
             {
-                if (monsterPair.Value.Health > 0 && monsterPair.Key != currentMonsterName)
+                if (monsterPair.Value.CurrentHealth > 0)
                 {
                     command = $"Switch#{monsterPair.Key}";
                     break;
@@ -41,7 +39,6 @@ public class AI : IPlayer
             }
             
             await Task.Delay(2000);
-        
             battleController.BattleMessageBox.CloseWaiting();
         
             Console.WriteLine($"AI {this.Name} Command: {command}");
@@ -61,12 +58,9 @@ public class AI : IPlayer
         }
         
         ISkill randomSkill = availableSkills[random.Next(availableSkills.Count)];
-        
-        command += "Command#" + randomSkill.Name;
-        
+        command = $"Command# + {randomSkill.Name}";
         
         await Task.Delay(2000);
-        
         battleController.BattleMessageBox.CloseWaiting();
         
         Console.WriteLine($"AI {this.Name} Command: {command}");
