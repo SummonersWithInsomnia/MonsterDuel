@@ -42,8 +42,8 @@ public partial class BattleMenu : UserControl
 
     public async Task Show()
     {
-        Visible = true;
         UpdateSkillsFromLeftPlayerCurrentMonster();
+        Visible = true;
     }
 
     public void UpdateSkillsFromLeftPlayerCurrentMonster()
@@ -114,6 +114,7 @@ public partial class BattleMenu : UserControl
             {
                 AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
                 Command = "Command#" + ((Label)sender).Text;
+                pnSkills.Visible = false;
                 Visible = false;
             }
             else

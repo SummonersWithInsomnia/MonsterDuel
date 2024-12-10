@@ -12,7 +12,7 @@ public class BattleController
     public Battle Battle { get; set; }
     public List<PictureBox> Gates = new List<PictureBox>();
 
-    private BattleMessageBox messageBox;
+    public BattleMessageBox BattleMessageBox;
     public TaskCompletionSource<bool> MessageBoxTcs;
 
     private IPlayer winner;
@@ -24,20 +24,20 @@ public class BattleController
         Battle = battle;
         Gates = gates;
         
-        messageBox = new BattleMessageBox(this);
+        BattleMessageBox = new BattleMessageBox(this);
     }
     
     public async Task Start()
     {
-        sourceForm.Controls.Add(messageBox);
-        messageBox.Visible = false;
+        sourceForm.Controls.Add(BattleMessageBox);
+        BattleMessageBox.Visible = false;
         sourceForm.Controls.Add(Battle);
         
         await Battle.Start(sourceForm, Gates);
         await Task.Delay(1000);
         
         MessageBoxTcs = new TaskCompletionSource<bool>();
-        await messageBox.Show($"You are challenged by Summoner {Battle.RightPlayer.Name}!");
+        await BattleMessageBox.Show($"You are challenged by Summoner {Battle.RightPlayer.Name}!");
         await MessageBoxTcs.Task;
 
         await SendMonstersAtStart();
@@ -50,19 +50,21 @@ public class BattleController
         while (!hasWinner)
         {
             string leftPlayerCommand = await Battle.LeftPlayer.GetCommandString(this); // Player
+            
             Battle.Refresh();
+            
             string rightPlayerCommand = await Battle.RightPlayer.GetCommandString(this); // AI
         }
     }
 
     public async Task SendMonstersAtStart()
     {
-        await messageBox.AutoShow("Summoner " + Battle.RightPlayer.Name + " summons " + Battle.RightPlayer.MonsterOrder[0] + ".");
+        await BattleMessageBox.AutoShow("Summoner " + Battle.RightPlayer.Name + " summons " + Battle.RightPlayer.MonsterOrder[0] + ".");
         Battle.RightPlayer.CurrentMonster = Battle.RightPlayer.MonsterOrder[0];
         await Battle.MoveRightPlayerOut(300, 30);
         await Battle.RightPlayerSummonsMonster(Battle.RightPlayer.MonsterOrder[0], 600, 60);
 
-        await messageBox.AutoShow($"You summon {Battle.LeftPlayer.MonsterOrder[0]}.");
+        await BattleMessageBox.AutoShow($"You summon {Battle.LeftPlayer.MonsterOrder[0]}.");
         Battle.LeftPlayer.CurrentMonster = Battle.LeftPlayer.MonsterOrder[0];
         await Battle.MoveLeftPlayerOut(300, 30);
         await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 600, 60);

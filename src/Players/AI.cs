@@ -17,6 +17,10 @@ public class AI : IPlayer
 
     public async Task<string> GetCommandString(BattleController battleController)
     {
-        throw new System.NotImplementedException();
+        battleController.BattleMessageBox.ShowWaitting("Communicating...");
+        
+        battleController.BattleMessageBox.CloseWaitting();
+        
+        return "";
     }
 }

@@ -75,6 +75,20 @@ public partial class BattleMessageBox : UserControl
         autoShowLock = false;
     }
 
+    public async Task ShowWaitting(string text)
+    {
+        autoShowLock = true;
+        Visible = true;
+        
+        await TextEffect.Typewriter(lbText, text, 100, 10);
+    }
+
+    public void CloseWaitting()
+    {
+        Visible = false;
+        autoShowLock = false;
+    }
+
     public async void Next(object sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left && autoShowLock == false)
