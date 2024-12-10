@@ -18,7 +18,7 @@ public class AI : IPlayer
 
     public async Task<string> GetCommandString(BattleController battleController)
     {
-        string command = "";
+        string command = "Surrender";
         battleController.BattleMessageBox.ShowWaitting("Communicating...");
 
         await Task.Delay(2000);

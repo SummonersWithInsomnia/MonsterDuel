@@ -80,6 +80,8 @@ public class BattleController
             // for switching monster
             
         }
+        
+        Console.WriteLine("OK");
     }
 
     public async Task SendMonstersAtStart()

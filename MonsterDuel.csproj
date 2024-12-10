@@ -156,6 +156,12 @@
     <Compile Include="src\Battle\BattleMessageBox.Designer.cs">
       <DependentUpon>BattleMessageBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Battle\BattleResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Battle\BattleResult.Designer.cs">
+      <DependentUpon>BattleResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Battle\HPBar.cs" />
     <Compile Include="src\Battle\MonsterMiniCardWithStatusBar.cs">
       <SubType>UserControl</SubType>
@@ -284,6 +290,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Battle\BattleMessageBox.resx">
       <DependentUpon>BattleMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Battle\BattleResult.resx">
+      <DependentUpon>BattleResult.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Battle\MonsterMiniCardWithStatusBar.resx">
       <DependentUpon>MonsterMiniCardWithStatusBar.cs</DependentUpon>
