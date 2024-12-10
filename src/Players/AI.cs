@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MonsterDuel;
@@ -17,10 +18,14 @@ public class AI : IPlayer
 
     public async Task<string> GetCommandString(BattleController battleController)
     {
+        string command = "";
         battleController.BattleMessageBox.ShowWaitting("Communicating...");
+
+        await Task.Delay(2000);
         
         battleController.BattleMessageBox.CloseWaitting();
         
-        return "";
+        Console.WriteLine($"Player {this.Name} Command: {command}");
+        return command;
     }
 }

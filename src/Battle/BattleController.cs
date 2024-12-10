@@ -17,6 +17,7 @@ public class BattleController
 
     private IPlayer winner;
     private bool hasWinner = false;
+    private bool isDraw = false;
     
     public BattleController(Form source, Battle battle, List<PictureBox> gates)
     {
@@ -47,13 +48,37 @@ public class BattleController
 
     public async Task GameLoop()
     {
-        while (!hasWinner)
+        while (!hasWinner || !isDraw)
         {
             string leftPlayerCommand = await Battle.LeftPlayer.GetCommandString(this); // Player
             
             Battle.Refresh();
             
             string rightPlayerCommand = await Battle.RightPlayer.GetCommandString(this); // AI
+            
+            // for surrendering
+            if (leftPlayerCommand == "Surrender" && rightPlayerCommand == "Surrender")
+            {
+                isDraw = true;
+                continue;
+            }
+
+            if (leftPlayerCommand == "Surrender" && rightPlayerCommand != "Surrender")
+            {
+                hasWinner = true;
+                winner = Battle.RightPlayer;
+                continue;
+            }
+
+            if (leftPlayerCommand != "Surrender" && rightPlayerCommand == "Surrender")
+            {
+                hasWinner = true;
+                winner = Battle.LeftPlayer;
+                continue;
+            }
+            
+            // for switching monster
+            
         }
     }
 
