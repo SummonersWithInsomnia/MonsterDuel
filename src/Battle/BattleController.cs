@@ -15,6 +15,7 @@ public class BattleController
     public BattleMessageBox BattleMessageBox;
     public TaskCompletionSource<bool> MessageBoxTcs;
 
+    private string battleResult;
     private IPlayer winner;
     private bool hasWinner = false;
     private bool isDraw = false;
@@ -60,12 +61,14 @@ public class BattleController
             if (leftPlayerCommand == "Surrender" && rightPlayerCommand == "Surrender")
             {
                 isDraw = true;
+                battleResult = "Draw";
                 continue;
             }
 
             if (leftPlayerCommand == "Surrender" && rightPlayerCommand != "Surrender")
             {
                 hasWinner = true;
+                battleResult = "Defeat";
                 winner = Battle.RightPlayer;
                 continue;
             }
@@ -73,6 +76,7 @@ public class BattleController
             if (leftPlayerCommand != "Surrender" && rightPlayerCommand == "Surrender")
             {
                 hasWinner = true;
+                battleResult = "Victory";
                 winner = Battle.LeftPlayer;
                 continue;
             }
@@ -80,8 +84,12 @@ public class BattleController
             // for switching monster
             
         }
-        
-        Console.WriteLine("OK");
+
+        await BattleMessageBox.AutoShow("Duel over!");
+        if (isDraw)
+        {
+            
+        }
     }
 
     public async Task SendMonstersAtStart()
@@ -105,5 +113,9 @@ public class BattleController
         Battle.BattleMenu.Command = "";
         
         return commandFromBattleMenu;
+    }
+
+    public async Task Dispose()
+    {
     }
 }

@@ -72,6 +72,7 @@ partial class BattleResult
         this.lbBackToGameTitle.TabIndex = 3;
         this.lbBackToGameTitle.Text = "Back to Title";
         this.lbBackToGameTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.lbBackToGameTitle.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lbBackToGameTitle_MouseClick);
         // 
         // lbRetry
         // 
@@ -84,6 +85,7 @@ partial class BattleResult
         this.lbRetry.TabIndex = 2;
         this.lbRetry.Text = "Retry";
         this.lbRetry.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        this.lbRetry.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lbRetry_MouseClick);
         // 
         // BattleResult
         // 

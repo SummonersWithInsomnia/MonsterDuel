@@ -75,7 +75,7 @@ public partial class BattleMessageBox : UserControl
         autoShowLock = false;
     }
 
-    public async Task ShowWaitting(string text)
+    public async Task ShowWaiting(string text)
     {
         autoShowLock = true;
         Visible = true;
@@ -83,7 +83,7 @@ public partial class BattleMessageBox : UserControl
         await TextEffect.Typewriter(lbText, text, 100, 10);
     }
 
-    public void CloseWaitting()
+    public void CloseWaiting()
     {
         Visible = false;
         autoShowLock = false;
