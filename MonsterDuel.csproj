@@ -369,6 +369,9 @@
     <Content Include="MonsterDuel_Data\battle_maps\Blank.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MonsterDuel_Data\battle_maps\Grassland.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonsterDuel_Data\bgm\battle_0.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -462,13 +465,13 @@
     <Content Include="MonsterDuel_Data\monsters\icons\Vader.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\monsters\icons\Visereon.png">
+    <Content Include="MonsterDuel_Data\monsters\icons\Viserion.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\monsters\J-hope_back.png">
+    <Content Include="MonsterDuel_Data\monsters\J-Hope_back.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MonsterDuel_Data\monsters\J-hope_front.png">
+    <Content Include="MonsterDuel_Data\monsters\J-Hope_front.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\monsters\Jimin_back.png">

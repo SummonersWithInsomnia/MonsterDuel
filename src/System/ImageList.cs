@@ -29,6 +29,10 @@ public static class ImageList
             new Bitmap("MonsterDuel_Data/battle_maps/Blank.png")
         },
         {
+            "MonsterDuel_Data/battle_maps/Grassland.png",
+            new Bitmap("MonsterDuel_Data/battle_maps/Grassland.png")
+        },
+        {
             "MonsterDuel_Data/effects/scenes/battle_message_box.png",
             new Bitmap("MonsterDuel_Data/effects/scenes/battle_message_box.png")
         },
@@ -133,8 +137,8 @@ public static class ImageList
             new Bitmap("MonsterDuel_Data/monsters/icons/Vader.png")
         },
         {
-            "MonsterDuel_Data/monsters/icons/Visereon.png",
-            new Bitmap("MonsterDuel_Data/monsters/icons/Visereon.png")
+            "MonsterDuel_Data/monsters/icons/Viserion.png",
+            new Bitmap("MonsterDuel_Data/monsters/icons/Viserion.png")
         },
         {
             "MonsterDuel_Data/monsters/Frodo_back.png",
@@ -145,12 +149,12 @@ public static class ImageList
             new Bitmap("MonsterDuel_Data/monsters/Frodo_front.png")
         },
         {
-            "MonsterDuel_Data/monsters/J-hope_back.png",
-            new Bitmap("MonsterDuel_Data/monsters/J-hope_back.png")
+            "MonsterDuel_Data/monsters/J-Hope_back.png",
+            new Bitmap("MonsterDuel_Data/monsters/J-Hope_back.png")
         },
         {
-            "MonsterDuel_Data/monsters/J-hope_front.png",
-            new Bitmap("MonsterDuel_Data/monsters/J-hope_front.png")
+            "MonsterDuel_Data/monsters/J-Hope_front.png",
+            new Bitmap("MonsterDuel_Data/monsters/J-Hope_front.png")
         },
         {
             "MonsterDuel_Data/monsters/Jimin_back.png",

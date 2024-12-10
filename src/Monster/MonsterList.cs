@@ -713,9 +713,9 @@ public static class MonsterList
             }
         });
 
-        All.Add("Visereon", new Monster
+        All.Add("Viserion", new Monster
         {
-            Name = "Visereon",
+            Name = "Viserion",
             Health = 110,
             CurrentHealth = 110,
             Attack = 75,
@@ -725,9 +725,9 @@ public static class MonsterList
             Element = "Ice",
             Buffs = new List<Buff>(),
             Available = true,
-            IconPath = "MonsterDuel_Data/monsters/icons/Visereon.png",
-            FrontImagePath = "MonsterDuel_Data/monsters/Visereon_front.png",
-            BackImagePath = "MonsterDuel_Data/monsters/Visereon_back.png",
+            IconPath = "MonsterDuel_Data/monsters/icons/Viserion.png",
+            FrontImagePath = "MonsterDuel_Data/monsters/Viserion_front.png",
+            BackImagePath = "MonsterDuel_Data/monsters/Viserion_back.png",
             Skills = new Dictionary<string, ISkill>
             {
                 {

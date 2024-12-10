@@ -7,7 +7,8 @@ public static class BattleMapList
 {
     public static readonly List<BattleMap> All =
     [
-        new BattleMap(name: "Blank", iconPath: "", backgroundImagePath: "MonsterDuel_Data/battle_maps/Blank.png")
+        // new BattleMap("Blank", "", "MonsterDuel_Data/battle_maps/Blank.png"),
+        new BattleMap("Grassland", "", "MonsterDuel_Data/battle_maps/Grassland.png")
     ];
     
     public static BattleMap GetRandom()

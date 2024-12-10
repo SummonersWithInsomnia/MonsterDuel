@@ -167,11 +167,11 @@ public partial class AppStartup : Form
         "MonsterDuel_Data/monsters/icons/Tinker.png",
         "MonsterDuel_Data/monsters/icons/V.png",
         "MonsterDuel_Data/monsters/icons/Vader.png",
-        "MonsterDuel_Data/monsters/icons/Visereon.png",
+        "MonsterDuel_Data/monsters/icons/Viserion.png",
         "MonsterDuel_Data/monsters/Frodo_back.png",
         "MonsterDuel_Data/monsters/Frodo_front.png",
-        "MonsterDuel_Data/monsters/J-hope_back.png",
-        "MonsterDuel_Data/monsters/J-hope_front.png",
+        "MonsterDuel_Data/monsters/J-Hope_back.png",
+        "MonsterDuel_Data/monsters/J-Hope_front.png",
         "MonsterDuel_Data/monsters/Jimin_back.png",
         "MonsterDuel_Data/monsters/Jimin_front.png",
         "MonsterDuel_Data/monsters/Jin_back.png",
@@ -225,7 +225,8 @@ public partial class AppStartup : Form
         "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png",
         "MonsterDuel_Data/effects/scenes/battle_opening_top.png",
         "MonsterDuel_Data/battle_maps/Blank.png",
-        "MonsterDuel_Data/effects/scenes/battle_message_box.png"
+        "MonsterDuel_Data/effects/scenes/battle_message_box.png",
+        "MonsterDuel_Data/battle_maps/Grassland.png"
     };
 
     private void AppStartup_Load(object sender, EventArgs e)

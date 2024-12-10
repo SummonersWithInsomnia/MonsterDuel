@@ -49,8 +49,9 @@ public class BattleController
     {
         while (!hasWinner)
         {
-            string leftPlayerCommand = await Battle.LeftPlayer.GetCommandString(this);
-            string rightPlayerCommand = await Battle.RightPlayer.GetCommandString(this);
+            string leftPlayerCommand = await Battle.LeftPlayer.GetCommandString(this); // Player
+            Battle.Refresh();
+            string rightPlayerCommand = await Battle.RightPlayer.GetCommandString(this); // AI
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MonsterDuel;
@@ -18,6 +19,7 @@ public class Player : IPlayer
     public async Task<string> GetCommandString(BattleController battleController)
     {
         string command =  await battleController.DisplayBattleMenu();
+        Console.WriteLine($"Player {this.Name} Command: {command}");
         return command;
     }
 }

@@ -141,7 +141,7 @@ namespace MonsterDuel
                 MonsterList.All["Jungkook"],
                 MonsterList.All["Jimin"],
                 MonsterList.All["Rhaegal"],
-                MonsterList.All["Visereon"]
+                MonsterList.All["Viserion"]
             ];
             
             // testMonsterMiniCardWithOrder = new MonsterMiniCardWithOrder();
@@ -649,7 +649,7 @@ namespace MonsterDuel
                     continue;
                 }
                 
-                playerMonsters.Add(item.Key, availableMonsters[item.Key]);
+                playerMonsters.Add(item.Key, new Monster(availableMonsters[item.Key]));
                 playerMonsterOrder.Add(item.Value, item.Key);
             }
             
@@ -701,7 +701,7 @@ namespace MonsterDuel
                 int opponentMonsterOrderIndex = 0;
                 foreach (var monsterName in opponentMonsterOrderList)
                 {
-                    opponentMonsters.Add(monsterName, MonsterList.All[monsterName]);
+                    opponentMonsters.Add(monsterName, new Monster(MonsterList.All[monsterName]));
                     opponentMonsterOrder.Add(opponentMonsterOrderIndex, monsterName);
                     opponentMonsterOrderIndex++;
                 }
@@ -729,7 +729,7 @@ namespace MonsterDuel
                 int opponentMonsterOrderIndex = 0;
                 foreach (var monsterName in opponentMonsterOrderList)
                 {
-                    opponentMonsters.Add(monsterName, MonsterList.All[monsterName]);
+                    opponentMonsters.Add(monsterName, new Monster(MonsterList.All[monsterName]));
                     opponentMonsterOrder.Add(opponentMonsterOrderIndex, monsterName);
                     opponentMonsterOrderIndex++;
                 }
