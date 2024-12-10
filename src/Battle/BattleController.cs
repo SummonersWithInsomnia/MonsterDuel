@@ -48,7 +48,7 @@ public class BattleController
 
     public async Task GameLoop()
     {
-        while (!hasWinner || !isDraw)
+        while (!hasWinner && !isDraw)
         {
             string leftPlayerCommand = await Battle.LeftPlayer.GetCommandString(this); // Player
             

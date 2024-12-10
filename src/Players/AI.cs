@@ -25,7 +25,7 @@ public class AI : IPlayer
         
         battleController.BattleMessageBox.CloseWaitting();
         
-        Console.WriteLine($"Player {this.Name} Command: {command}");
+        Console.WriteLine($"AI {this.Name} Command: {command}");
         return command;
     }
 }
