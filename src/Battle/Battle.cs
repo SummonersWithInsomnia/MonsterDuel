@@ -9,8 +9,8 @@ namespace MonsterDuel;
 
 public partial class Battle : UserControl
 {
-    public IPlayer LeftPlayer { get; set; }
-    public IPlayer RightPlayer { get; set; }
+    public Player LeftPlayer { get; set; }
+    public AI RightPlayer { get; set; }
         
     public BattleMap Map { get; set; }
     public string BGMPath { get; set; }
@@ -45,8 +45,28 @@ public partial class Battle : UserControl
     public TaskCompletionSource<bool> SwitchMonsterMenuTcs;
     public SurrenderMenu SurrenderMenu;
     public TaskCompletionSource<bool> SurrenderMenuTcs;
-    
-    public Battle(IPlayer left, IPlayer right, BattleMap map, string bgmPath)
+
+    public Battle(Battle battle)
+    {
+        InitializeComponent();
+
+        this.LeftPlayer = new Player(battle.LeftPlayer);
+        this.RightPlayer = new AI(battle.RightPlayer);
+        this.Map = new BattleMap(battle.Map);
+        this.BGMPath = battle.BGMPath;
+        
+        leftPlayerImage.Image = ImageList.GetImage(LeftPlayer.FullBackImagePath);
+        rightPlayerImage.Image = ImageList.GetImage(RightPlayer.FullFrontImagePath);
+        
+        leftPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(LeftPlayer.SummoningColorRGB);
+        rightPlayerSummoningMagic.BackColor = ColorTranslator.FromHtml(RightPlayer.SummoningColorRGB);
+
+        BattleMenu = new BattleMenu(this);
+        SwitchMonsterMenu = new SwitchMonsterMenu(this);
+        SurrenderMenu = new SurrenderMenu(this);
+    }
+
+    public Battle(Player left, AI right, BattleMap map, string bgmPath)
     {
         InitializeComponent();
 

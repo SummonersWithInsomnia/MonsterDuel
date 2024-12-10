@@ -653,7 +653,7 @@ namespace MonsterDuel
                 playerMonsterOrder.Add(item.Value, item.Key);
             }
             
-            IPlayer player = new Player
+            Player player = new Player
             {
                 Name = PlayerImageList.CurrentPlayerName,
                 Monsters = playerMonsters,

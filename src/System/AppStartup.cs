@@ -226,7 +226,8 @@ public partial class AppStartup : Form
         "MonsterDuel_Data/effects/scenes/battle_opening_top.png",
         "MonsterDuel_Data/battle_maps/Blank.png",
         "MonsterDuel_Data/effects/scenes/battle_message_box.png",
-        "MonsterDuel_Data/battle_maps/Grassland.png"
+        "MonsterDuel_Data/battle_maps/Grassland.png",
+        "MonsterDuel_Data/video/battle_result.mp4"
     };
 
     private void AppStartup_Load(object sender, EventArgs e)

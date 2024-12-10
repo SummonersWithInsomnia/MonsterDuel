@@ -15,11 +15,38 @@ public class AI : IPlayer
     public string FullFrontImagePath { get; set; }
     public string FullBackImagePath { get; set; }
     public string SummoningColorRGB { get; set; }
+    
+    public AI(AI ai)
+    {
+        this.Name = ai.Name;
+        this.Monsters = new Dictionary<string, Monster>(ai.Monsters);
+        this.MonsterOrder = new Dictionary<int, string>(ai.MonsterOrder);
+        this.CurrentMonster = ai.CurrentMonster;
+        this.IconPath = ai.IconPath;
+        this.VSBarIconPath = ai.VSBarIconPath;
+        this.FullFrontImagePath = ai.FullFrontImagePath;
+        this.FullBackImagePath = ai.FullBackImagePath;
+        this.SummoningColorRGB = ai.SummoningColorRGB;
+    }
+
+    public AI()
+    {
+    }
 
     public async Task<string> GetCommandString(BattleController battleController)
     {
         string command = "";
         battleController.BattleMessageBox.ShowWaiting("Communicating...");
+        
+        // Testing START
+        command = "Surrender";
+        
+        await Task.Delay(2000);
+        battleController.BattleMessageBox.CloseWaiting();
+        
+        Console.WriteLine($"AI {this.Name} Command: {command}");
+        return command;
+        // Testing END
         
         Dictionary<string, Monster> monsterList = new Dictionary<string, Monster>(this.Monsters);
         string currentMonsterName = this.CurrentMonster;

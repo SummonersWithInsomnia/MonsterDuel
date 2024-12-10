@@ -156,12 +156,7 @@
     <Compile Include="src\Battle\BattleMessageBox.Designer.cs">
       <DependentUpon>BattleMessageBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\Battle\BattleResult.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="src\Battle\BattleResult.Designer.cs">
-      <DependentUpon>BattleResult.cs</DependentUpon>
-    </Compile>
+    <Compile Include="src\Battle\BattleResult.cs" />
     <Compile Include="src\Battle\HPBar.cs" />
     <Compile Include="src\Battle\MonsterMiniCardWithStatusBar.cs">
       <SubType>UserControl</SubType>
@@ -290,9 +285,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Battle\BattleMessageBox.resx">
       <DependentUpon>BattleMessageBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="src\Battle\BattleResult.resx">
-      <DependentUpon>BattleResult.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\Battle\MonsterMiniCardWithStatusBar.resx">
       <DependentUpon>MonsterMiniCardWithStatusBar.cs</DependentUpon>
@@ -625,6 +617,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\system\warning_bar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MonsterDuel_Data\video\battle_result.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MonsterDuel_Data\video\title.mp4">

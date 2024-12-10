@@ -10,6 +10,17 @@ public partial class BattleMap : UserControl
     public string IconPath { get; set; }
     public string BackgroundImagePath { get; set; }
 
+    public BattleMap(BattleMap battleMap)
+    {
+        InitializeComponent();
+
+        this.Name = battleMap.Name;
+        this.IconPath = battleMap.IconPath;
+        this.BackgroundImagePath = battleMap.BackgroundImagePath;
+        
+        this.BackgroundImage = ImageList.GetImage(BackgroundImagePath);
+    }
+
     public BattleMap(string name, string iconPath, string backgroundImagePath)
     {
         InitializeComponent();

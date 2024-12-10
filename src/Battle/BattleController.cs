@@ -19,12 +19,16 @@ public class BattleController
     private IPlayer winner;
     private bool hasWinner = false;
     private bool isDraw = false;
+
+    private Battle battleForRetry;
     
     public BattleController(Form source, Battle battle, List<PictureBox> gates)
     {
         sourceForm = source;
         Battle = battle;
         Gates = gates;
+
+        battleForRetry = new Battle(battle);
         
         BattleMessageBox = new BattleMessageBox(this);
     }
@@ -85,11 +89,35 @@ public class BattleController
             
         }
 
-        await BattleMessageBox.AutoShow("Duel over!");
+        MessageBoxTcs = new TaskCompletionSource<bool>();
+        await BattleMessageBox.Show($"Duel over!");
+        await MessageBoxTcs.Task;
+        
         if (isDraw)
         {
-            
+            await BattleMessageBox.ShowWaiting($"Both summoners were surrendered!");
         }
+        else
+        {
+            await BattleMessageBox.ShowWaiting($"The winner is Summoner {winner.Name}!");
+        }
+        
+        await Task.Delay(3000);
+        
+        List<PictureBox> gates = await SceneEffect.CuttingInLikeClosingGate(sourceForm,
+            "MonsterDuel_Data/effects/scenes/battle_opening_top.png", 
+            "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png", 200, 10);
+        
+        BattleMessageBox.CloseWaiting();
+        await Dispose();
+        
+        // foreach (Control control in sourceForm.Controls)
+        // {
+        //     Console.WriteLine(control.Name);
+        // }
+        // Console.WriteLine(sourceForm.Controls.Count);
+        
+        
     }
 
     public async Task SendMonstersAtStart()
@@ -117,5 +145,9 @@ public class BattleController
 
     public async Task Dispose()
     {
+        AudioPlayer.StopBGM();
+        
+        sourceForm.Controls.Remove(BattleMessageBox);
+        sourceForm.Controls.Remove(Battle);
     }
 }
