@@ -18,9 +18,32 @@ public class AI : IPlayer
 
     public async Task<string> GetCommandString(BattleController battleController)
     {
-        string command = "Surrender";
+        string command = "";
         battleController.BattleMessageBox.ShowWaitting("Communicating...");
 
+        // TODO
+        Dictionary<string, Monster> monsterList = new Dictionary<string, Monster>(this.Monsters);
+        string currentMonsterName = this.CurrentMonster;
+        Monster currentMonster = this.Monsters[currentMonsterName];
+        Dictionary<string, ISkill> currentMonsterSkills = currentMonster.Skills;
+        
+        // command = "Command#SkillName"
+        Random random = new Random();
+        List<ISkill> availableSkills = new List<ISkill>();
+
+        foreach (var skillPair in currentMonsterSkills)
+        {
+            if (skillPair.Value.Limit > 0)
+            {
+                availableSkills.Add(skillPair.Value);
+            }
+        }
+        
+        ISkill randomSkill = availableSkills[random.Next(availableSkills.Count)];
+        
+        command += "Command#" + randomSkill.Name;
+        
+        
         await Task.Delay(2000);
         
         battleController.BattleMessageBox.CloseWaitting();
