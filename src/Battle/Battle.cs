@@ -274,12 +274,25 @@ public partial class Battle : UserControl
     {
         await rightPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
-        rightPlayerMonster.Image = ImageList.GetImage(RightPlayer.Monsters[monsterName].FrontImagePath);
-        rightPlayerMonster.Visible = true;
-        RightPlayerMonsterStatusBar.Visible = false;
+
+        if (monsterName == string.Empty)
+        {
+            rightPlayerMonster.Image = null;
+            rightPlayerMonster.Visible = false;
+            RightPlayerMonsterStatusBar.Visible = false;
+        }
+        else
+        {
+            rightPlayerMonster.Image = ImageList.GetImage(RightPlayer.Monsters[monsterName].FrontImagePath);
+            rightPlayerMonster.Visible = true;
+            RightPlayerMonsterStatusBar.Visible = false;
+        }
+        
         await Task.Delay(200);
         await rightPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
+        
+        if (monsterName == string.Empty) return;
         
         RightPlayerMonsterStatusBar.Switch(RightPlayer.Monsters[monsterName].Name, RightPlayer.Monsters[monsterName].Health, RightPlayer.Monsters[monsterName].CurrentHealth, "Right");
         RightPlayerMonsterStatusBar.Visible = true;
@@ -363,12 +376,25 @@ public partial class Battle : UserControl
     {
         await leftPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
-        leftPlayerMonster.Image = ImageList.GetImage(LeftPlayer.Monsters[monsterName].BackImagePath);
-        leftPlayerMonster.Visible = true;
-        LeftPlayerMonsterStatusBar.Visible = false;
+        
+        if (monsterName == string.Empty)
+        {
+            leftPlayerMonster.Image = null;
+            leftPlayerMonster.Visible = false;
+            LeftPlayerMonsterStatusBar.Visible = false;
+        }
+        else
+        {
+            leftPlayerMonster.Image = ImageList.GetImage(LeftPlayer.Monsters[monsterName].BackImagePath);
+            leftPlayerMonster.Visible = true;
+            LeftPlayerMonsterStatusBar.Visible = false;
+        }
+        
         await Task.Delay(200);
         await leftPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
+        
+        if (monsterName == string.Empty) return;
         
         LeftPlayerMonsterStatusBar.Switch(LeftPlayer.Monsters[monsterName].Name, LeftPlayer.Monsters[monsterName].Health, LeftPlayer.Monsters[monsterName].CurrentHealth, "Left");
         LeftPlayerMonsterStatusBar.Visible = true;

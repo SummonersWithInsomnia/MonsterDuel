@@ -59,11 +59,11 @@ public class BattleController
         while (!hasWinner && !isDraw)
         {
             string leftPlayerCommand = await Battle.LeftPlayer.GetCommandString(this); // Player
-            
+
             Battle.Refresh();
-            
+
             string rightPlayerCommand = await Battle.RightPlayer.GetCommandString(this); // AI
-            
+
             // for surrendering
             if (leftPlayerCommand == "Surrender" && rightPlayerCommand == "Surrender")
             {
@@ -77,7 +77,7 @@ public class BattleController
                 hasWinner = true;
                 battleResult = "Defeat";
                 winner = Battle.RightPlayer;
-                
+
                 await BattleMessageBox.AutoShow($"Summoner {Battle.LeftPlayer.Name} surrenders!");
                 continue;
             }
@@ -87,62 +87,66 @@ public class BattleController
                 hasWinner = true;
                 battleResult = "Victory";
                 winner = Battle.LeftPlayer;
-                
+
                 await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} surrenders!");
                 continue;
             }
-            
+
             // for switching monster
             if (leftPlayerCommand.Contains("Switch#"))
             {
                 await BattleMessageBox.AutoShow($"Come back, {Battle.LeftPlayer.CurrentMonster}!");
                 await BattleMessageBox.AutoShow($"Summoning magic! {leftPlayerCommand.Split('#')[1]}!");
-                
+
                 Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs.Clear();
-                
+
                 string monsterName = leftPlayerCommand.Split('#')[1];
                 Battle.LeftPlayer.CurrentMonster = monsterName;
                 await Battle.LeftPlayerSummonsMonster(monsterName, 500, 50);
             }
-            
+
             if (rightPlayerCommand.Contains("Switch#"))
             {
-                await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} calls back {Battle.RightPlayer.CurrentMonster}!");
-                await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} summons {rightPlayerCommand.Split('#')[1]}!");
-                
+                await BattleMessageBox.AutoShow(
+                    $"Summoner {Battle.RightPlayer.Name} calls back {Battle.RightPlayer.CurrentMonster}!");
+                await BattleMessageBox.AutoShow(
+                    $"Summoner {Battle.RightPlayer.Name} summons {rightPlayerCommand.Split('#')[1]}!");
+
                 Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Buffs.Clear();
-                
+
                 string monsterName = rightPlayerCommand.Split('#')[1];
                 Battle.RightPlayer.CurrentMonster = monsterName;
                 await Battle.RightPlayerSummonsMonster(monsterName, 500, 50);
             }
-            
+
             // Preparing for applying buffs/debuffs and using skills
-            
+
             // If the left monster name is the same as the right monster name, the right monster ownership text will be displayed.
-            string rightMonsterOwnership = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster ? $"Summoner {Battle.RightPlayer.Name}'s " : "";
-            
+            string rightMonsterOwnership = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster
+                ? $"Summoner {Battle.RightPlayer.Name}'s "
+                : "";
+
             Monster leftMonster = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster];
             Monster rightMonster = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster];
 
             MonsterStatusBar leftMonsterStatusBar = Battle.LeftPlayerMonsterStatusBar;
             MonsterStatusBar rightMonsterStatusBar = Battle.RightPlayerMonsterStatusBar;
-            
+
             Skill leftSkill = leftMonster.Skills[leftPlayerCommand.Split('#')[1]];
             Skill rightSkill = rightMonster.Skills[rightPlayerCommand.Split('#')[1]];
 
             List<Buff> leftBuffs = leftMonster.Buffs;
             List<Buff> rightBuffs = rightMonster.Buffs;
-            
+
             Random leftRandom = new Random();
             bool leftCriticalHit = leftRandom.Next(0, 100) < CriticalHitRate ? true : false;
             bool leftSkillHit = leftRandom.Next(0, 100) < leftSkill.HitRate ? true : false;
-            
+
             Random rightRandom = new Random();
             bool rightCriticalHit = rightRandom.Next(0, 100) < CriticalHitRate ? true : false;
             bool rightSkillHit = rightRandom.Next(0, 100) < rightSkill.HitRate ? true : false;
-            
-            
+
+
             // Applying and updating buffs/debuffs
             BuffEffect leftBuffEffect = new BuffEffect();
             foreach (var buff in leftBuffs)
@@ -193,7 +197,7 @@ public class BattleController
                     leftBuffs.Remove(buff);
                 }
             }
-            
+
             BuffEffect rightBuffEffect = new BuffEffect();
             foreach (var buff in rightBuffs)
             {
@@ -201,13 +205,15 @@ public class BattleController
                 {
                     if (buff.Value < 0)
                     {
-                        await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s damage.");
+                        await BattleMessageBox.AutoShow(
+                            $"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s damage.");
                         rightMonster.CurrentHealth += buff.Value;
                         await rightMonsterStatusBar.ApplyValue(buff.Value);
                     }
                     else
                     {
-                        await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s healing.");
+                        await BattleMessageBox.AutoShow(
+                            $"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s healing.");
                         rightMonster.CurrentHealth += buff.Value;
                         await rightMonsterStatusBar.ApplyValue(buff.Value);
                     }
@@ -228,14 +234,10 @@ public class BattleController
                 {
                     rightBuffEffect.TurnSkip = rightRandom.Next(0, 100) < buff.Value;
                 }
-                else
-                {
-                    continue;
-                }
 
                 buff.Duration--;
             }
-            
+
             foreach (var buff in rightBuffs)
             {
                 if (buff.Duration < 0)
@@ -243,21 +245,543 @@ public class BattleController
                     rightBuffs.Remove(buff);
                 }
             }
-            
+
+            if (leftBuffEffect.TurnSkip || rightBuffEffect.TurnSkip)
+            {
+                await BattleMessageBox.AutoShow($"{leftMonster.Name} cannot move!");
+                await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} cannot move!");
+                continue;
+            }
+
             // Using skills
 
-            if (leftSkill is DefenseSkill leftDefenseSkill)
+            if (leftSkill is DefenseSkill leftDefenseSkill && leftBuffEffect.TurnSkip == false)
             {
-                
+                if (leftSkillHit)
+                {
+                    await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                    leftBuffEffect.Defense += leftDefenseSkill.Defense;
+                    await BattleMessageBox.AutoShow($"{leftMonster.Name}'s defense increased in this turn.");
+                }
+                else
+                {
+                    await BattleMessageBox.AutoShow($"{leftMonster.Name} failed to use {leftSkill.Name}.");
+                }
             }
 
-            if (rightSkill is DefenseSkill rightDefenseSkill)
+            if (rightSkill is DefenseSkill rightDefenseSkill && rightBuffEffect.TurnSkip == false)
             {
+                if (rightSkillHit)
+                {
+                    await BattleMessageBox.AutoShow(
+                        $"{rightMonsterOwnership}{rightMonster.Name} uses {rightSkill.Name}.");
+                    rightBuffEffect.Defense += rightDefenseSkill.Defense;
+                    await BattleMessageBox.AutoShow(
+                        $"{rightMonsterOwnership}{rightMonster.Name}'s defense increased in this turn.");
+                }
+                else
+                {
+                    await BattleMessageBox.AutoShow(
+                        $"{rightMonsterOwnership}{rightMonster.Name} failed to use {rightSkill.Name}.");
+                }
+            }
+
+
+            int leftMonsterSpeed = leftMonster.Speed + leftBuffEffect.Speed;
+            int rightMonsterSpeed = rightMonster.Speed + rightBuffEffect.Speed;
+
+            if (leftMonsterSpeed == rightMonsterSpeed)
+            {
+                Random random = new Random();
+                int randomValue = random.Next(0, 2);
+                if (randomValue == 0)
+                {
+                    leftMonsterSpeed++;
+                }
+                else
+                {
+                    rightMonsterSpeed++;
+                }
+            }
+
+            if (leftMonsterSpeed > rightMonsterSpeed)
+            {
+                // AttackAndBuffSkill
+                if (leftSkill is AttackAndBuffSkill leftAttackAndBuffSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        int damage = leftMonster.Attack + leftAttackAndBuffSkill.Damage + leftBuffEffect.Attack;
+                        if (leftCriticalHit)
+                        {
+                            damage *= 2;
+                            await BattleMessageBox.AutoShow($"{leftMonster.Name} lands a critical hit!");
+                        }
+
+                        damage -= rightBuffEffect.Defense + rightMonster.Defense;
+
+                        await BattleMessageBox.AutoShow(
+                            $"{leftMonster.Name} deals {damage} damage to {rightMonsterOwnership}{rightMonster.Name}.");
+                        rightMonster.CurrentHealth -= damage;
+                        await rightMonsterStatusBar.ApplyValue(-damage);
+
+                        foreach (var buff in leftAttackAndBuffSkill.Buffs)
+                        {
+                            leftBuffs.Add(buff);
+                            await BattleMessageBox.AutoShow(
+                                $"{leftMonster.Name} gets the buff '{buff.Name}' from the skill.");
+
+                            if (buff.Property == "Health")
+                            {
+                                if (buff.Value < 0)
+                                {
+                                    await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s damage.");
+                                    leftMonster.CurrentHealth += buff.Value;
+                                    await leftMonsterStatusBar.ApplyValue(buff.Value);
+                                }
+                                else
+                                {
+                                    await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s healing.");
+                                    leftMonster.CurrentHealth += buff.Value;
+                                    await leftMonsterStatusBar.ApplyValue(buff.Value);
+                                }
+                            }
+                            else if (buff.Property == "Attack")
+                            {
+                                leftBuffEffect.Attack += buff.Value;
+                            }
+                            else if (buff.Property == "Defense")
+                            {
+                                leftBuffEffect.Defense += buff.Value;
+                            }
+                            else if (buff.Property == "Speed")
+                            {
+                                leftBuffEffect.Speed += buff.Value;
+                            }
+                            else if (buff.Property == "TurnSkip")
+                            {
+                                leftBuffEffect.TurnSkip = leftRandom.Next(0, 100) < buff.Value;
+                            }
+
+                            buff.Duration--;
+                        }
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow(
+                            $"However, {leftMonster.Name} failed to hit {rightMonsterOwnership}{rightMonster.Name}.");
+                    }
+                }
+
+                // AttackAndDebuffSkill
+                if (leftSkill is AttackAndDebuffSkill leftAttackAndDebuffSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        int damage = leftMonster.Attack + leftAttackAndDebuffSkill.Damage + leftBuffEffect.Attack;
+                        if (leftCriticalHit)
+                        {
+                            damage *= 2;
+                            await BattleMessageBox.AutoShow($"{leftMonster.Name} lands a critical hit!");
+                        }
+
+                        damage -= rightBuffEffect.Defense + rightMonster.Defense;
+
+                        await BattleMessageBox.AutoShow(
+                            $"{leftMonster.Name} deals {damage} damage to {rightMonsterOwnership}{rightMonster.Name}.");
+                        rightMonster.CurrentHealth -= damage;
+                        await rightMonsterStatusBar.ApplyValue(-damage);
+
+                        if (leftRandom.Next(0, 100) < leftAttackAndDebuffSkill.DebuffHitRate)
+                            foreach (var debuff in leftAttackAndDebuffSkill.Debuffs)
+                            {
+                                rightBuffs.Add(debuff);
+                                await BattleMessageBox.AutoShow(
+                                    $"{rightMonsterOwnership}{rightMonster.Name} gets the debuff '{debuff.Name}' from the skill.");
+
+                                if (debuff.Property == "Health")
+                                {
+                                    if (debuff.Value < 0)
+                                    {
+                                        await BattleMessageBox.AutoShow(
+                                            $"{rightMonsterOwnership}{rightMonster.Name} gets {debuff.Name}'s damage.");
+                                        rightMonster.CurrentHealth += debuff.Value;
+                                        await rightMonsterStatusBar.ApplyValue(debuff.Value);
+                                    }
+                                    else
+                                    {
+                                        await BattleMessageBox.AutoShow(
+                                            $"{rightMonsterOwnership}{rightMonster.Name} gets {debuff.Name}'s healing.");
+                                        rightMonster.CurrentHealth += debuff.Value;
+                                        await rightMonsterStatusBar.ApplyValue(debuff.Value);
+                                    }
+                                }
+                                else if (debuff.Property == "Attack")
+                                {
+                                    rightBuffEffect.Attack += debuff.Value;
+                                }
+                                else if (debuff.Property == "Defense")
+                                {
+                                    rightBuffEffect.Defense += debuff.Value;
+                                }
+                                else if (debuff.Property == "Speed")
+                                {
+                                    rightBuffEffect.Speed += debuff.Value;
+                                }
+                                else if (debuff.Property == "TurnSkip")
+                                {
+                                    rightBuffEffect.TurnSkip = rightRandom.Next(0, 100) < debuff.Value;
+                                }
+
+                                debuff.Duration--;
+                            }
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow(
+                            $"However, {leftMonster.Name} failed to hit {rightMonsterOwnership}{rightMonster.Name}.");
+                    }
+                }
+
+                // AttackSkill
+                if (leftSkill is AttackSkill leftAttackSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        int damage = leftMonster.Attack + leftAttackSkill.Damage + leftBuffEffect.Attack;
+                        if (leftCriticalHit)
+                        {
+                            damage *= 2;
+                            await BattleMessageBox.AutoShow($"{leftMonster.Name} lands a critical hit!");
+                        }
+
+                        damage -= rightBuffEffect.Defense + rightMonster.Defense;
+
+                        await BattleMessageBox.AutoShow(
+                            $"{leftMonster.Name} deals {damage} damage to {rightMonsterOwnership}{rightMonster.Name}.");
+                        rightMonster.CurrentHealth -= damage;
+                        await rightMonsterStatusBar.ApplyValue(-damage);
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow(
+                            $"However, {leftMonster.Name} failed to hit {rightMonsterOwnership}{rightMonster.Name}.");
+                    }
+                }
+
+                // BuffSkill
+                if (leftSkill is BuffSkill leftBuffSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        foreach (var buff in leftBuffSkill.Buffs)
+                        {
+                            leftBuffs.Add(buff);
+                            await BattleMessageBox.AutoShow(
+                                $"{leftMonster.Name} gets the buff '{buff.Name}' from the skill.");
+
+                            if (buff.Property == "Health")
+                            {
+                                if (buff.Value < 0)
+                                {
+                                    await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s damage.");
+                                    leftMonster.CurrentHealth += buff.Value;
+                                    await leftMonsterStatusBar.ApplyValue(buff.Value);
+                                }
+                                else
+                                {
+                                    await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s healing.");
+                                    leftMonster.CurrentHealth += buff.Value;
+                                    await leftMonsterStatusBar.ApplyValue(buff.Value);
+                                }
+                            }
+                            else if (buff.Property == "Attack")
+                            {
+                                leftBuffEffect.Attack += buff.Value;
+                            }
+                            else if (buff.Property == "Defense")
+                            {
+                                leftBuffEffect.Defense += buff.Value;
+                            }
+                            else if (buff.Property == "Speed")
+                            {
+                                leftBuffEffect.Speed += buff.Value;
+                            }
+                            else if (buff.Property == "TurnSkip")
+                            {
+                                leftBuffEffect.TurnSkip = leftRandom.Next(0, 100) < buff.Value;
+                            }
+
+                            buff.Duration--;
+                        }
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow($"However, {leftMonster.Name} failed to use {leftSkill.Name}.");
+                    }
+                }
+
+                // DebuffSkill
+                if (leftSkill is DebuffSkill leftDebuffSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        foreach (var debuff in leftDebuffSkill.Debuffs)
+                        {
+                            rightBuffs.Add(debuff);
+                            await BattleMessageBox.AutoShow(
+                                $"{rightMonsterOwnership}{rightMonster.Name} gets the debuff '{debuff.Name}' from the skill.");
+
+                            if (debuff.Property == "Health")
+                            {
+                                if (debuff.Value < 0)
+                                {
+                                    await BattleMessageBox.AutoShow(
+                                        $"{rightMonsterOwnership}{rightMonster.Name} gets {debuff.Name}'s damage.");
+                                    rightMonster.CurrentHealth += debuff.Value;
+                                    await rightMonsterStatusBar.ApplyValue(debuff.Value);
+                                }
+                                else
+                                {
+                                    await BattleMessageBox.AutoShow(
+                                        $"{rightMonsterOwnership}{rightMonster.Name} gets {debuff.Name}'s healing.");
+                                    rightMonster.CurrentHealth += debuff.Value;
+                                    await rightMonsterStatusBar.ApplyValue(debuff.Value);
+                                }
+                            }
+                            else if (debuff.Property == "Attack")
+                            {
+                                rightBuffEffect.Attack += debuff.Value;
+                            }
+                            else if (debuff.Property == "Defense")
+                            {
+                                rightBuffEffect.Defense += debuff.Value;
+                            }
+                            else if (debuff.Property == "Speed")
+                            {
+                                rightBuffEffect.Speed += debuff.Value;
+                            }
+                            else if (debuff.Property == "TurnSkip")
+                            {
+                                rightBuffEffect.TurnSkip = rightRandom.Next(0, 100) < debuff.Value;
+                            }
+
+                            debuff.Duration--;
+                        }
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow($"However, {leftMonster.Name} failed to use {leftSkill.Name}.");
+                    }
+                }
+
+                // FixedDamageSkill
+                if (leftSkill is FixedDamageSkill leftFixedDamageSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        int damage = leftFixedDamageSkill.FixedDamage;
+                        if (leftCriticalHit)
+                        {
+                            damage *= 2;
+                            await BattleMessageBox.AutoShow($"{leftMonster.Name} lands a critical hit!");
+                        }
+
+                        await BattleMessageBox.AutoShow(
+                            $"{leftMonster.Name} deals {damage} damage to {rightMonsterOwnership}{rightMonster.Name}.");
+                        rightMonster.CurrentHealth -= damage;
+                        await rightMonsterStatusBar.ApplyValue(-damage);
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow($"However, {leftMonster.Name} failed to use {leftSkill.Name}.");
+                    }
+                }
+
+                // HealingSkill
+                if (leftSkill is HealingSkill leftHealingSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        int heal = leftHealingSkill.Heal;
+                        if (leftCriticalHit)
+                        {
+                            heal *= 2;
+                            await BattleMessageBox.AutoShow($"{leftMonster.Name} lands a critical heal!");
+                        }
+
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} heals {heal} health.");
+                        leftMonster.CurrentHealth += heal;
+                        await leftMonsterStatusBar.ApplyValue(heal);
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow($"However, {leftMonster.Name} failed to use {leftSkill.Name}.");
+                    }
+                }
+
+                // MultipleHitAttackSkill
+                if (leftSkill is MultipleHitAttackSkill leftMultipleHitAttackSkill && leftBuffEffect.TurnSkip == false)
+                {
+                    leftSkill.Limit--;
+                    if (leftSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        int totalDamage = 0;
+                        int hitCount = leftRandom.Next(leftMultipleHitAttackSkill.MinHit,
+                            leftMultipleHitAttackSkill.MaxHit + 1);
+                        for (int i = 0; i < hitCount; i++)
+                        {
+                            int damage = leftMonster.Attack + leftMultipleHitAttackSkill.DamagePerHit +
+                                         leftBuffEffect.Attack;
+                            if (leftCriticalHit)
+                            {
+                                damage *= 2;
+                                await BattleMessageBox.AutoShow($"{leftMonster.Name} lands a critical hit!");
+                                leftCriticalHit = leftRandom.Next(0, 100) < CriticalHitRate ? true : false;
+                            }
+
+                            damage -= rightBuffEffect.Defense + rightMonster.Defense;
+
+                            await BattleMessageBox.AutoShow(
+                                $"{leftMonster.Name} deals {damage} damage to {rightMonsterOwnership}{rightMonster.Name}.");
+                            rightMonster.CurrentHealth -= damage;
+                            await rightMonsterStatusBar.ApplyValue(-damage);
+
+                            totalDamage += damage;
+                        }
+
+                        string hitCountText = hitCount > 1 ? "s" : "";
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} hit {hitCount} time{hitCountText}.");
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} deals {totalDamage} damage in total.");
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftSkill.Name}.");
+                        await BattleMessageBox.AutoShow($"However, {leftMonster.Name} failed to use {leftSkill.Name}.");
+                    }
+                }
+
+                if (leftBuffEffect.TurnSkip)
+                {
+                    await BattleMessageBox.AutoShow($"{leftMonster.Name} cannot move!");
+                }
+
+                if (rightMonster.CurrentHealth <= 0)
+                {
+                    rightMonster.CurrentHealth = 0;
+                    await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} fainted!");
+                    await Battle.RightPlayerSummonsMonster(string.Empty, 500, 50);
+                    continue;
+                }
+
+                // Right monster's turn
+                // AttackAndBuffSkill
+                if (rightSkill is AttackAndBuffSkill rightAttackAndBuffSkill && rightBuffEffect.TurnSkip == false)
+                {
+                    rightSkill.Limit--;
+                    if (rightSkillHit)
+                    {
+                        await BattleMessageBox.AutoShow(
+                            $"{rightMonsterOwnership}{rightMonster.Name} uses {rightSkill.Name}.");
+                        int damage = rightMonster.Attack + rightAttackAndBuffSkill.Damage + rightBuffEffect.Attack;
+                        if (rightCriticalHit)
+                        {
+                            damage *= 2;
+                            await BattleMessageBox.AutoShow(
+                                $"{rightMonsterOwnership}{rightMonster.Name} lands a critical hit!");
+                        }
+
+                        damage -= leftBuffEffect.Defense + leftMonster.Defense;
+
+                        await BattleMessageBox.AutoShow(
+                            $"{rightMonsterOwnership}{rightMonster.Name} deals {damage} damage to {leftMonster.Name}.");
+                        leftMonster.CurrentHealth -= damage;
+                        await leftMonsterStatusBar.ApplyValue(-damage);
+
+                        foreach (var buff in rightAttackAndBuffSkill.Buffs)
+                        {
+                            rightBuffs.Add(buff);
+                            await BattleMessageBox.AutoShow(
+                                $"{rightMonsterOwnership}{rightMonster.Name} gets the buff '{buff.Name}' from the skill.");
+
+                            if (buff.Property == "Health")
+                            {
+                                if (buff.Value < 0)
+                                {
+                                    await BattleMessageBox.AutoShow(
+                                        $"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s damage.");
+                                    rightMonster.CurrentHealth += buff.Value;
+                                    await rightMonsterStatusBar.ApplyValue(buff.Value);
+                                }
+                                else
+                                {
+                                    await BattleMessageBox.AutoShow(
+                                        $"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s healing.");
+                                    rightMonster.CurrentHealth += buff.Value;
+                                    await rightMonsterStatusBar.ApplyValue(buff.Value);
+                                }
+                            }
+                            else if (buff.Property == "Attack")
+                            {
+                                rightBuffEffect.Attack += buff.Value;
+                            }
+                            else if (buff.Property == "Defense")
+                            {
+                                rightBuffEffect.Defense += buff.Value;
+                            }
+                            else if (buff.Property == "Speed")
+                            {
+                                rightBuffEffect.Speed += buff.Value;
+                            }
+                            else if (buff.Property == "TurnSkip")
+                            {
+                                rightBuffEffect.TurnSkip = rightRandom.Next(0, 100) < buff.Value;
+                            }
+
+                            buff.Duration--;
+                        }
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow(
+                            $"{rightMonsterOwnership}{rightMonster.Name} uses {rightSkill.Name}.");
+                        await BattleMessageBox.AutoShow(
+                            $"However, {rightMonsterOwnership}{rightMonster.Name} failed to hit {leftMonster.Name}.");
+                    }
+                }
+
+                // AttackAndDebuffSkill
+
+
+
                 
             }
-            
-            
-            
+            else if (rightMonsterSpeed > leftMonsterSpeed)
+            {
+            }
+
             turn++;
         }
 
