@@ -70,7 +70,11 @@ namespace MonsterDuel
             
             monsterMiniCards = new List<MonsterMiniCard>();
             
-            MonsterList.Init();
+            if (MonsterList.All.Count == 0)
+            {
+                MonsterList.Init();
+            }
+            
             foreach (var item in MonsterList.All)
             {
                 if (item.Value.Available)
@@ -752,7 +756,7 @@ namespace MonsterDuel
                 opponent.CurrentMonster = opponentMonsterOrder[0];
             }
             
-            BattleMap battleMap = BattleMapList.GetRandom();
+            BattleMap battleMap = new BattleMap(BattleMapList.GetRandom());
             string bgmPath = BattleBGMList.GetRandom();
             Battle battle = new Battle(player, opponent, battleMap, bgmPath);
             

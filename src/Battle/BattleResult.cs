@@ -30,7 +30,7 @@ public class BattleResult
         
         if (this.result == "Victory")
         {
-            lbResult.ForeColor = Color.PaleGreen;
+            lbResult.ForeColor = Color.LawnGreen;
         }
         else if(this.result == "Defeat")
         {
@@ -135,12 +135,47 @@ public class BattleResult
         // Console.WriteLine("lbBackToGameTitle.Width: " + lbBackToGameTitle.Width);
         // Console.WriteLine("lbBackToGameTitle.Height: " + lbBackToGameTitle.Height);
     }
+    
+    public async Task Dispose()
+    {
+        mediaPlayer.Stop();
+        mediaPlayer.Dispose();
+        libVLC.Dispose();
+        sourceForm.Controls.Remove(vvBackground);
+        vvBackground.Dispose();
+        
+        sourceForm.Controls.Remove(lbTitle);
+        sourceForm.Controls.Remove(lbResult);
+        sourceForm.Controls.Remove(lbRetry);
+        sourceForm.Controls.Remove(lbBackToGameTitle);
+    }
 
     private async void lbRetry_MouseClick(object sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
         {
             AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+
+            List<PictureBox> gates = await SceneEffect.CuttingInLikeClosingGate(sourceForm,
+                "MonsterDuel_Data/effects/scenes/battle_opening_top.png", 
+                "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png", 200, 10);
+            await Task.Delay(2000);
+            await Dispose();
+            await SceneEffect.CuttingOutLikeOpeningGate(sourceForm, gates, 200, 10);
+            
+            VSBar vsBar = new VSBar(battleForRetry.LeftPlayer, battleForRetry.RightPlayer);
+            sourceForm.Controls.Add(vsBar);
+            await vsBar.Start();
+            
+            List<PictureBox> gates2 = await SceneEffect.CuttingInLikeClosingGate(sourceForm,
+                "MonsterDuel_Data/effects/scenes/battle_opening_top.png", 
+                "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png", 200, 10);
+            
+            sourceForm.Controls.Remove(vsBar);
+            await Task.Delay(2000);
+            
+            BattleController battleController = new BattleController(sourceForm, battleForRetry, gates2);
+            await battleController.Start();
         }
         else
         {
@@ -153,6 +188,16 @@ public class BattleResult
         if (e.Button == MouseButtons.Left)
         {
             AudioPlayer.PlaySE("MonsterDuel_Data/se/yes.wav");
+            
+            List<PictureBox> gates = await SceneEffect.CuttingInLikeClosingGate(sourceForm,
+                "MonsterDuel_Data/effects/scenes/battle_opening_top.png", 
+                "MonsterDuel_Data/effects/scenes/battle_opening_bottom.png", 200, 10);
+            await Task.Delay(2000);
+            await Dispose();
+            await SceneEffect.CuttingOutLikeOpeningGate(sourceForm, gates, 200, 10);
+            
+            GameTitle gameTitle = new GameTitle(sourceForm);
+            await gameTitle.Start();
         }
         else
         {

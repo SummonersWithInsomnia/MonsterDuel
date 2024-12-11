@@ -74,6 +74,8 @@ public class BattleController
                 hasWinner = true;
                 battleResult = "Defeat";
                 winner = Battle.RightPlayer;
+                
+                await BattleMessageBox.AutoShow($"Summoner {Battle.LeftPlayer.Name} surrenders!");
                 continue;
             }
 
@@ -82,6 +84,8 @@ public class BattleController
                 hasWinner = true;
                 battleResult = "Victory";
                 winner = Battle.LeftPlayer;
+                
+                await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} surrenders!");
                 continue;
             }
             
@@ -119,8 +123,6 @@ public class BattleController
         //     Console.WriteLine(control.Name);
         // }
         // Console.WriteLine(sourceForm.Controls.Count);
-
-
     }
 
     public async Task SendMonstersAtStart()

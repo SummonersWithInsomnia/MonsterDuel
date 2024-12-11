@@ -45,6 +45,7 @@ partial class AppStartup
         this.ShowInTaskbar = false;
         this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         this.Text = "Monster Duel";
+        this.TopMost = true;
         this.Load += new System.EventHandler(this.AppStartup_Load);
         this.ResumeLayout(false);
     }
