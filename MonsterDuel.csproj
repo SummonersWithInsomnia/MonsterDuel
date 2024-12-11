@@ -231,6 +231,7 @@
     <Compile Include="src\Skills\AttackAndDebuffSkill.cs" />
     <Compile Include="src\Skills\AttackSkill.cs" />
     <Compile Include="src\Skills\Buff.cs" />
+    <Compile Include="src\Skills\BuffEffect.cs" />
     <Compile Include="src\Skills\BuffSkill.cs" />
     <Compile Include="src\Skills\DebuffSkill.cs" />
     <Compile Include="src\Skills\DefenseSkill.cs" />

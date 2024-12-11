@@ -23,6 +23,8 @@ public class BattleController
 
     private Battle battleForRetry;
     
+    public int CriticalHitRate = 15;
+    
     public BattleController(Form source, Battle battle, List<PictureBox> gates)
     {
         sourceForm = source;
@@ -95,6 +97,9 @@ public class BattleController
             {
                 await BattleMessageBox.AutoShow($"Come back, {Battle.LeftPlayer.CurrentMonster}!");
                 await BattleMessageBox.AutoShow($"Summoning magic! {leftPlayerCommand.Split('#')[1]}!");
+                
+                Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs.Clear();
+                
                 string monsterName = leftPlayerCommand.Split('#')[1];
                 Battle.LeftPlayer.CurrentMonster = monsterName;
                 await Battle.LeftPlayerSummonsMonster(monsterName, 500, 50);
@@ -104,20 +109,117 @@ public class BattleController
             {
                 await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} calls back {Battle.RightPlayer.CurrentMonster}!");
                 await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} summons {rightPlayerCommand.Split('#')[1]}!");
+                
+                Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Buffs.Clear();
+                
                 string monsterName = rightPlayerCommand.Split('#')[1];
                 Battle.RightPlayer.CurrentMonster = monsterName;
                 await Battle.RightPlayerSummonsMonster(monsterName, 500, 50);
             }
             
-            // for using skills (Version 2)
+            // Preparing for applying buffs/debuffs and using skills
             
             // If the left monster name is the same as the right monster name, the right monster ownership text will be displayed.
             string rightMonsterOwnership = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster ? $"Summoner {Battle.RightPlayer.Name}'s " : "";
             
+            Monster leftMonster = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster];
+            Monster rightMonster = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster];
+            
+            Skill leftSkill = leftMonster.Skills[leftPlayerCommand.Split('#')[1]];
+            Skill rightSkill = rightMonster.Skills[rightPlayerCommand.Split('#')[1]];
+
+            List<Buff> leftBuffs = leftMonster.Buffs;
+            List<Buff> rightBuffs = rightMonster.Buffs;
+            
+            Random leftRandom = new Random();
+            bool leftCriticalHit = leftRandom.Next(0, 100) < CriticalHitRate ? true : false;
+            bool leftSkillHit = leftRandom.Next(0, 100) < leftSkill.HitRate ? true : false;
+            
+            Random rightRandom = new Random();
+            bool rightCriticalHit = rightRandom.Next(0, 100) < CriticalHitRate ? true : false;
+            bool rightSkillHit = rightRandom.Next(0, 100) < rightSkill.HitRate ? true : false;
             
             
+            // Applying buffs/debuffs
+            BuffEffect leftBuffEffect = new BuffEffect();
+            foreach (var buff in leftBuffs)
+            {
+                if (buff.Property == "Health")
+                {
+                    leftBuffEffect.Health += buff.Value;
+                }
+                else if (buff.Property == "Attack")
+                {
+                    leftBuffEffect.Attack += buff.Value;
+                }
+                else if (buff.Property == "Defense")
+                {
+                    leftBuffEffect.Defense += buff.Value;
+                }
+                else if (buff.Property == "Speed")
+                {
+                    leftBuffEffect.Speed += buff.Value;
+                }
+                else if (buff.Property == "TurnSkip")
+                {
+                    leftBuffEffect.TurnSkip = leftRandom.Next(0, 100) < buff.Value;
+                }
+                else
+                {
+                    continue;
+                }
+
+                buff.Duration--;
+            }
+
+            foreach (var buff in leftBuffs)
+            {
+                if (buff.Duration < 0)
+                {
+                    leftBuffs.Remove(buff);
+                }
+            }
             
+            BuffEffect rightBuffEffect = new BuffEffect();
+            foreach (var buff in rightBuffs)
+            {
+                if (buff.Property == "Health")
+                {
+                    rightBuffEffect.Health += buff.Value;
+                }
+                else if (buff.Property == "Attack")
+                {
+                    rightBuffEffect.Attack += buff.Value;
+                }
+                else if (buff.Property == "Defense")
+                {
+                    rightBuffEffect.Defense += buff.Value;
+                }
+                else if (buff.Property == "Speed")
+                {
+                    rightBuffEffect.Speed += buff.Value;
+                }
+                else if (buff.Property == "TurnSkip")
+                {
+                    rightBuffEffect.TurnSkip = rightRandom.Next(0, 100) < buff.Value;
+                }
+                else
+                {
+                    continue;
+                }
+
+                buff.Duration--;
+            }
             
+            foreach (var buff in rightBuffs)
+            {
+                if (buff.Duration < 0)
+                {
+                    rightBuffs.Remove(buff);
+                }
+            }
+            
+            // Using skills
             
             turn++;
         }
