@@ -15,6 +15,7 @@ public class BattleController
     public BattleMessageBox BattleMessageBox;
     public TaskCompletionSource<bool> MessageBoxTcs;
 
+    private int turn = 0;
     private string battleResult;
     private IPlayer winner;
     private bool hasWinner = false;
@@ -93,7 +94,7 @@ public class BattleController
             if (leftPlayerCommand.Contains("Switch#"))
             {
                 await BattleMessageBox.AutoShow($"Come back, {Battle.LeftPlayer.CurrentMonster}!");
-                await BattleMessageBox.AutoShow($"Summon {leftPlayerCommand.Split('#')[1]}!");
+                await BattleMessageBox.AutoShow($"Summoning magic! {leftPlayerCommand.Split('#')[1]}!");
                 string monsterName = leftPlayerCommand.Split('#')[1];
                 Battle.LeftPlayer.CurrentMonster = monsterName;
                 await Battle.LeftPlayerSummonsMonster(monsterName, 500, 50);
@@ -109,6 +110,8 @@ public class BattleController
             }
             
             // for using skills
+            string rightMonsterOwner = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster ? $"Summoner {Battle.RightPlayer.Name}'s " : "";
+            
             int leftPlayerMonsterSpeed = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Speed;
             foreach (var buff in Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs)
             {
@@ -140,15 +143,72 @@ public class BattleController
                     rightPlayerMonsterSpeed++;
                 }
             }
+            
+            Monster leftPlayerMonster = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster];
+            Monster rightPlayerMonster = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster];
+            
+            string leftPlayerMonsterSkillName = leftPlayerCommand.Split('#')[1];
+            string rightPlayerMonsterSkillName = rightPlayerCommand.Split('#')[1];
+            
+            Skill leftPlayerMonsterSkill = leftPlayerMonster.Skills[leftPlayerMonsterSkillName];
+            Skill rightPlayerMonsterSkill = rightPlayerMonster.Skills[rightPlayerMonsterSkillName];
 
+            int leftPlayerMonsterTempDefenseFromDefenseSkill = 0;
+            int rightPlayerMonsterTempDefenseFromDefenseSkill = 0;
+
+            if (leftPlayerMonsterSkill is DefenseSkill leftPlayerMonsterDefenseSkill)
+            {
+                await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
+                
+                Random random = new Random();
+                int randomValue = random.Next(0, 100);
+                if (randomValue < leftPlayerMonsterSkill.HitRate)
+                {
+                    leftPlayerMonsterTempDefenseFromDefenseSkill = leftPlayerMonsterDefenseSkill.Defense;
+                    await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name}'s defense increased in this turn.");
+                }
+                else
+                {
+                    await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} failed to use {leftPlayerMonsterSkillName}.");
+                }
+
+                leftPlayerMonsterSkill.Limit--;
+            }
+            
+            if (rightPlayerMonsterSkill is DefenseSkill rightPlayerMonsterDefenseSkill)
+            {
+                await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} uses {rightPlayerMonsterSkillName}.");
+                
+                Random random = new Random();
+                int randomValue = random.Next(0, 100);
+                if (randomValue < rightPlayerMonsterSkill.HitRate)
+                {
+                    rightPlayerMonsterTempDefenseFromDefenseSkill = rightPlayerMonsterDefenseSkill.Defense;
+                    await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name}'s defense increased in this turn.");
+                }
+                else
+                {
+                    await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} failed to use {rightPlayerMonsterSkillName}.");
+                }
+                
+                rightPlayerMonsterSkill.Limit--;
+            }
+            
             if (leftPlayerMonsterSpeed > rightPlayerMonsterSpeed)
             {
+                if (leftPlayerMonsterSkill is AttackAndBuffSkill leftPlayerMonsterAttackAndBuffSkill)
+                {
+                    await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
+                    
+                }
                 
             }
             else if (rightPlayerMonsterSpeed > leftPlayerMonsterSpeed)
             {
                 
             }
+            
+            turn++;
         }
 
         MessageBoxTcs = new TaskCompletionSource<bool>();

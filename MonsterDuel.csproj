@@ -157,6 +157,7 @@
       <DependentUpon>BattleMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Battle\BattleResult.cs" />
+    <Compile Include="src\Battle\Element.cs" />
     <Compile Include="src\Battle\HPBar.cs" />
     <Compile Include="src\Battle\MonsterMiniCardWithStatusBar.cs">
       <SubType>UserControl</SubType>
@@ -228,7 +229,6 @@
     <Compile Include="src\Scenes\VSMode\VSMode.cs" />
     <Compile Include="src\Skills\AttackAndBuffSkill.cs" />
     <Compile Include="src\Skills\AttackAndDebuffSkill.cs" />
-    <Compile Include="src\Skills\AttackAndSwitchSkill.cs" />
     <Compile Include="src\Skills\AttackSkill.cs" />
     <Compile Include="src\Skills\Buff.cs" />
     <Compile Include="src\Skills\BuffSkill.cs" />
@@ -236,7 +236,7 @@
     <Compile Include="src\Skills\DefenseSkill.cs" />
     <Compile Include="src\Skills\FixedDamageSkill.cs" />
     <Compile Include="src\Skills\HealingSkill.cs" />
-    <Compile Include="src\Skills\ISkill.cs" />
+    <Compile Include="src\Skills\Skill.cs" />
     <Compile Include="src\Skills\MultipleHitAttackSkill.cs" />
     <Compile Include="src\System\AppStartup.cs">
       <SubType>Form</SubType>

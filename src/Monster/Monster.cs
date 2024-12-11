@@ -18,7 +18,7 @@ namespace MonsterDuel
         public string IconPath { get; set; }
         public string FrontImagePath { get; set; }
         public string BackImagePath { get; set; }
-        public Dictionary<string, ISkill> Skills { get; set; }
+        public Dictionary<string, Skill> Skills { get; set; }
 
         public Monster()
         {
@@ -39,7 +39,7 @@ namespace MonsterDuel
             this.IconPath = monster.IconPath;
             this.FrontImagePath = monster.FrontImagePath;
             this.BackImagePath = monster.BackImagePath;
-            this.Skills = new Dictionary<string, ISkill>(monster.Skills);
+            this.Skills = new Dictionary<string, Skill>(monster.Skills);
         }
     }
 }

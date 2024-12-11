@@ -24,7 +24,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/V.png",
             FrontImagePath = "MonsterDuel_Data/monsters/V_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/V_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Blade Fury", new AttackSkill
@@ -107,7 +107,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Jin.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Jin_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Jin_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Quick Jab", new MultipleHitAttackSkill
@@ -183,7 +183,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Suga.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Suga_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Suga_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Thunderbolt", new AttackAndDebuffSkill
@@ -214,7 +214,7 @@ public static class MonsterList
                         Description = "Absorbs 30 damage for 2 turns",
                         Limit = 40,
                         HitRate = 100,
-                        Element = "Eclectic",
+                        Element = "Electric",
                         Buffs = new List<Buff>
                         {
                             new()
@@ -276,7 +276,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Jungkook.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Jungkook_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Jungkook_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Blade Dance", new AttackAndBuffSkill
@@ -386,7 +386,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/RapMonster.png",
             FrontImagePath = "MonsterDuel_Data/monsters/RapMonster_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/RapMonster_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Energy Punch", new AttackSkill
@@ -470,7 +470,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/J-Hope.png",
             FrontImagePath = "MonsterDuel_Data/monsters/J-Hope_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/J-Hope_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Healing Dance", new HealingSkill
@@ -552,7 +552,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Jimin.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Jimin_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Jimin_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Double Slash", new MultipleHitAttackSkill
@@ -645,7 +645,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Rhaegal.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Rhaegal_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Rhaegal_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Dragon's Fury", new AttackSkill
@@ -728,7 +728,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Viserion.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Viserion_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Viserion_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Frost Breath", new AttackAndDebuffSkill
@@ -826,7 +826,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Kylo.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Kylo_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Kylo_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Crushing Blow", new AttackSkill
@@ -910,7 +910,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Moonfang.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Moonfang_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Moonfang_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Lunar Strike", new AttackAndBuffSkill
@@ -1009,7 +1009,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Tinker.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Tinker_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Tinker_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Gear Grind", new AttackSkill
@@ -1091,7 +1091,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Vader.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Vader_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Vader_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Dark Saber", new AttackSkill
@@ -1175,7 +1175,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Luke.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Luke_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Luke_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Force Push", new AttackAndDebuffSkill
@@ -1260,7 +1260,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Frodo.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Frodo_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Frodo_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 //skills
                 //Sword Jab / Attack / 
@@ -1348,7 +1348,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Smaug.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Smaug_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Smaug_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Dragon Flame", new AttackAndDebuffSkill
@@ -1444,7 +1444,7 @@ public static class MonsterList
             IconPath = "MonsterDuel_Data/monsters/icons/Phantom.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Phantom_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Phantom_back.png",
-            Skills = new Dictionary<string, ISkill>
+            Skills = new Dictionary<string, Skill>
             {
                 {
                     "Shadow Sneak", new DebuffSkill

@@ -44,11 +44,23 @@ public partial class BattleMenu : UserControl
     {
         UpdateSkillsFromLeftPlayerCurrentMonster();
         Visible = true;
+
+        if (battle.LeftPlayer.Monsters[battle.LeftPlayer.CurrentMonster].CurrentHealth <= 0)
+        {
+            while (battle.SwitchMonsterMenu.Result == "")
+            {
+                await battle.DisplaySwitchMonsterMenu();
+            }
+            
+            Command = battle.SwitchMonsterMenu.Result;
+            battle.SwitchMonsterMenu.Result = "";
+            Visible = false;
+        }
     }
 
     public void UpdateSkillsFromLeftPlayerCurrentMonster()
     {
-        Dictionary<string, ISkill> skills = battle.LeftPlayer.Monsters[battle.LeftPlayer.CurrentMonster].Skills;
+        Dictionary<string, Skill> skills = battle.LeftPlayer.Monsters[battle.LeftPlayer.CurrentMonster].Skills;
         
         skillList = new Dictionary<string, int>();
         skillNames = new List<string>();

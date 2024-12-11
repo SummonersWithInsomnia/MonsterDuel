@@ -2,7 +2,7 @@
 
 namespace MonsterDuel
 {
-    public class AttackAndDebuffSkill : ISkill
+    public class AttackAndDebuffSkill : Skill
     {
         public string Name { get; set; }
         public string Description { get; set; }

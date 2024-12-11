@@ -1,6 +1,6 @@
 ﻿namespace MonsterDuel
 {
-    public class DefenseSkill : ISkill
+    public class DefenseSkill : Skill
     {
         public string Name { get; set; }
         public string Description { get; set; }

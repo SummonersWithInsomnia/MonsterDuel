@@ -51,7 +51,7 @@ public class AI : IPlayer
         Dictionary<string, Monster> monsterList = new Dictionary<string, Monster>(this.Monsters);
         string currentMonsterName = this.CurrentMonster;
         Monster currentMonster = this.Monsters[currentMonsterName];
-        Dictionary<string, ISkill> currentMonsterSkills = currentMonster.Skills;
+        Dictionary<string, Skill> currentMonsterSkills = currentMonster.Skills;
         
         // command = "Switch#MonsterName"
         if (currentMonster.CurrentHealth <= 0)
@@ -74,7 +74,7 @@ public class AI : IPlayer
 
         // command = "Command#SkillName"
         Random random = new Random();
-        List<ISkill> availableSkills = new List<ISkill>();
+        List<Skill> availableSkills = new List<Skill>();
 
         foreach (var skillPair in currentMonsterSkills)
         {
@@ -84,7 +84,7 @@ public class AI : IPlayer
             }
         }
         
-        ISkill randomSkill = availableSkills[random.Next(availableSkills.Count)];
+        Skill randomSkill = availableSkills[random.Next(availableSkills.Count)];
         command = $"Command# + {randomSkill.Name}";
         
         await Task.Delay(2000);
