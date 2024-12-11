@@ -124,6 +124,9 @@ public class BattleController
             
             Monster leftMonster = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster];
             Monster rightMonster = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster];
+
+            MonsterStatusBar leftMonsterStatusBar = Battle.LeftPlayerMonsterStatusBar;
+            MonsterStatusBar rightMonsterStatusBar = Battle.RightPlayerMonsterStatusBar;
             
             Skill leftSkill = leftMonster.Skills[leftPlayerCommand.Split('#')[1]];
             Skill rightSkill = rightMonster.Skills[rightPlayerCommand.Split('#')[1]];
@@ -140,13 +143,24 @@ public class BattleController
             bool rightSkillHit = rightRandom.Next(0, 100) < rightSkill.HitRate ? true : false;
             
             
-            // Applying buffs/debuffs
+            // Applying and updating buffs/debuffs
             BuffEffect leftBuffEffect = new BuffEffect();
             foreach (var buff in leftBuffs)
             {
                 if (buff.Property == "Health")
                 {
-                    leftBuffEffect.Health += buff.Value;
+                    if (buff.Value < 0)
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s damage.");
+                        leftMonster.CurrentHealth += buff.Value;
+                        await leftMonsterStatusBar.ApplyValue(buff.Value);
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s healing.");
+                        leftMonster.CurrentHealth += buff.Value;
+                        await leftMonsterStatusBar.ApplyValue(buff.Value);
+                    }
                 }
                 else if (buff.Property == "Attack")
                 {
@@ -185,7 +199,18 @@ public class BattleController
             {
                 if (buff.Property == "Health")
                 {
-                    rightBuffEffect.Health += buff.Value;
+                    if (buff.Value < 0)
+                    {
+                        await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s damage.");
+                        rightMonster.CurrentHealth += buff.Value;
+                        await rightMonsterStatusBar.ApplyValue(buff.Value);
+                    }
+                    else
+                    {
+                        await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s healing.");
+                        rightMonster.CurrentHealth += buff.Value;
+                        await rightMonsterStatusBar.ApplyValue(buff.Value);
+                    }
                 }
                 else if (buff.Property == "Attack")
                 {
@@ -220,6 +245,18 @@ public class BattleController
             }
             
             // Using skills
+
+            if (leftSkill is DefenseSkill leftDefenseSkill)
+            {
+                
+            }
+
+            if (rightSkill is DefenseSkill rightDefenseSkill)
+            {
+                
+            }
+            
+            
             
             turn++;
         }

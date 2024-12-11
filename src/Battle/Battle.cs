@@ -33,10 +33,10 @@ public partial class Battle : UserControl
         Location = new Point(-233, 0)
     };
     
-    private MonsterStatusBar leftPlayerMonsterStatusBar = new MonsterStatusBar("Left Player's Monster",
+    public MonsterStatusBar LeftPlayerMonsterStatusBar = new MonsterStatusBar("Left Player's Monster",
         1000, 1000, "Left");
     
-    private MonsterStatusBar rightPlayerMonsterStatusBar = new MonsterStatusBar("Right Player's Monster",
+    public MonsterStatusBar RightPlayerMonsterStatusBar = new MonsterStatusBar("Right Player's Monster",
         1000, 1000, "Right");
 
     public BattleMenu BattleMenu;
@@ -88,8 +88,8 @@ public partial class Battle : UserControl
 
     public async Task Start(Form source, List<PictureBox> gates)
     {
-        leftPlayerMonsterStatusBar.Location = new Point(780, 390);
-        rightPlayerMonsterStatusBar.Location = new Point(30, 30);
+        LeftPlayerMonsterStatusBar.Location = new Point(780, 390);
+        RightPlayerMonsterStatusBar.Location = new Point(30, 30);
         
         AudioPlayer.PlayBGM(BGMPath);
         
@@ -100,8 +100,8 @@ public partial class Battle : UserControl
         Map.Controls.Add(leftPlayerSummoningMagic);
         Map.Controls.Add(rightPlayerSummoningMagic);
         
-        Map.Controls.Add(leftPlayerMonsterStatusBar);
-        Map.Controls.Add(rightPlayerMonsterStatusBar);
+        Map.Controls.Add(LeftPlayerMonsterStatusBar);
+        Map.Controls.Add(RightPlayerMonsterStatusBar);
         
         Map.Controls.Add(leftPlayerMonster);
         Map.Controls.Add(rightPlayerMonster);
@@ -116,8 +116,8 @@ public partial class Battle : UserControl
         
         leftPlayerSummoningMagic.Visible = false;
         rightPlayerSummoningMagic.Visible = false;
-        leftPlayerMonsterStatusBar.Visible = false;
-        rightPlayerMonsterStatusBar.Visible = false;
+        LeftPlayerMonsterStatusBar.Visible = false;
+        RightPlayerMonsterStatusBar.Visible = false;
         leftPlayerMonster.Visible = false;
         rightPlayerMonster.Visible = false;
         
@@ -276,13 +276,13 @@ public partial class Battle : UserControl
         await Task.Delay(200);
         rightPlayerMonster.Image = ImageList.GetImage(RightPlayer.Monsters[monsterName].FrontImagePath);
         rightPlayerMonster.Visible = true;
-        rightPlayerMonsterStatusBar.Visible = false;
+        RightPlayerMonsterStatusBar.Visible = false;
         await Task.Delay(200);
         await rightPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
         
-        rightPlayerMonsterStatusBar.Switch(RightPlayer.Monsters[monsterName].Name, RightPlayer.Monsters[monsterName].Health, RightPlayer.Monsters[monsterName].CurrentHealth, "Right");
-        rightPlayerMonsterStatusBar.Visible = true;
+        RightPlayerMonsterStatusBar.Switch(RightPlayer.Monsters[monsterName].Name, RightPlayer.Monsters[monsterName].Health, RightPlayer.Monsters[monsterName].CurrentHealth, "Right");
+        RightPlayerMonsterStatusBar.Visible = true;
     }
     
     private PictureBox leftPlayerMonster = new PictureBox
@@ -365,13 +365,13 @@ public partial class Battle : UserControl
         await Task.Delay(200);
         leftPlayerMonster.Image = ImageList.GetImage(LeftPlayer.Monsters[monsterName].BackImagePath);
         leftPlayerMonster.Visible = true;
-        leftPlayerMonsterStatusBar.Visible = false;
+        LeftPlayerMonsterStatusBar.Visible = false;
         await Task.Delay(200);
         await leftPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
         
-        leftPlayerMonsterStatusBar.Switch(LeftPlayer.Monsters[monsterName].Name, LeftPlayer.Monsters[monsterName].Health, LeftPlayer.Monsters[monsterName].CurrentHealth, "Left");
-        leftPlayerMonsterStatusBar.Visible = true;
+        LeftPlayerMonsterStatusBar.Switch(LeftPlayer.Monsters[monsterName].Name, LeftPlayer.Monsters[monsterName].Health, LeftPlayer.Monsters[monsterName].CurrentHealth, "Left");
+        LeftPlayerMonsterStatusBar.Visible = true;
     }
 
     public async Task DisplayMenu()
