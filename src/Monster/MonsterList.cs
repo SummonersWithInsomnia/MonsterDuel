@@ -19,7 +19,6 @@ public static class MonsterList
             Speed = 60,
             Description = "",
             Element = "Steel",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/V.png",
             FrontImagePath = "MonsterDuel_Data/monsters/V_front.png",
@@ -30,7 +29,7 @@ public static class MonsterList
                     "Blade Fury", new AttackSkill
                     {
                         Name = "Blade Fury",
-                        Description = "Deals 30 damage to an opponent monster",
+                        Description = "Deals 30 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Steel",
@@ -38,52 +37,33 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Iron Will", new BuffSkill
+                    "Iron Blade", new AttackSkill
                     {
-                        Name = "Iron Will",
-                        Description = "Increases Defence by 20 for 2 turns",
+                        Name = "Iron Blade",
+                        Description = "Deals 40 damage in 75% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 75,
                         Element = "Steel",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Iron Will",
-                                Property = "Defense",
-                                Value = 20,
-                                Duration = 2
-                            }
-                        }
+                        Damage = 40
                     }
                 },
                 {
-                    "Swift Strike", new AttackAndBuffSkill
+                    "Swift Strike", new FixedDamageSkill
                     {
                         Name = "Swift Strike",
-                        Description = "Deals 25 damage and increases Speed by 10 for 2 turns",
+                        Description = "Ignores all defenses and shields and deals 30 damage in 80% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 80,
                         Element = "Steel",
-                        Damage = 25,
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Swift Strike",
-                                Property = "Speed",
-                                Value = 10,
-                                Duration = 2
-                            }
-                        }
+                        FixedDamage = 30,
                     }
                 },
                 {
                     "Steel Shield", new DefenseSkill
                     {
                         Name = "Steel Shield",
-                        Description = "Absorbs up to 40 damage in this turn",
-                        Limit = 40,
+                        Description = "Increases defense by 40",
+                        Limit = 5,
                         HitRate = 100,
                         Element = "Steel",
                         Defense = 40
@@ -102,7 +82,6 @@ public static class MonsterList
             Speed = 65,
             Description = "",
             Element = "Fighting",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Jin.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Jin_front.png",
@@ -110,17 +89,14 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Quick Jab", new MultipleHitAttackSkill
+                    "Quick Jab", new AttackSkill
                     {
                         Name = "Quick Jab",
-                        Description = "Deals 20 damage and hits twice",
+                        Description = "Deals 40 damage in 85% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 85,
                         Element = "Fighting",
-                        DamagePerHit = 20,
-                        MinHit = 2,
-                        MaxHit = 2,
-                        HitRatePerHit = 100
+                        Damage = 40,
                     }
                 },
                 {
@@ -135,32 +111,23 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Deflection", new BuffSkill
+                    "Deflection", new DefenseSkill
                     {
                         Name = "Deflection",
-                        Description = "Reduces incoming damage by 25 for 2 turns",
+                        Description = "Increases defense by 30",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Deflection",
-                                Property = "Defense",
-                                Value = 25,
-                                Duration = 2
-                            }
-                        }
+                        Defense = 30
                     }
                 },
                 {
                     "Barrier Break", new FixedDamageSkill
                     {
                         Name = "Barrier Break",
-                        Description = "Ignores all defenses and shields on the target and deals 35 damage",
+                        Description = "Ignores all defenses and shields and deals 35 damage in 75% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 75,
                         Element = "Fighting",
                         FixedDamage = 35
                     }
@@ -178,7 +145,6 @@ public static class MonsterList
             Speed = 70,
             Description = "",
             Element = "Electric",
-            Buffs = new List<Buff>(),
             Available = false, // only available for bosses
             IconPath = "MonsterDuel_Data/monsters/icons/Suga.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Suga_front.png",
@@ -186,76 +152,47 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Thunderbolt", new AttackAndDebuffSkill
+                    "Thunderbolt", new AttackSkill
                     {
                         Name = "Thunderbolt",
-                        Description = "Deals 60 damage with a 50% chance to paralyze the target",
-                        Limit = 40,
+                        Description = "Deals 60 damage",
+                        Limit = 60,
                         HitRate = 100,
                         Element = "Electric",
-                        Damage = 60,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Thunderbolt",
-                                Property = "TurnSkip",
-                                Value = 70, // 70% chance to skip turn
-                                Duration = 3
-                            }
-                        },
-                        DebuffHitRate = 50 // 50% chance to apply debuff
+                        Damage = 60
                     }
                 },
                 {
-                    "Lightning Shield", new BuffSkill
+                    "Lightning Shield", new DefenseSkill
                     {
                         Name = "Lightning Shield",
-                        Description = "Absorbs 30 damage for 2 turns",
-                        Limit = 40,
+                        Description = "Increases defense by 45",
+                        Limit = 10,
                         HitRate = 100,
                         Element = "Electric",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Lightning Shield",
-                                Property = "Defense",
-                                Value = 30,
-                                Duration = 2
-                            }
-                        }
+                        Defense = 45
                     }
                 },
                 {
                     "Electric Surge", new AttackSkill
                     {
                         Name = "Electric Surge",
-                        Description = "Deals 30 damage",
+                        Description = "Deals 140 damage in 30% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 30,
                         Element = "Electric",
-                        Damage = 30
+                        Damage = 140
                     }
                 },
                 {
-                    "Static Charge", new DebuffSkill
+                    "Static Charge", new HealingSkill
                     {
                         Name = "Static Charge",
-                        Description = "Stuns the target for 1 turn",
+                        Description = "Restores 100 HP",
                         Limit = 40,
-                        HitRate = 50, // 50% chance to hit
+                        HitRate = 100,
                         Element = "Electric",
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Static Charge",
-                                Property = "TurnSkip",
-                                Value = 100,
-                                Duration = 1
-                            }
-                        }
+                        Heal = 100
                     }
                 }
             }
@@ -271,7 +208,6 @@ public static class MonsterList
             Speed = 75,
             Description = "",
             Element = "Fighting",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Jungkook.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Jungkook_front.png",
@@ -279,93 +215,47 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Blade Dance", new AttackAndBuffSkill
+                    "Blade Dance", new AttackSkill
                     {
                         Name = "Blade Dance",
-                        Description = "Deals 30 damage and increases Speed by 15 for 2 turns",
+                        Description = "Deals 30 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
-                        Damage = 30,
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Blade Dance",
-                                Property = "Speed",
-                                Value = 15,
-                                Duration = 2
-                            }
-                        }
+                        Damage = 30
                     }
                 },
                 {
-                    "Steadfast", new BuffSkill
+                    "Steadfast", new DefenseSkill
                     {
                         Name = "Steadfast",
-                        Description = "Increases both Defense and Speed by 10 for 4 turn",
-                        Limit = 40,
+                        Description = "Increases defense by 30",
+                        Limit = 10,
                         HitRate = 100,
                         Element = "Fighting",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Steadfast",
-                                Property = "Defense",
-                                Value = 10,
-                                Duration = 4
-                            },
-                            new()
-                            {
-                                Name = "Steadfast",
-                                Property = "Speed",
-                                Value = 10,
-                                Duration = 4
-                            }
-                        }
+                        Defense = 30,
                     }
                 },
                 {
-                    "Flash Step", new AttackAndDebuffSkill
+                    "Flash Step", new FixedDamageSkill
                     {
                         Name = "Flash Step",
-                        Description = "Deals 20 damage and stuns the target for 1 turn",
+                        Description = "Ignores all defenses and shields and deals 40 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
-                        Damage = 20,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Flash Step",
-                                Property = "TurnSkip",
-                                Value = 100, // 100% chance to skip turn
-                                Duration = 1
-                            }
-                        },
-                        DebuffHitRate = 100 // 100% chance to apply debuff
+                        FixedDamage = 40,
                     }
                 },
                 {
-                    "Counter Shield", new BuffSkill
+                    "Counter Shield", new AttackSkill
                     {
                         Name = "Counter Shield",
-                        Description = "Absorbs 20 damage for 3 turns",
+                        Description = "Deals 45 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Counter Shield",
-                                Property = "Defense",
-                                Value = 20,
-                                Duration = 3
-                            }
-                        }
+                        Damage = 45
                     }
                 }
             }
@@ -381,7 +271,6 @@ public static class MonsterList
             Speed = 55,
             Description = "",
             Element = "Rock",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/RapMonster.png",
             FrontImagePath = "MonsterDuel_Data/monsters/RapMonster_front.png",
@@ -411,45 +300,25 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Rock Wall", new BuffSkill
+                    "Rock Wall", new DefenseSkill
                     {
                         Name = "Rock Wall",
-                        Description = "Absorbs 50 damage for 2 turns",
-                        Limit = 40,
+                        Description = "Increases defense by 50",
+                        Limit = 5,
                         HitRate = 100,
                         Element = "Rock",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Rock Wall",
-                                Property = "Defense",
-                                Value = 50,
-                                Duration = 2
-                            }
-                        }
+                        Defense = 50
                     }
                 },
                 {
-                    "Ground Slam", new AttackAndDebuffSkill
+                    "Ground Slam", new AttackSkill
                     {
                         Name = "Ground Slam",
-                        Description = "Deals 35 damage and reduces the opponent's Speed by 10 for 2 turns",
+                        Description = "Deals 35 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Rock",
-                        Damage = 35,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Ground Slam",
-                                Property = "Speed",
-                                Value = -10,
-                                Duration = 2
-                            }
-                        },
-                        DebuffHitRate = 100 // 100% chance to apply debuff
+                        Damage = 35
                     }
                 }
             }
@@ -465,7 +334,6 @@ public static class MonsterList
             Speed = 60,
             Description = "",
             Element = "Water",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/J-Hope.png",
             FrontImagePath = "MonsterDuel_Data/monsters/J-Hope_front.png",
@@ -487,7 +355,7 @@ public static class MonsterList
                     "Light Strike", new AttackSkill
                     {
                         Name = "Light Strike",
-                        Description = "Deals 25 damage to an opponent",
+                        Description = "Deals 25 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Normal",
@@ -495,43 +363,25 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Defensive Spin", new BuffSkill
+                    "Defensive Spin", new DefenseSkill
                     {
                         Name = "Defensive Spin",
-                        Description = "Increases Defense by 20 for 3 turns",
-                        Limit = 40,
+                        Description = "Increases defense by 40",
+                        Limit = 5,
                         HitRate = 100,
                         Element = "Water",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Defensive Spin",
-                                Property = "Defense",
-                                Value = 20,
-                                Duration = 3
-                            }
-                        }
+                        Defense = 20
                     }
                 },
                 {
-                    "Water Shield", new BuffSkill
+                    "Water Shield", new DefenseSkill()
                     {
                         Name = "Water Shield",
-                        Description = "Reduces incoming damage by 20 for 2 turns",
-                        Limit = 40,
+                        Description = "Increases defense by 20",
+                        Limit = 10,
                         HitRate = 100,
                         Element = "Water",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Aura Shield",
-                                Property = "Defense",
-                                Value = 20,
-                                Duration = 2
-                            }
-                        }
+                        Defense = 10
                     }
                 }
             }
@@ -547,7 +397,6 @@ public static class MonsterList
             Speed = 50,
             Description = "",
             Element = "Fighting",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Jimin.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Jimin_front.png",
@@ -555,76 +404,47 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Double Slash", new MultipleHitAttackSkill
+                    "Double Slash", new FixedDamageSkill
                     {
                         Name = "Double Slash",
-                        Description = "Deals 20 damage with 2 hits",
-                        Limit = 40,
+                        Description = "Ignores all defenses and shields and deals 40 damage",
+                        Limit = 15,
                         HitRate = 100,
                         Element = "Fighting",
-                        DamagePerHit = 20,
-                        MinHit = 2,
-                        MaxHit = 2,
-                        HitRatePerHit = 100
+                        FixedDamage = 40
                     }
                 },
                 {
-                    "Armor Up", new BuffSkill
+                    "Armor Up", new DefenseSkill
                     {
                         Name = "Armor Up",
-                        Description = "Increases Defense by 25 for 2 turns",
-                        Limit = 40,
+                        Description = "Increases defense by 30",
+                        Limit = 5,
                         HitRate = 100,
                         Element = "Fighting",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Armor Up",
-                                Property = "Defense",
-                                Value = 25,
-                                Duration = 2
-                            }
-                        }
+                        Defense = 30
                     }
                 },
                 {
-                    "Courageous Roar", new AttackAndBuffSkill
+                    "Courageous Roar", new AttackSkill
                     {
                         Name = "Courageous Roar",
-                        Description = "Increases Attack and Speed by 10 for 3 turns",
-                        Limit = 40,
+                        Description = "Deals 50 damage",
+                        Limit = 10,
                         HitRate = 100,
                         Element = "Fighting",
-                        Damage = 10,
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Courageous Roar",
-                                Property = "Attack",
-                                Value = 10,
-                                Duration = 3
-                            },
-                            new()
-                            {
-                                Name = "Courageous Roar",
-                                Property = "Speed",
-                                Value = 10,
-                                Duration = 3
-                            }
-                        }
+                        Damage = 50
                     }
                 },
                 {
                     "Charge Strike", new FixedDamageSkill
                     {
                         Name = "Charge Strike",
-                        Description = "Ignores all defenses and shields on the target and deals 35 damage",
+                        Description = "Ignores all defenses and shields and deals 20 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
-                        FixedDamage = 35
+                        FixedDamage = 20
                     }
                 }
             }
@@ -640,7 +460,6 @@ public static class MonsterList
             Speed = 60,
             Description = "",
             Element = "Fire",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Rhaegal.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Rhaegal_front.png",
@@ -651,7 +470,7 @@ public static class MonsterList
                     "Dragon's Fury", new AttackSkill
                     {
                         Name = "Dragon's Fury",
-                        Description = "Deals 40 damage to a single target",
+                        Description = "Deals 40 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fire",
@@ -662,7 +481,7 @@ public static class MonsterList
                     "Wing Shield", new DefenseSkill
                     {
                         Name = "Wing Shield",
-                        Description = "Absorbs up to 35 damage in this turn",
+                        Description = "Increases defense by 35",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dragon",
@@ -670,44 +489,25 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Tail Spin", new DebuffSkill
+                    "Tail Spin", new AttackSkill
                     {
                         Name = "Tail Spin",
-                        Description = "Stuns the target for 1 turn",
+                        Description = "Deals 30 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dragon",
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Tail Spin",
-                                Property = "TurnSkip",
-                                Value = 100,
-                                Duration = 1
-                            }
-                        }
+                        Damage = 30
                     }
                 },
                 {
-                    "Fiery Roar", new AttackAndBuffSkill
+                    "Fiery Roar", new FixedDamageSkill
                     {
                         Name = "Fiery Roar",
-                        Description = "Deals 25 damage and increases Attack by 15 for 2 turns",
+                        Description = "Ignores all defenses and shields and deals 25 damage",
                         Limit = 40,
                         HitRate = 100,
-                        Element = "Dragon",
-                        Damage = 25,
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Fiery Roar",
-                                Property = "Attack",
-                                Value = 15,
-                                Duration = 2
-                            }
-                        }
+                        Element = "Dragon", 
+                        FixedDamage= 25
                     }
                 }
             }
@@ -723,7 +523,6 @@ public static class MonsterList
             Speed = 65,
             Description = "",
             Element = "Ice",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Viserion.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Viserion_front.png",
@@ -731,32 +530,21 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Frost Breath", new AttackAndDebuffSkill
+                    "Frost Breath", new AttackSkill
                     {
                         Name = "Frost Breath",
-                        Description = "Deals 35 damage and reduces the opponent’s Speed by 15 for 1 turn in 65% chance",
+                        Description = "Deals 35 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Ice",
-                        Damage = 35,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Frost Breath",
-                                Property = "Speed",
-                                Value = -15,
-                                Duration = 1
-                            }
-                        },
-                        DebuffHitRate = 65 // 65% chance to apply debuff
+                        Damage = 35
                     }
                 },
                 {
                     "Ice Shield", new DefenseSkill
                     {
                         Name = "Ice Shield",
-                        Description = "Absorbs 30 damage in this turn",
+                        Description = "Increases defense by 30",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Ice",
@@ -764,48 +552,25 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Frozen Claw", new AttackAndDebuffSkill
+                    "Frozen Claw", new FixedDamageSkill
                     {
                         Name = "Frozen Claw",
-                        Description = "Deals 20 damage and freezes the opponent for 3 turn in 45% chance",
+                        Description = "Deals 20 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Ice",
-                        Damage = 20,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Frozen Claw",
-                                Property = "TurnSkip",
-                                Value = 100, // 100% chance to skip turn
-                                Duration = 3
-                            }
-                        },
-                        DebuffHitRate = 45 // 45% chance to apply debuff
+                        FixedDamage = 20
                     }
                 },
                 {
-                    "Winter's Bite", new AttackAndDebuffSkill
+                    "Winter Bite", new HealingSkill
                     {
-                        Name = "Winter's Bite",
-                        Description =
-                            "Deals 25 damage with a chance to decrease Defense of the opponent by 10 for 3 turn in 50% chance",
+                        Name = "Winter Bite",
+                        Description = "Restores 50 HP",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Ice",
-                        Damage = 25,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Winter's Bite",
-                                Property = "Defense",
-                                Value = -10,
-                                Duration = 3
-                            }
-                        },
-                        DebuffHitRate = 50 // 50% chance to apply debuff
+                        Heal = 50
                     }
                 }
             }
@@ -821,7 +586,6 @@ public static class MonsterList
             Speed = 65,
             Description = "",
             Element = "Fighting",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Kylo.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Kylo_front.png",
@@ -832,9 +596,9 @@ public static class MonsterList
                     "Crushing Blow", new AttackSkill
                     {
                         Name = "Crushing Blow",
-                        Description = "Deals 35 damage to an opponent",
+                        Description = "Deals 35 damage in 80% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 80,
                         Element = "Fighting",
                         Damage = 35
                     }
@@ -843,7 +607,7 @@ public static class MonsterList
                     "Barrier of Resolve", new DefenseSkill
                     {
                         Name = "Barrier of Resolve",
-                        Description = "Absorbs 40 damage",
+                        Description = "Increases defense by 40",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
@@ -851,45 +615,26 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Thunderous Strike", new AttackAndDebuffSkill
+                    "Thunderous Strike", new AttackSkill
                     {
                         Name = "Thunderous Strike",
-                        Description = "Deals 25 damage and stuns the opponent for 1 turn in 65% chance",
+                        Description = "Deals 25 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
                         Damage = 25,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Thunderous Strike",
-                                Property = "TurnSkip",
-                                Value = 100,
-                                Duration = 1
-                            }
-                        },
-                        DebuffHitRate = 65 // 65% chance to apply debuff
+                        
                     }
                 },
                 {
-                    "Fury's Awakening", new BuffSkill
+                    "Awakening", new HealingSkill
                     {
-                        Name = "Fury's Awakening",
-                        Description = "Increases Attack by 20 for 3 turns",
+                        Name = "Awakening",
+                        Description = "Restores 30 HP",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Fury's Awakening",
-                                Property = "Attack",
-                                Value = 20,
-                                Duration = 3
-                            }
-                        }
+                        Heal = 30
                     }
                 }
             }
@@ -905,7 +650,6 @@ public static class MonsterList
             Speed = 55,
             Description = "",
             Element = "Dark",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Moonfang.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Moonfang_front.png",
@@ -913,24 +657,14 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Lunar Strike", new AttackAndBuffSkill
+                    "Lunar Strike", new AttackSkill
                     {
                         Name = "Lunar Strike",
-                        Description = "Deals 25 damage and increases Speed",
+                        Description = "Deals 25 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dark",
-                        Damage = 25,
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Lunar Strike",
-                                Property = "Speed",
-                                Value = 15,
-                                Duration = 2
-                            }
-                        }
+                        Damage = 25
                     }
                 },
                 {
@@ -945,50 +679,25 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Howl of Defense", new BuffSkill
+                    "Howl of Defense", new DefenseSkill
                     {
                         Name = "Howl of Defense",
-                        Description = "Increases Defense and Speed by 10 for 2 turns",
+                        Description = "Increases defense by 35",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Normal",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Howl of Defense",
-                                Property = "Defense",
-                                Value = 10,
-                                Duration = 2
-                            },
-                            new()
-                            {
-                                Name = "Howl of Defense",
-                                Property = "Speed",
-                                Value = 10,
-                                Duration = 2
-                            }
-                        }
+                        Defense = 35,
                     }
                 },
                 {
-                    "Shield of Night", new BuffSkill
+                    "Wind of Night", new HealingSkill
                     {
-                        Name = "Shield of Night",
-                        Description = "Reduces incoming damage by 20 for 2 turn",
+                        Name = "Wind of Night",
+                        Description = "Restores 50 HP",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dark",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Shield of Night",
-                                Property = "Defense",
-                                Value = 20,
-                                Duration = 2
-                            }
-                        }
+                        Heal = 50
                     }
                 }
             }
@@ -1004,7 +713,6 @@ public static class MonsterList
             Speed = 90,
             Description = "",
             Element = "Steel",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Tinker.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Tinker_front.png",
@@ -1023,54 +731,36 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Speed Tune", new BuffSkill
+                    "Defense Tune", new DefenseSkill
                     {
-                        Name = "Speed Tune",
+                        Name = "Defense Tune",
                         Description = "Increases Speed by 25",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Steel",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Speed Tune",
-                                Property = "Speed",
-                                Value = 25,
-                                Duration = 1
-                            }
-                        }
+                        Defense = 25
                     }
                 },
                 {
-                    "Metal Armor", new BuffSkill
+                    "Metal Armor", new FixedDamageSkill
                     {
                         Name = "Metal Armor",
-                        Description = "Increases Defense by 20 for 2 turns",
+                        Description = "Ignores all defenses and shields and deals 40 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Steel",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Metal Armor",
-                                Property = "Defense",
-                                Value = 20,
-                                Duration = 2
-                            }
-                        }
+                        FixedDamage = 40
                     }
                 },
                 {
                     "Reflective Shield", new DefenseSkill
                     {
                         Name = "Reflective Shield",
-                        Description = "Absorbs 35 damage",
-                        Limit = 40,
+                        Description = "Increases defense by 40",
+                        Limit = 10,
                         HitRate = 100,
                         Element = "Steel",
-                        Defense = 35
+                        Defense = 40
                     }
                 }
             }
@@ -1086,7 +776,6 @@ public static class MonsterList
             Speed = 45,
             Description = "",
             Element = "Dark",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Vader.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Vader_front.png",
@@ -1097,7 +786,7 @@ public static class MonsterList
                     "Dark Saber", new AttackSkill
                     {
                         Name = "Dark Saber",
-                        Description = "Deals 40 damage to an opponent",
+                        Description = "Deals 40 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dark",
@@ -1108,7 +797,7 @@ public static class MonsterList
                     "Force Shield", new DefenseSkill
                     {
                         Name = "Force Shield",
-                        Description = "Absorbs 30 damage in this turn",
+                        Description = "Increases defense by 30",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dark",
@@ -1116,45 +805,25 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Power Strike", new AttackAndDebuffSkill
+                    "Power Strike", new AttackSkill
                     {
                         Name = "Power Strike",
-                        Description = "Deals 35 damage and reduces the opponent’s Speed by 15 for 1 turn in 75% chance",
-                        Limit = 40,
+                        Description = "Deals 50 damage",
+                        Limit = 20,
                         HitRate = 100,
                         Element = "Fighting",
-                        Damage = 35,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Power Strike",
-                                Property = "Speed",
-                                Value = -15,
-                                Duration = 1
-                            }
-                        },
-                        DebuffHitRate = 75 // 75% chance to apply debuff
+                        Damage = 50
                     }
                 },
                 {
-                    "Intimidate", new DebuffSkill
+                    "Intimidate", new AttackSkill
                     {
                         Name = "Intimidate",
-                        Description = "Reduces the opponent’s Attack by 20 for 2 turns",
+                        Description = "Deals 30 damage in 55% chance",
                         Limit = 40,
-                        HitRate = 75,
+                        HitRate = 55,
                         Element = "Dark",
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Intimidate",
-                                Property = "Attack",
-                                Value = -20,
-                                Duration = 2
-                            }
-                        }
+                        Damage = 60
                     }
                 }
             }
@@ -1170,7 +839,6 @@ public static class MonsterList
             Speed = 70,
             Description = "",
             Element = "Fighting",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Luke.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Luke_front.png",
@@ -1178,32 +846,21 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Force Push", new AttackAndDebuffSkill
+                    "Force Push", new AttackSkill
                     {
                         Name = "Force Push",
-                        Description = "Deals 25 damage and stuns the opponent for 1 turn in 60% chance",
+                        Description = "Deals 25 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
-                        Damage = 25,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Force Push",
-                                Property = "TurnSkip",
-                                Value = 100, // 100% chance to skip turn
-                                Duration = 1
-                            }
-                        },
-                        DebuffHitRate = 60 // 60% chance to apply debuff
+                        Damage = 25
                     }
                 },
                 {
                     "Piercing Strike", new AttackSkill
                     {
                         Name = "Piercing Strike",
-                        Description = "Deals 35 damage to an opponent",
+                        Description = "Deals 35 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
@@ -1214,7 +871,7 @@ public static class MonsterList
                     "Iron Bastion", new DefenseSkill
                     {
                         Name = "Iron Bastion",
-                        Description = "Absorbs 40 damage in this turn",
+                        Description = "Increases defense by 40",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fighting",
@@ -1222,24 +879,14 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Blazing Momentum", new AttackAndBuffSkill
+                    "Blazing Momentum", new AttackSkill
                     {
                         Name = "Blazing Momentum",
-                        Description = "Deals 30 damage and increases Speed by 15 for 2 turns",
+                        Description = "Deals 50 damage in 50% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 50,
                         Element = "Fighting",
-                        Damage = 30,
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Blazing Momentum",
-                                Property = "Speed",
-                                Value = 15,
-                                Duration = 2
-                            }
-                        }
+                        Damage = 50
                     }
                 }
             }
@@ -1255,19 +902,12 @@ public static class MonsterList
             Speed = 80,
             Description = "",
             Element = "Normal",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Frodo.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Frodo_front.png",
             BackImagePath = "MonsterDuel_Data/monsters/Frodo_back.png",
             Skills = new Dictionary<string, Skill>
             {
-                //skills
-                //Sword Jab / Attack / 
-                //Ring Shield / Defense / 
-                //Stealth Step / Stun / Evades attacks and 
-                //Hopeful Heal / Heal /  to an ally 
-
                 {
                     "Jab", new AttackSkill
                     {
@@ -1280,54 +920,36 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Ring Shield", new BuffSkill
+                    "Ring Shield", new DefenseSkill
                     {
                         Name = "Ring Shield",
-                        Description = "Increases Defense by 20 for 2 turns",
+                        Description = "Increases defense by 30",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Normal",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Ring Shield",
-                                Property = "Defense",
-                                Value = 20,
-                                Duration = 2
-                            }
-                        }
+                        Defense = 30
                     }
                 },
                 {
-                    "Stealth Step", new DebuffSkill
+                    "Stealth Step", new FixedDamageSkill
                     {
                         Name = "Stealth Step",
-                        Description = "Stuns the opponent for 1 turn in 70% chance",
+                        Description = "Ignores all defenses and shields and deals 50 damage in 70% chance",
                         Limit = 40,
                         HitRate = 70,
                         Element = "Normal",
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Stealth Step",
-                                Property = "TurnSkip",
-                                Value = 100,
-                                Duration = 1
-                            }
-                        }
+                        FixedDamage = 50
                     }
                 },
                 {
                     "Hopeful Heal", new HealingSkill
                     {
                         Name = "Hopeful Heal",
-                        Description = "Restores 20 HP",
+                        Description = "Restores 40 HP",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Normal",
-                        Heal = 20
+                        Heal = 40
                     }
                 }
             }
@@ -1343,7 +965,6 @@ public static class MonsterList
             Speed = 70,
             Description = "",
             Element = "Fire",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Smaug.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Smaug_front.png",
@@ -1351,32 +972,21 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Dragon Flame", new AttackAndDebuffSkill
+                    "Dragon Flame", new AttackSkill
                     {
                         Name = "Dragon Flame",
-                        Description = "Deals 35 damage and has a 20% chance to burn the target",
+                        Description = "Deals 35 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fire",
-                        Damage = 35,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Dragon Flame",
-                                Property = "Health",
-                                Value = -15,
-                                Duration = 2
-                            }
-                        },
-                        DebuffHitRate = 20 // 20% chance to apply debuff
+                        Damage = 35
                     }
                 },
                 {
                     "Fire Shield", new DefenseSkill
                     {
                         Name = "Fire Shield",
-                        Description = "Absorbs 40 damage in this turn",
+                        Description = "Increases defense by 40",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Fire",
@@ -1384,46 +994,25 @@ public static class MonsterList
                     }
                 },
                 {
-                    "Tail Whip", new AttackAndDebuffSkill
+                    "Tail Whip", new AttackSkill()
                     {
                         Name = "Tail Whip",
-                        Description =
-                            "Deals 25 damage and reduces the opponent’s Speed by 15 for 2 turns in 80% chance",
+                        Description = "Deals 30 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dragon",
-                        Damage = 25,
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Tail Whip",
-                                Property = "Speed",
-                                Value = -15,
-                                Duration = 2
-                            }
-                        },
-                        DebuffHitRate = 80 // 80% chance to apply debuff
+                        Damage = 30
                     }
                 },
                 {
-                    "Roar", new BuffSkill
+                    "Roar", new AttackSkill()
                     {
                         Name = "Roar",
-                        Description = "Increases Attack by 20 for 3 turns",
+                        Description = "Deals 55 damage in 80% chance",
                         Limit = 40,
-                        HitRate = 100,
+                        HitRate = 80,
                         Element = "Dragon",
-                        Buffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Roar",
-                                Property = "Attack",
-                                Value = 20,
-                                Duration = 3
-                            }
-                        }
+                        Damage = 55
                     }
                 }
             }
@@ -1439,7 +1028,6 @@ public static class MonsterList
             Speed = 45,
             Description = "",
             Element = "Dark",
-            Buffs = new List<Buff>(),
             Available = true,
             IconPath = "MonsterDuel_Data/monsters/icons/Phantom.png",
             FrontImagePath = "MonsterDuel_Data/monsters/Phantom_front.png",
@@ -1447,42 +1035,32 @@ public static class MonsterList
             Skills = new Dictionary<string, Skill>
             {
                 {
-                    "Shadow Sneak", new DebuffSkill
+                    "Shadow Sneak", new AttackSkill()
                     {
                         Name = "Shadow Sneak",
-                        Description = "Stuns the opponent for 1 turn in 70% chance",
+                        Description = "Deals 50 damage in 70% chance",
                         Limit = 40,
                         HitRate = 70,
                         Element = "Dark",
-                        Debuffs = new List<Buff>
-                        {
-                            new()
-                            {
-                                Name = "Shadow Sneak",
-                                Property = "TurnSkip",
-                                Value = 100,
-                                Duration = 1
-                            }
-                        }
+                        Damage = 50
                     }
                 },
                 {
                     "Ghost Strike", new FixedDamageSkill
                     {
                         Name = "Ghost Strike",
-                        Description = "Ignores all defenses and shields on the target and deals 30 damage",
+                        Description = "Ignores all defenses and shields and deals 40 damage",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Dark",
-                        FixedDamage = 30
+                        FixedDamage = 40
                     }
                 },
-
                 {
                     "Ethereal Shield", new DefenseSkill
                     {
                         Name = "Ethereal Shield",
-                        Description = "Absorbs 30 damage in this turn",
+                        Description = "Increases defense by 30",
                         Limit = 40,
                         HitRate = 100,
                         Element = "Normal",

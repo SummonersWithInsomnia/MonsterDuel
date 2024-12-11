@@ -10,8 +10,6 @@ public partial class MonsterMiniCardWithStatusBar : UserControl
     
     private Monster monster;
     private bool currentMonster;
-
-    private int hpPercentage;
     
     public MonsterMiniCardWithStatusBar(SwitchMonsterMenu smm, Monster monster, bool current)
     {
@@ -20,37 +18,37 @@ public partial class MonsterMiniCardWithStatusBar : UserControl
         this.smm = smm;
         this.monster = monster;
         currentMonster = current;
-        
-        hpBar.ValueChanged += HPBar_ValueChanged;
-        hpPercentage = monster.CurrentHealth / monster.Health * 100;
-        hpBar.Value = hpPercentage;
 
-        lbName.Text = monster.Name;
-        lbHPValue.Text = $"{monster.CurrentHealth} / {monster.Health}";
+        hpBar.Maximum = this.monster.Health;
+        hpBar.ValueChanged += HPBar_ValueChanged;
+        hpBar.Value = this.monster.CurrentHealth;
+
+        lbName.Text = this.monster.Name;
+        lbHPValue.Text = $"{this.monster.CurrentHealth} / {this.monster.Health}";
 
         if (!currentMonster)
         {
-            if (monster.CurrentHealth > 0)
+            if (this.monster.CurrentHealth > 0)
             {
                 lbStatus.Text = "Ready";
                 lbStatus.ForeColor = Color.LawnGreen;
             }
             else
             {
-                lbStatus.Text = "Dead";
+                lbStatus.Text = "Fainted";
                 lbStatus.ForeColor = Color.PaleVioletRed;
             }
         }
         else
         {
-            if (monster.CurrentHealth > 0)
+            if (this.monster.CurrentHealth > 0)
             {
                 lbStatus.Text = "Current";
                 lbStatus.ForeColor = Color.White;
             }
             else
             {
-                lbStatus.Text = "Dead";
+                lbStatus.Text = "Fainted";
                 lbStatus.ForeColor = Color.PaleVioletRed;
             }
         }
@@ -60,37 +58,36 @@ public partial class MonsterMiniCardWithStatusBar : UserControl
     {
         this.monster = monster;
         currentMonster = current;
-        
-        hpBar.ValueChanged += HPBar_ValueChanged;
-        hpPercentage = monster.CurrentHealth / monster.Health * 100;
-        hpBar.Value = hpPercentage;
 
-        lbName.Text = monster.Name;
-        lbHPValue.Text = $"{monster.CurrentHealth} / {monster.Health}";
+        hpBar.Maximum = this.monster.Health;
+        hpBar.Value = this.monster.CurrentHealth;
+
+        lbName.Text = this.monster.Name;
+        lbHPValue.Text = $"{this.monster.CurrentHealth} / {this.monster.Health}";
 
         if (!currentMonster)
         {
-            if (monster.CurrentHealth > 0)
+            if (this.monster.CurrentHealth > 0)
             {
                 lbStatus.Text = "Ready";
                 lbStatus.ForeColor = Color.LawnGreen;
             }
             else
             {
-                lbStatus.Text = "Dead";
+                lbStatus.Text = "Fainted";
                 lbStatus.ForeColor = Color.PaleVioletRed;
             }
         }
         else
         {
-            if (monster.CurrentHealth > 0)
+            if (this.monster.CurrentHealth > 0)
             {
                 lbStatus.Text = "Current";
                 lbStatus.ForeColor = Color.White;
             }
             else
             {
-                lbStatus.Text = "Dead";
+                lbStatus.Text = "Fainted";
                 lbStatus.ForeColor = Color.PaleVioletRed;
             }
         }
@@ -98,7 +95,7 @@ public partial class MonsterMiniCardWithStatusBar : UserControl
 
     private void HPBar_ValueChanged(object sender, EventArgs e)
     {
-        if (hpPercentage < 40)
+        if ((monster.CurrentHealth / monster.Health * 100) < 40)
         {
             hpBar.BarColor = Color.PaleVioletRed;
         }

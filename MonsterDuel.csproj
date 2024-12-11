@@ -227,18 +227,11 @@
       <DependentUpon>OpponentMonsterMiniCard.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Scenes\VSMode\VSMode.cs" />
-    <Compile Include="src\Skills\AttackAndBuffSkill.cs" />
-    <Compile Include="src\Skills\AttackAndDebuffSkill.cs" />
     <Compile Include="src\Skills\AttackSkill.cs" />
-    <Compile Include="src\Skills\Buff.cs" />
-    <Compile Include="src\Skills\BuffEffect.cs" />
-    <Compile Include="src\Skills\BuffSkill.cs" />
-    <Compile Include="src\Skills\DebuffSkill.cs" />
     <Compile Include="src\Skills\DefenseSkill.cs" />
     <Compile Include="src\Skills\FixedDamageSkill.cs" />
     <Compile Include="src\Skills\HealingSkill.cs" />
     <Compile Include="src\Skills\Skill.cs" />
-    <Compile Include="src\Skills\MultipleHitAttackSkill.cs" />
     <Compile Include="src\System\AppStartup.cs">
       <SubType>Form</SubType>
     </Compile>

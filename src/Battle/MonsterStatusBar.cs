@@ -10,11 +10,7 @@ public partial class MonsterStatusBar : UserControl
     public string MonsterName;
     public int HP;
     public int CurrentHP;
-    public int HPPercentage;
     public string Direction;
-
-    public int duration = 200;
-    public int step = 10;
     
     public MonsterStatusBar(string monsterName, int hp, int currentHP, string direction)
     {
@@ -38,7 +34,7 @@ public partial class MonsterStatusBar : UserControl
         {
             lbLeft.Visible = false;
             lbRight.Visible = true;
-            lbHPValue.Visible = false;
+            lbHPValue.Visible = true;
         }
         else
         {
@@ -47,10 +43,10 @@ public partial class MonsterStatusBar : UserControl
             lbHPValue.Visible = false;
         }
 
-        HPPercentage = CurrentHP / HP * 100;
-
+        hpBar.Maximum = HP;
         hpBar.ValueChanged += HPBar_ValueChanged;
-        hpBar.Value = HPPercentage;
+        hpBar.Value = CurrentHP;
+        
         Controls.Add(hpBar);
     }
 
@@ -74,7 +70,7 @@ public partial class MonsterStatusBar : UserControl
         {
             lbLeft.Visible = false;
             lbRight.Visible = true;
-            lbHPValue.Visible = false;
+            lbHPValue.Visible = true;
         }
         else
         {
@@ -83,8 +79,8 @@ public partial class MonsterStatusBar : UserControl
             lbHPValue.Visible = false;
         }
 
-        HPPercentage = CurrentHP / HP * 100;
-        hpBar.Value = HPPercentage;
+        hpBar.Maximum = HP;
+        hpBar.Value = CurrentHP;
     }
 
     public async Task ApplyValue(int value)
@@ -93,49 +89,30 @@ public partial class MonsterStatusBar : UserControl
         {
             return;
         }
-
-        int lastCurrentHP = CurrentHP;
         
         int temp = CurrentHP;
         temp += value;
-
-        int hpDifference = value;
-        int hpDifferencePercentage = hpDifference / HP * 100;
-            
+        
         if (temp <= 0)
         {
             CurrentHP = 0;
-            HPPercentage = 0;
         }
         else if (temp >= HP)
         {
             CurrentHP = HP;
-            HPPercentage = 100;
         }
         else
         {
             CurrentHP = temp;
-            HPPercentage = CurrentHP / HP * 100;
-        }
-
-        int waitTime = duration / step;
-        int hpPerStep = hpDifference / step;
-        int hpPercentagePerStep = hpDifferencePercentage / step;
-        for (int i = 0; i < step; i++)
-        {
-            lastCurrentHP += hpPerStep;
-            lbHPValue.Text = $"{lastCurrentHP} / {HP}";
-            hpBar.Value += hpPercentagePerStep;
-            await Task.Delay(waitTime);
         }
         
         lbHPValue.Text = $"{CurrentHP} / {HP}";
-        hpBar.Value = HPPercentage;
+        hpBar.Value = CurrentHP;
     }
     
     private void HPBar_ValueChanged(object sender, EventArgs e)
     {
-        if (HPPercentage < 40)
+        if ((CurrentHP / HP * 100) < 40)
         {
             hpBar.BarColor = Color.PaleVioletRed;
         }

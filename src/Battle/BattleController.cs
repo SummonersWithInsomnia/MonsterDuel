@@ -105,8 +105,6 @@ public class BattleController
                 
                 await BattleMessageBox.AutoShow($"Summoning magic! {leftPlayerCommand.Split('#')[1]}!");
 
-                Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs.Clear();
-
                 string monsterName = leftPlayerCommand.Split('#')[1];
                 Battle.LeftPlayer.CurrentMonster = monsterName;
                 await Battle.LeftPlayerSummonsMonster(monsterName, 500, 50);
@@ -122,8 +120,6 @@ public class BattleController
                 
                 await BattleMessageBox.AutoShow(
                     $"Summoner {Battle.RightPlayer.Name} summons {rightPlayerCommand.Split('#')[1]}!");
-
-                Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Buffs.Clear();
 
                 string monsterName = rightPlayerCommand.Split('#')[1];
                 Battle.RightPlayer.CurrentMonster = monsterName;
@@ -150,9 +146,6 @@ public class BattleController
             var leftSkill = leftMonster.Skills[leftPlayerCommand.Split('#')[1]];
             var rightSkill = rightMonster.Skills[rightPlayerCommand.Split('#')[1]];
             
-            var leftBuffs = leftMonster.Buffs;
-            var rightBuffs = rightMonster.Buffs;
-            
             var leftRandom = new Random();
             var leftCriticalHit = leftRandom.Next(0, 100) < CriticalHitRate ? true : false;
             var leftSkillHit = leftRandom.Next(0, 100) < leftSkill.HitRate ? true : false;
@@ -161,147 +154,8 @@ public class BattleController
             var rightCriticalHit = rightRandom.Next(0, 100) < CriticalHitRate ? true : false;
             var rightSkillHit = rightRandom.Next(0, 100) < rightSkill.HitRate ? true : false;
             
-            // Applying and updating buffs/debuffs
-            var leftBuffEffect = new BuffEffect();
-            foreach (var buff in leftBuffs)
-            {
-                if (buff.Property == "Health")
-                {
-                    if (buff.Value < 0)
-                    {
-                        await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s damage.");
-                        leftMonster.CurrentHealth += buff.Value;
-                        await leftMonsterStatusBar.ApplyValue(buff.Value);
-                    }
-                    else
-                    {
-                        await BattleMessageBox.AutoShow($"{leftMonster.Name} gets {buff.Name}'s healing.");
-                        leftMonster.CurrentHealth += buff.Value;
-                        await leftMonsterStatusBar.ApplyValue(buff.Value);
-                    }
-                }
-                else if (buff.Property == "Attack")
-                {
-                    leftBuffEffect.Attack += buff.Value;
-                }
-                else if (buff.Property == "Defense")
-                {
-                    leftBuffEffect.Defense += buff.Value;
-                }
-                else if (buff.Property == "Speed")
-                {
-                    leftBuffEffect.Speed += buff.Value;
-                }
-                else if (buff.Property == "TurnSkip")
-                {
-                    leftBuffEffect.TurnSkip = leftRandom.Next(0, 100) < buff.Value;
-                }
-
-                buff.Duration--;
-            }
-
-            foreach (var buff in leftBuffs)
-                if (buff.Duration < 0)
-                    leftBuffs.Remove(buff);
-
-            var rightBuffEffect = new BuffEffect();
-            foreach (var buff in rightBuffs)
-            {
-                if (buff.Property == "Health")
-                {
-                    if (buff.Value < 0)
-                    {
-                        await BattleMessageBox.AutoShow(
-                            $"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s damage.");
-                        rightMonster.CurrentHealth += buff.Value;
-                        await rightMonsterStatusBar.ApplyValue(buff.Value);
-                    }
-                    else
-                    {
-                        await BattleMessageBox.AutoShow(
-                            $"{rightMonsterOwnership}{rightMonster.Name} gets {buff.Name}'s healing.");
-                        rightMonster.CurrentHealth += buff.Value;
-                        await rightMonsterStatusBar.ApplyValue(buff.Value);
-                    }
-                }
-                else if (buff.Property == "Attack")
-                {
-                    rightBuffEffect.Attack += buff.Value;
-                }
-                else if (buff.Property == "Defense")
-                {
-                    rightBuffEffect.Defense += buff.Value;
-                }
-                else if (buff.Property == "Speed")
-                {
-                    rightBuffEffect.Speed += buff.Value;
-                }
-                else if (buff.Property == "TurnSkip")
-                {
-                    rightBuffEffect.TurnSkip = rightRandom.Next(0, 100) < buff.Value;
-                }
-
-                buff.Duration--;
-            }
-
-            foreach (var buff in rightBuffs)
-                if (buff.Duration < 0)
-                    rightBuffs.Remove(buff);
-
-            if (leftBuffEffect.TurnSkip && rightBuffEffect.TurnSkip)
-            {
-                await BattleMessageBox.AutoShow($"{leftMonster.Name} cannot move!");
-                await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} cannot move!");
-                continue;
-            }
-
-            if (leftBuffEffect.TurnSkip)
-            {
-                await BattleMessageBox.AutoShow($"{leftMonster.Name} cannot move!");
-            }
-            else
-            {
-                if (leftSkill is DefenseSkill leftDefenseSkill)
-                {
-                    if (leftSkillHit)
-                    {
-                        await BattleMessageBox.AutoShow($"{leftMonster.Name} uses {leftDefenseSkill.Name}.");
-                        leftBuffEffect.Defense += leftDefenseSkill.Defense;
-                        await BattleMessageBox.AutoShow($"{leftMonster.Name}'s defense increased in this turn.");
-                    }
-                    else
-                    {
-                        await BattleMessageBox.AutoShow($"{leftMonster.Name} failed to use {leftDefenseSkill.Name}.");
-                    }
-                }
-            }
-            
-            if (rightBuffEffect.TurnSkip)
-            {
-                await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} cannot move!");
-            }
-            else
-            {
-                if (rightSkill is DefenseSkill rightDefenseSkill)
-                {
-                    if (rightSkillHit)
-                    {
-                        await BattleMessageBox.AutoShow(
-                            $"{rightMonsterOwnership}{rightMonster.Name} uses {rightDefenseSkill.Name}.");
-                        rightBuffEffect.Defense += rightDefenseSkill.Defense;
-                        await BattleMessageBox.AutoShow(
-                            $"{rightMonsterOwnership}{rightMonster.Name}'s defense increased in this turn.");
-                    }
-                    else
-                    {
-                        await BattleMessageBox.AutoShow(
-                            $"{rightMonsterOwnership}{rightMonster.Name} failed to use {rightDefenseSkill.Name}.");
-                    }
-                }
-            }
-            
-            var leftMonsterSpeed = leftMonster.Speed + leftBuffEffect.Speed;
-            var rightMonsterSpeed = rightMonster.Speed + rightBuffEffect.Speed;
+            var leftMonsterSpeed = leftMonster.Speed;
+            var rightMonsterSpeed = rightMonster.Speed;
 
             if (leftMonsterSpeed == rightMonsterSpeed)
             {
@@ -311,62 +165,6 @@ public class BattleController
                     leftMonsterSpeed++;
                 else
                     rightMonsterSpeed++;
-            }
-            
-            // Using skills
-
-            // left can move and speed is faster (Combo 1)
-            if (!leftBuffEffect.TurnSkip && leftMonsterSpeed > rightMonsterSpeed)
-            {
-            }
-            
-            // right can move and speed is faster (Combo 2)
-            if (!rightBuffEffect.TurnSkip && rightMonsterSpeed > leftMonsterSpeed)
-            {
-            }
-            
-            // checkpoint for current HP
-            if (leftMonster.CurrentHealth <= 0 || rightMonster.CurrentHealth <= 0)
-            {
-                if (leftMonster.CurrentHealth <= 0)
-                {
-                    await BattleMessageBox.AutoShow($"{leftMonster.Name} fainted!");
-                    await Battle.LeftPlayerSummonsMonster(leftMonster.Name, 500, 50);
-                }
-                
-                if (rightMonster.CurrentHealth <= 0)
-                {
-                    await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} fainted!");
-                    await Battle.RightPlayerSummonsMonster(rightMonster.Name, 500, 50);
-                }
-            }
-            else
-            {
-                // left can move and speed is slower (Combo 2)
-                if (!leftBuffEffect.TurnSkip && leftMonsterSpeed < rightMonsterSpeed)
-                {
-                }
-            
-                // right can move and speed is slower (Combo 1)
-                if (!rightBuffEffect.TurnSkip && rightMonsterSpeed < leftMonsterSpeed)
-                {
-                }
-                
-                // checkpoint 2 for current HP
-                if (leftMonster.CurrentHealth <= 0 || rightMonster.CurrentHealth <= 0)
-                {
-                    if (leftMonster.CurrentHealth <= 0)
-                    {
-                        await BattleMessageBox.AutoShow($"{leftMonster.Name} fainted!");
-                        await Battle.LeftPlayerSummonsMonster(leftMonster.Name, 500, 50);
-                    }
-                
-                    if (rightMonster.CurrentHealth <= 0)
-                    {
-                        await BattleMessageBox.AutoShow($"{rightMonsterOwnership}{rightMonster.Name} fainted!");
-                        await Battle.RightPlayerSummonsMonster(rightMonster.Name, 500, 50);
-                    }
-                }
             }
         }
 
@@ -390,12 +188,6 @@ public class BattleController
 
         var result = new BattleResult(sourceForm, battleResult, battleForRetry, gates);
         await result.Start();
-
-        // foreach (Control control in sourceForm.Controls)
-        // {
-        //     Console.WriteLine(control.Name);
-        // }
-        // Console.WriteLine(sourceForm.Controls.Count);
     }
 
     public async Task SendMonstersAtStart()
@@ -432,105 +224,3 @@ public class BattleController
         sourceForm.Controls.Remove(Battle);
     }
 }
-
-// In GameLoop method
-// for using skills (Version 1)
-
-// string rightMonsterOwner = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster ? $"Summoner {Battle.RightPlayer.Name}'s " : "";
-
-// int leftPlayerMonsterSpeed = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Speed;
-// foreach (var buff in Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs)
-// {
-//     if (buff.Property == "Speed")
-//     {
-//         leftPlayerMonsterSpeed += buff.Value;
-//     }
-// }
-
-// int rightPlayerMonsterSpeed = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Speed;
-// foreach (var buff in Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Buffs)
-// {
-//     if (buff.Property == "Speed")
-//     {
-//         rightPlayerMonsterSpeed += buff.Value;
-//     }
-// }
-//
-// if (leftPlayerMonsterSpeed == rightPlayerMonsterSpeed)
-// {
-//     Random random = new Random();
-//     int randomValue = random.Next(0, 2);
-//     if (randomValue == 0)
-//     {
-//         leftPlayerMonsterSpeed++;
-//     }
-//     else
-//     {
-//         rightPlayerMonsterSpeed++;
-//     }
-// }
-//
-// Monster leftPlayerMonster = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster];
-// Monster rightPlayerMonster = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster];
-//
-// string leftPlayerMonsterSkillName = leftPlayerCommand.Split('#')[1];
-// string rightPlayerMonsterSkillName = rightPlayerCommand.Split('#')[1];
-//
-// Skill leftPlayerMonsterSkill = leftPlayerMonster.Skills[leftPlayerMonsterSkillName];
-// Skill rightPlayerMonsterSkill = rightPlayerMonster.Skills[rightPlayerMonsterSkillName];
-//
-// int leftPlayerMonsterTempDefenseFromDefenseSkill = 0;
-// int rightPlayerMonsterTempDefenseFromDefenseSkill = 0;
-//
-// if (leftPlayerMonsterSkill is DefenseSkill leftPlayerMonsterDefenseSkill)
-// {
-//     await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
-//     
-//     Random random = new Random();
-//     int randomValue = random.Next(0, 100);
-//     if (randomValue < leftPlayerMonsterSkill.HitRate)
-//     {
-//         leftPlayerMonsterTempDefenseFromDefenseSkill = leftPlayerMonsterDefenseSkill.Defense;
-//         await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name}'s defense increased in this turn.");
-//     }
-//     else
-//     {
-//         await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} failed to use {leftPlayerMonsterSkillName}.");
-//     }
-//
-//     leftPlayerMonsterSkill.Limit--;
-// }
-//
-// if (rightPlayerMonsterSkill is DefenseSkill rightPlayerMonsterDefenseSkill)
-// {
-//     await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} uses {rightPlayerMonsterSkillName}.");
-//     
-//     Random random = new Random();
-//     int randomValue = random.Next(0, 100);
-//     if (randomValue < rightPlayerMonsterSkill.HitRate)
-//     {
-//         rightPlayerMonsterTempDefenseFromDefenseSkill = rightPlayerMonsterDefenseSkill.Defense;
-//         await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name}'s defense increased in this turn.");
-//     }
-//     else
-//     {
-//         await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} failed to use {rightPlayerMonsterSkillName}.");
-//     }
-//     
-//     rightPlayerMonsterSkill.Limit--;
-// }
-//
-// if (leftPlayerMonsterSpeed > rightPlayerMonsterSpeed)
-// {
-//     if (leftPlayerMonsterSkill is AttackAndBuffSkill leftPlayerMonsterAttackAndBuffSkill)
-//     {
-//         await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
-//         
-//     }
-//     
-// }
-// else if (rightPlayerMonsterSpeed > leftPlayerMonsterSpeed)
-// {
-//     
-// }
-

@@ -13,7 +13,6 @@ namespace MonsterDuel
         public int Speed { get; set; }
         public string Description { get; set; }
         public string Element { get; set; }
-        public List<Buff> Buffs { get; set; }
         public bool Available { get; set; }
         public string IconPath { get; set; }
         public string FrontImagePath { get; set; }
@@ -34,7 +33,6 @@ namespace MonsterDuel
             this.Speed = monster.Speed;
             this.Description = monster.Description;
             this.Element = monster.Element;
-            this.Buffs = new List<Buff>(monster.Buffs);
             this.Available = monster.Available;
             this.IconPath = monster.IconPath;
             this.FrontImagePath = monster.FrontImagePath;
