@@ -112,7 +112,8 @@ public partial class MonsterStatusBar : UserControl
     
     private void HPBar_ValueChanged(object sender, EventArgs e)
     {
-        if ((CurrentHP / HP * 100) < 40)
+        double hpPercentage = (double)hpBar.Value / hpBar.Maximum * 100;
+        if (hpPercentage < 40)
         {
             hpBar.BarColor = Color.PaleVioletRed;
         }

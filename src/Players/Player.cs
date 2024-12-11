@@ -35,7 +35,7 @@ public class Player : IPlayer
 
     public async Task<string> GetCommandString(BattleController battleController)
     {
-        string command =  await battleController.DisplayBattleMenu();
+        string command = await battleController.DisplayBattleMenu();
         Console.WriteLine($"Player {this.Name} Command: {command}");
         return command;
     }
