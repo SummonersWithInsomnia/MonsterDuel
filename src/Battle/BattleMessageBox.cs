@@ -49,7 +49,7 @@ public partial class BattleMessageBox : UserControl
         {
             await TextEffect.Typewriter(lbText, textList[0], 100, 10);
             textList.RemoveAt(0);
-            await Task.Delay(1000);
+            await Task.Delay(1500);
         }
         
         Visible = false;
@@ -69,7 +69,7 @@ public partial class BattleMessageBox : UserControl
         Visible = true;
         
         await TextEffect.Typewriter(lbText, text, 100, 10);
-        await Task.Delay(1000);
+        await Task.Delay(1500);
         
         Visible = false;
         autoShowLock = false;

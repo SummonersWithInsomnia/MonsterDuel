@@ -39,7 +39,7 @@ public class AI : IPlayer
         battleController.BattleMessageBox.ShowWaiting("Communicating...");
         
         // Testing START
-        command = "Surrender";
+        // command = "Surrender";
         
         await Task.Delay(2000);
         battleController.BattleMessageBox.CloseWaiting();

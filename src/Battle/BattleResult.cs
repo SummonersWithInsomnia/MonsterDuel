@@ -30,11 +30,11 @@ public class BattleResult
         
         if (this.result == "Victory")
         {
-            lbResult.ForeColor = Color.LawnGreen;
+            lbResult.ForeColor = Color.LightGreen;
         }
         else if(this.result == "Defeat")
         {
-            lbResult.ForeColor = Color.PaleVioletRed;
+            lbResult.ForeColor = Color.LightCoral;
         }
         
         lbRetry.MouseClick += lbRetry_MouseClick;

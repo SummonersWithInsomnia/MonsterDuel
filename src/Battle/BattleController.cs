@@ -90,7 +90,65 @@ public class BattleController
             }
             
             // for switching monster
+            if (leftPlayerCommand.Contains("Switch#"))
+            {
+                await BattleMessageBox.AutoShow($"Come back, {Battle.LeftPlayer.CurrentMonster}!");
+                await BattleMessageBox.AutoShow($"Summon {leftPlayerCommand.Split('#')[1]}!");
+                string monsterName = leftPlayerCommand.Split('#')[1];
+                Battle.LeftPlayer.CurrentMonster = monsterName;
+                await Battle.LeftPlayerSummonsMonster(monsterName, 500, 50);
+            }
             
+            if (rightPlayerCommand.Contains("Switch#"))
+            {
+                await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} calls back {Battle.RightPlayer.CurrentMonster}!");
+                await BattleMessageBox.AutoShow($"Summoner {Battle.RightPlayer.Name} summons {rightPlayerCommand.Split('#')[1]}!");
+                string monsterName = rightPlayerCommand.Split('#')[1];
+                Battle.RightPlayer.CurrentMonster = monsterName;
+                await Battle.RightPlayerSummonsMonster(monsterName, 500, 50);
+            }
+            
+            // for using skills
+            int leftPlayerMonsterSpeed = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Speed;
+            foreach (var buff in Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs)
+            {
+                if (buff.Property == "Speed")
+                {
+                    leftPlayerMonsterSpeed += buff.Value;
+                }
+            }
+            
+            int rightPlayerMonsterSpeed = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Speed;
+            foreach (var buff in Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Buffs)
+            {
+                if (buff.Property == "Speed")
+                {
+                    rightPlayerMonsterSpeed += buff.Value;
+                }
+            }
+
+            if (leftPlayerMonsterSpeed == rightPlayerMonsterSpeed)
+            {
+                Random random = new Random();
+                int randomValue = random.Next(0, 2);
+                if (randomValue == 0)
+                {
+                    leftPlayerMonsterSpeed++;
+                }
+                else
+                {
+                    rightPlayerMonsterSpeed++;
+                }
+            }
+
+            if (leftPlayerMonsterSpeed > rightPlayerMonsterSpeed)
+            {
+                
+            }
+            else if (rightPlayerMonsterSpeed > leftPlayerMonsterSpeed)
+            {
+                
+            }
         }
 
         MessageBoxTcs = new TaskCompletionSource<bool>();
@@ -129,13 +187,15 @@ public class BattleController
     {
         await BattleMessageBox.AutoShow("Summoner " + Battle.RightPlayer.Name + " summons " + Battle.RightPlayer.MonsterOrder[0] + ".");
         Battle.RightPlayer.CurrentMonster = Battle.RightPlayer.MonsterOrder[0];
-        await Battle.MoveRightPlayerOut(300, 30);
-        await Battle.RightPlayerSummonsMonster(Battle.RightPlayer.MonsterOrder[0], 300, 30);
+        await Battle.MoveRightPlayerOut(500, 50);
+        await Battle.RightPlayerSummonsMonster(Battle.RightPlayer.MonsterOrder[0], 500, 50);
 
+        await Task.Delay(200);
+        
         await BattleMessageBox.AutoShow($"You summon {Battle.LeftPlayer.MonsterOrder[0]}.");
         Battle.LeftPlayer.CurrentMonster = Battle.LeftPlayer.MonsterOrder[0];
-        await Battle.MoveLeftPlayerOut(300, 30);
-        await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 300, 30);
+        await Battle.MoveLeftPlayerOut(500, 50);
+        await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 500, 50);
     }
 
     public async Task<string> DisplayBattleMenu()

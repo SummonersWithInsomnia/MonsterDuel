@@ -276,6 +276,7 @@ public partial class Battle : UserControl
         await Task.Delay(200);
         rightPlayerMonster.Image = ImageList.GetImage(RightPlayer.Monsters[monsterName].FrontImagePath);
         rightPlayerMonster.Visible = true;
+        rightPlayerMonsterStatusBar.Visible = false;
         await Task.Delay(200);
         await rightPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
@@ -364,6 +365,7 @@ public partial class Battle : UserControl
         await Task.Delay(200);
         leftPlayerMonster.Image = ImageList.GetImage(LeftPlayer.Monsters[monsterName].BackImagePath);
         leftPlayerMonster.Visible = true;
+        leftPlayerMonsterStatusBar.Visible = false;
         await Task.Delay(200);
         await leftPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
