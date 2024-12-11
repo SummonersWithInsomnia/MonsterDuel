@@ -274,28 +274,34 @@ public partial class Battle : UserControl
     {
         await rightPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
+        
+        rightPlayerMonster.Image = ImageList.GetImage(RightPlayer.Monsters[monsterName].FrontImagePath);
 
-        if (monsterName == string.Empty)
+        if (RightPlayer.Monsters[monsterName].CurrentHealth <= 0)
         {
-            rightPlayerMonster.Image = null;
             rightPlayerMonster.Visible = false;
-            RightPlayerMonsterStatusBar.Visible = false;
         }
         else
         {
-            rightPlayerMonster.Image = ImageList.GetImage(RightPlayer.Monsters[monsterName].FrontImagePath);
             rightPlayerMonster.Visible = true;
-            RightPlayerMonsterStatusBar.Visible = false;
         }
+        
+        RightPlayerMonsterStatusBar.Visible = false;
         
         await Task.Delay(200);
         await rightPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
         
-        if (monsterName == string.Empty) return;
-        
         RightPlayerMonsterStatusBar.Switch(RightPlayer.Monsters[monsterName].Name, RightPlayer.Monsters[monsterName].Health, RightPlayer.Monsters[monsterName].CurrentHealth, "Right");
-        RightPlayerMonsterStatusBar.Visible = true;
+
+        if (RightPlayer.Monsters[monsterName].CurrentHealth <= 0)
+        {
+            RightPlayerMonsterStatusBar.Visible = false;
+        }
+        else
+        {
+            RightPlayerMonsterStatusBar.Visible = true;
+        }
     }
     
     private PictureBox leftPlayerMonster = new PictureBox
@@ -377,27 +383,33 @@ public partial class Battle : UserControl
         await leftPlayerSummoning((duration / 2), (step / 2));
         await Task.Delay(200);
         
-        if (monsterName == string.Empty)
+        leftPlayerMonster.Image = ImageList.GetImage(LeftPlayer.Monsters[monsterName].BackImagePath);
+
+        if (LeftPlayer.Monsters[monsterName].CurrentHealth <= 0)
         {
-            leftPlayerMonster.Image = null;
             leftPlayerMonster.Visible = false;
-            LeftPlayerMonsterStatusBar.Visible = false;
         }
         else
         {
-            leftPlayerMonster.Image = ImageList.GetImage(LeftPlayer.Monsters[monsterName].BackImagePath);
             leftPlayerMonster.Visible = true;
-            LeftPlayerMonsterStatusBar.Visible = false;
         }
+        
+        LeftPlayerMonsterStatusBar.Visible = false;
         
         await Task.Delay(200);
         await leftPlayerEndSummoning((duration / 2), (step / 2));
         Map.Refresh();
         
-        if (monsterName == string.Empty) return;
-        
         LeftPlayerMonsterStatusBar.Switch(LeftPlayer.Monsters[monsterName].Name, LeftPlayer.Monsters[monsterName].Health, LeftPlayer.Monsters[monsterName].CurrentHealth, "Left");
-        LeftPlayerMonsterStatusBar.Visible = true;
+        
+        if (LeftPlayer.Monsters[monsterName].CurrentHealth <= 0)
+        {
+            LeftPlayerMonsterStatusBar.Visible = false;
+        }
+        else
+        {
+            LeftPlayerMonsterStatusBar.Visible = true;
+        }
     }
 
     public async Task DisplayMenu()
