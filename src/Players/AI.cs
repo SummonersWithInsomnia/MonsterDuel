@@ -41,11 +41,11 @@ public class AI : IPlayer
         // Testing START
         // command = "Surrender";
         
-        await Task.Delay(2000);
-        battleController.BattleMessageBox.CloseWaiting();
-        
-        Console.WriteLine($"AI {this.Name} Command: {command}");
-        return command;
+        // await Task.Delay(2000);
+        // battleController.BattleMessageBox.CloseWaiting();
+        //
+        // Console.WriteLine($"AI {this.Name} Command: {command}");
+        // return command;
         // Testing END
         
         Dictionary<string, Monster> monsterList = new Dictionary<string, Monster>(this.Monsters);
@@ -85,7 +85,7 @@ public class AI : IPlayer
         }
         
         Skill randomSkill = availableSkills[random.Next(availableSkills.Count)];
-        command = $"Command# + {randomSkill.Name}";
+        command = $"Command#{randomSkill.Name}";
         
         await Task.Delay(2000);
         battleController.BattleMessageBox.CloseWaiting();
