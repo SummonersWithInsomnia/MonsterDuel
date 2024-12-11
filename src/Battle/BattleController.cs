@@ -109,104 +109,15 @@ public class BattleController
                 await Battle.RightPlayerSummonsMonster(monsterName, 500, 50);
             }
             
-            // for using skills
-            string rightMonsterOwner = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster ? $"Summoner {Battle.RightPlayer.Name}'s " : "";
+            // for using skills (Version 2)
             
-            int leftPlayerMonsterSpeed = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Speed;
-            foreach (var buff in Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs)
-            {
-                if (buff.Property == "Speed")
-                {
-                    leftPlayerMonsterSpeed += buff.Value;
-                }
-            }
+            // If the left monster name is the same as the right monster name, the right monster ownership text will be displayed.
+            string rightMonsterOwnership = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster ? $"Summoner {Battle.RightPlayer.Name}'s " : "";
             
-            int rightPlayerMonsterSpeed = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Speed;
-            foreach (var buff in Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Buffs)
-            {
-                if (buff.Property == "Speed")
-                {
-                    rightPlayerMonsterSpeed += buff.Value;
-                }
-            }
-
-            if (leftPlayerMonsterSpeed == rightPlayerMonsterSpeed)
-            {
-                Random random = new Random();
-                int randomValue = random.Next(0, 2);
-                if (randomValue == 0)
-                {
-                    leftPlayerMonsterSpeed++;
-                }
-                else
-                {
-                    rightPlayerMonsterSpeed++;
-                }
-            }
             
-            Monster leftPlayerMonster = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster];
-            Monster rightPlayerMonster = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster];
             
-            string leftPlayerMonsterSkillName = leftPlayerCommand.Split('#')[1];
-            string rightPlayerMonsterSkillName = rightPlayerCommand.Split('#')[1];
             
-            Skill leftPlayerMonsterSkill = leftPlayerMonster.Skills[leftPlayerMonsterSkillName];
-            Skill rightPlayerMonsterSkill = rightPlayerMonster.Skills[rightPlayerMonsterSkillName];
-
-            int leftPlayerMonsterTempDefenseFromDefenseSkill = 0;
-            int rightPlayerMonsterTempDefenseFromDefenseSkill = 0;
-
-            if (leftPlayerMonsterSkill is DefenseSkill leftPlayerMonsterDefenseSkill)
-            {
-                await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
-                
-                Random random = new Random();
-                int randomValue = random.Next(0, 100);
-                if (randomValue < leftPlayerMonsterSkill.HitRate)
-                {
-                    leftPlayerMonsterTempDefenseFromDefenseSkill = leftPlayerMonsterDefenseSkill.Defense;
-                    await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name}'s defense increased in this turn.");
-                }
-                else
-                {
-                    await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} failed to use {leftPlayerMonsterSkillName}.");
-                }
-
-                leftPlayerMonsterSkill.Limit--;
-            }
             
-            if (rightPlayerMonsterSkill is DefenseSkill rightPlayerMonsterDefenseSkill)
-            {
-                await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} uses {rightPlayerMonsterSkillName}.");
-                
-                Random random = new Random();
-                int randomValue = random.Next(0, 100);
-                if (randomValue < rightPlayerMonsterSkill.HitRate)
-                {
-                    rightPlayerMonsterTempDefenseFromDefenseSkill = rightPlayerMonsterDefenseSkill.Defense;
-                    await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name}'s defense increased in this turn.");
-                }
-                else
-                {
-                    await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} failed to use {rightPlayerMonsterSkillName}.");
-                }
-                
-                rightPlayerMonsterSkill.Limit--;
-            }
-            
-            if (leftPlayerMonsterSpeed > rightPlayerMonsterSpeed)
-            {
-                if (leftPlayerMonsterSkill is AttackAndBuffSkill leftPlayerMonsterAttackAndBuffSkill)
-                {
-                    await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
-                    
-                }
-                
-            }
-            else if (rightPlayerMonsterSpeed > leftPlayerMonsterSpeed)
-            {
-                
-            }
             
             turn++;
         }
@@ -276,3 +187,104 @@ public class BattleController
         sourceForm.Controls.Remove(Battle);
     }
 }
+
+// In GameLoop method
+// for using skills (Version 1)
+
+// string rightMonsterOwner = Battle.LeftPlayer.CurrentMonster == Battle.RightPlayer.CurrentMonster ? $"Summoner {Battle.RightPlayer.Name}'s " : "";
+
+// int leftPlayerMonsterSpeed = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Speed;
+// foreach (var buff in Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster].Buffs)
+// {
+//     if (buff.Property == "Speed")
+//     {
+//         leftPlayerMonsterSpeed += buff.Value;
+//     }
+// }
+
+// int rightPlayerMonsterSpeed = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Speed;
+// foreach (var buff in Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster].Buffs)
+// {
+//     if (buff.Property == "Speed")
+//     {
+//         rightPlayerMonsterSpeed += buff.Value;
+//     }
+// }
+//
+// if (leftPlayerMonsterSpeed == rightPlayerMonsterSpeed)
+// {
+//     Random random = new Random();
+//     int randomValue = random.Next(0, 2);
+//     if (randomValue == 0)
+//     {
+//         leftPlayerMonsterSpeed++;
+//     }
+//     else
+//     {
+//         rightPlayerMonsterSpeed++;
+//     }
+// }
+//
+// Monster leftPlayerMonster = Battle.LeftPlayer.Monsters[Battle.LeftPlayer.CurrentMonster];
+// Monster rightPlayerMonster = Battle.RightPlayer.Monsters[Battle.RightPlayer.CurrentMonster];
+//
+// string leftPlayerMonsterSkillName = leftPlayerCommand.Split('#')[1];
+// string rightPlayerMonsterSkillName = rightPlayerCommand.Split('#')[1];
+//
+// Skill leftPlayerMonsterSkill = leftPlayerMonster.Skills[leftPlayerMonsterSkillName];
+// Skill rightPlayerMonsterSkill = rightPlayerMonster.Skills[rightPlayerMonsterSkillName];
+//
+// int leftPlayerMonsterTempDefenseFromDefenseSkill = 0;
+// int rightPlayerMonsterTempDefenseFromDefenseSkill = 0;
+//
+// if (leftPlayerMonsterSkill is DefenseSkill leftPlayerMonsterDefenseSkill)
+// {
+//     await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
+//     
+//     Random random = new Random();
+//     int randomValue = random.Next(0, 100);
+//     if (randomValue < leftPlayerMonsterSkill.HitRate)
+//     {
+//         leftPlayerMonsterTempDefenseFromDefenseSkill = leftPlayerMonsterDefenseSkill.Defense;
+//         await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name}'s defense increased in this turn.");
+//     }
+//     else
+//     {
+//         await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} failed to use {leftPlayerMonsterSkillName}.");
+//     }
+//
+//     leftPlayerMonsterSkill.Limit--;
+// }
+//
+// if (rightPlayerMonsterSkill is DefenseSkill rightPlayerMonsterDefenseSkill)
+// {
+//     await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} uses {rightPlayerMonsterSkillName}.");
+//     
+//     Random random = new Random();
+//     int randomValue = random.Next(0, 100);
+//     if (randomValue < rightPlayerMonsterSkill.HitRate)
+//     {
+//         rightPlayerMonsterTempDefenseFromDefenseSkill = rightPlayerMonsterDefenseSkill.Defense;
+//         await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name}'s defense increased in this turn.");
+//     }
+//     else
+//     {
+//         await BattleMessageBox.AutoShow($"{rightMonsterOwner}{rightPlayerMonster.Name} failed to use {rightPlayerMonsterSkillName}.");
+//     }
+//     
+//     rightPlayerMonsterSkill.Limit--;
+// }
+//
+// if (leftPlayerMonsterSpeed > rightPlayerMonsterSpeed)
+// {
+//     if (leftPlayerMonsterSkill is AttackAndBuffSkill leftPlayerMonsterAttackAndBuffSkill)
+//     {
+//         await BattleMessageBox.AutoShow($"{leftPlayerMonster.Name} uses {leftPlayerMonsterSkillName}.");
+//         
+//     }
+//     
+// }
+// else if (rightPlayerMonsterSpeed > leftPlayerMonsterSpeed)
+// {
+//     
+// }
