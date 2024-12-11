@@ -110,14 +110,17 @@ public class BattleController
         
         BattleMessageBox.CloseWaiting();
         await Dispose();
-        
+
+        BattleResult result = new BattleResult(sourceForm, battleResult, battleForRetry, gates);
+        await result.Start();
+
         // foreach (Control control in sourceForm.Controls)
         // {
         //     Console.WriteLine(control.Name);
         // }
         // Console.WriteLine(sourceForm.Controls.Count);
-        
-        
+
+
     }
 
     public async Task SendMonstersAtStart()
@@ -125,12 +128,12 @@ public class BattleController
         await BattleMessageBox.AutoShow("Summoner " + Battle.RightPlayer.Name + " summons " + Battle.RightPlayer.MonsterOrder[0] + ".");
         Battle.RightPlayer.CurrentMonster = Battle.RightPlayer.MonsterOrder[0];
         await Battle.MoveRightPlayerOut(300, 30);
-        await Battle.RightPlayerSummonsMonster(Battle.RightPlayer.MonsterOrder[0], 600, 60);
+        await Battle.RightPlayerSummonsMonster(Battle.RightPlayer.MonsterOrder[0], 300, 30);
 
         await BattleMessageBox.AutoShow($"You summon {Battle.LeftPlayer.MonsterOrder[0]}.");
         Battle.LeftPlayer.CurrentMonster = Battle.LeftPlayer.MonsterOrder[0];
         await Battle.MoveLeftPlayerOut(300, 30);
-        await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 600, 60);
+        await Battle.LeftPlayerSummonsMonster(Battle.LeftPlayer.MonsterOrder[0], 300, 30);
     }
 
     public async Task<string> DisplayBattleMenu()
