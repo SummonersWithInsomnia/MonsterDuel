@@ -6,5 +6,9 @@
         public string Property { get; set; }
         public int Value { get; set; }
         public int Duration { get; set; }
+        
+        public Buff()
+        {
+        }
     }
 }
