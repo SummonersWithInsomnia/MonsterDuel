@@ -117,7 +117,7 @@ public class BattleResult
         await Task.Delay(1000);
         if (result == "Defeat" || result == "Draw")
         {
-            lbRetry.Visible = true;
+            // lbRetry.Visible = true;
             await Task.Delay(200);
             lbBackToGameTitle.Visible = true;
         }
